@@ -1,33 +1,91 @@
 import React, { useEffect, useState } from "react";
 import { ethers } from 'ethers';
-import ERC20ContractAbi from '@openzeppelin/contracts/build/contracts/ERC20.json';
-
-import { useWeb3React } from '@web3-react/core';
+import Abi from '/src/contractsData/Challenge.json'
+import ContractAddress from '/src/contractsData/Challenge-address.json'
+import { useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi';
+import useAlert from '../hooks/useAlert';
+import { useSnackbar } from 'notistack';
 
 export const RequestContext = React.createContext();
 
 
 export const RequestProvider = ({ children }) => {
-  const { library, activate, account, active } = useWeb3React();
-  const [contract, setContract] = useState();
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+
+  let [transactions, setTransactions] = useState([]);
+  let callAlert = useAlert();
+  let [config, setConfig] = useState({
+    enabled: false,
+    functionName: null,
+    args: null,
+  });
+  let snackbarId;
 
 
+  const { config: prepare } = usePrepareContractWrite({
+    addressOrName: ContractAddress?.address,
+    contractInterface: Abi.abi,
+    ...config,
+    overrides: {
+      value: config['ether'] ? ethers.utils.parseEther(config['ether']) : undefined,
+    },
+    onSuccess: (res) => {
+      if (res) {
+      }
+    },
+    onError: ({ message }) => {
+      console.log('onError message', message);
+    },
+  });
+
+
+  const { data: tx, write: callReq } = useContractWrite({
+    ...prepare,
+    onSuccess: ({ hash }) => {
+      snackbarId = callAlert(`Transaction function: (${config.functionName}) `, null, hash);
+
+
+    },
+    onError: ({ message }) => {
+      callAlert('Transaction failed', 'error')
+      console.log('onError message', message);
+    },
+  });
+
+
+  const { isSuccess: txSuccess, error: txError, hash } = useWaitForTransaction({
+    hash: tx?.hash,
+    onError: error => {
+      closeSnackbar(hash)
+      callAlert('Transaction failed', 'error')
+      console.log('is err', error)
+    },
+    onSuccess: data => {
+      closeSnackbar(hash)
+      callAlert(`Success! Tx hash: ${data.transactionHash}`, 'success')
+
+    },
+  });
 
 
   useEffect(() => {
-    if (account) {
-      const signer = library.getSigner();
-      // const contract = new ethers.Contract(
-      //   VoucherAddress.address,
-      //   VoucherAbi.abi,
-      //   signer
-      // );
-      setContract(contract);
+    if (prepare['args']) {
+      callReq?.()
     }
-  }, [account]);
+  }, [callReq]);
+
+  useEffect(() => {
+    //set enabled if is function name TODO:: on validate
+    if (config['functionName'] && config['enabled'] === false) {
+      setConfig({ ...config, 'enabled': true })
+    }
+    //
+  }, [config]);
+
+
   return (
     <RequestContext.Provider
-      value={{  }}>
+      value={{ config, setConfig, tx, txSuccess, txError, transactions, setTransactions }}>
       {children}
     </RequestContext.Provider>)
 

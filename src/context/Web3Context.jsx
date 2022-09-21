@@ -1,88 +1,104 @@
 import React, { useEffect, useState } from "react";
-import { Web3ReactProvider } from '@web3-react/core'
 import { ethers, BigNumber } from 'ethers';
-import { InjectedConnector } from '@web3-react/injected-connector';
+import {
+  WagmiConfig,
+  createClient,
+  chain,
+  configureChains,
+} from 'wagmi'
+import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
+import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
+import { InjectedConnector } from 'wagmi/connectors/injected'
 
+import { ConnectKitProvider } from 'connectkit';
+import { publicProvider } from 'wagmi/providers/public'
+import { SnackbarProvider } from 'notistack';
 
 export const Web3Context = React.createContext();
-export const SignInProvider = ({ children }) => {
-  const [CHAIN_ID, CHAIN_NAME, RPC_URL, EXPLORER_URL, TOKEN_SYMBOL, TOKEN_DECIMALS] = [import.meta.env.V_CHAIN_ID, import.meta.env.V_CHAIN_NAME, import.meta.env.V_RPC_URL, import.meta.env.V_EXPLORER_URL, import.meta.env.V_TOKEN_SYMBOL, import.meta.env.V_TOKEN_DECIMALS];
-  const getLibrary = (provider) => {
-    const library = new ethers.providers.Web3Provider(provider);
-    library.pollingInterval = 5000;
-    return library;
+export const Web3Provider = ({ children }) => {
+
+
+  const [
+    CHAIN_ID,
+    CHAIN_NAME,
+    RPC_URL,
+    EXPLORER_URL,
+    TOKEN_SYMBOL,
+    TOKEN_DECIMALS
+  ] = [import.meta.env.V_CHAIN_ID, import.meta.env.V_CHAIN_NAME, import.meta.env.V_RPC_URL, import.meta.env.V_EXPLORER_URL, import.meta.env.V_TOKEN_SYMBOL, import.meta.env.V_TOKEN_DECIMALS];
+  const evmosChain = {
+    id: parseInt(CHAIN_ID),
+    name: CHAIN_NAME,
+    network: CHAIN_NAME,
+    nativeCurrency: {
+      decimals: TOKEN_DECIMALS,
+      name: CHAIN_NAME,
+      symbol: TOKEN_SYMBOL,
+    },
+    rpcUrls: {
+      default: RPC_URL,
+    },
+    blockExplorers: {
+      default: { name: 'SnowTrace', url: EXPLORER_URL },
+    },
+    testnet: false,
   }
 
 
-  const isMetamaskInstalled = () => {
-    return typeof window.ethereum !== "undefined";
-  };
-
-
-  const checkNetwork = async (chainId) => {
-    if (!chainId) {
-      chainId = await window.ethereum.request({ method: 'eth_chainId' });
-      chainId = BigNumber.from(chainId).toNumber();
-    }
-    return chainId === BigNumber.from(CHAIN_ID).toNumber();
+  const localChain = {
+    id: 31337,
+    name: 'Local',
+    network: 'Local',
+    nativeCurrency: {
+      decimals: 18,
+      name: 'Local',
+      symbol: 'GO',
+    },
+    rpcUrls: {
+      default: 'http://localhost:8545',
+    },
+    blockExplorers: {
+      default: { name: 'SnowTrace', url: 'https://etherscan.io' },
+    },
+    testnet: false,
   }
 
 
-  const connectWeb3Wallets = async (activate, chainId) => {
-    try {
-      const injected = new InjectedConnector({
-        supportedChainIds: [BigNumber.from(CHAIN_ID).toNumber()]
-      });
-      await activate(injected);
-
-    } catch (e) {
-      console.log('Connection Error!', e)
-    }
-
-    if (!chainId) {
-      await switchNetworkToCorrect();
-    }
-  }
+  const { chains, provider } = configureChains([
+    chain.mainnet, chain.polygon, evmosChain, localChain
+  ], [
+    publicProvider(),
+  ])
 
 
-  const switchNetworkToCorrect = async () => {
-    try {
-      await window.ethereum.request({
-        method: 'wallet_switchEthereumChain',
-        params: [{ chainId: CHAIN_ID }],
-      });
-    } catch (switchError) {
-      if (switchError.code === 4902) {
-        await window.ethereum.request({
-          method: 'wallet_addEthereumChain',
-          params: [
-            {
-              chainId: CHAIN_ID,
-              chainName: CHAIN_NAME,
-              rpcUrls: RPC_URL.split(','),
-              blockExplorerUrls: [EXPLORER_URL],
-              nativeCurrency: {
-                symbol: TOKEN_SYMBOL,
-                decimals: parseInt(TOKEN_DECIMALS)
-              }
-            }]
-        });
-      }
-    }
-  }
-
+  // Set up client
+  const client = createClient({
+    autoConnect: true,
+    connectors: [
+      new MetaMaskConnector({ chains }),
+      new InjectedConnector({ chains }),
+      new WalletConnectConnector({
+        chains,
+        options: {
+          qrcode: true,
+        },
+      }),
+    ],
+    provider,
+    // webSocketProvider,
+  })
   return (
-    <Web3ReactProvider getLibrary={getLibrary}>
-      <Web3Context.Provider
-        value={{
-          switchNetworkToCorrect,
-          connectWeb3Wallets,
-          checkNetwork,
-          isMetamaskInstalled,
-        }}>
-        {children}
-      </Web3Context.Provider>
-    </Web3ReactProvider>
+    <WagmiConfig client={client}>
+      <ConnectKitProvider>
+        <SnackbarProvider autoHideDuration={8000} anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
+                          maxSnack={5}>
+          <Web3Context.Provider
+            value={{}}>
+            {children}
+          </Web3Context.Provider>
+        </SnackbarProvider>
+      </ConnectKitProvider>
+    </WagmiConfig>
 
   )
 
