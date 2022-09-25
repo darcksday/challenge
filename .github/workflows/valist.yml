@@ -27,6 +27,6 @@ jobs:
         with:
           private-key: ${{ secrets.VALIST_SIGNER }}
           account: darcksday
-          project: web3chalange
+          project: chalange
           release: github-action-${{ env.TIMESTAMP }}
-          path: out
+          path: dist
