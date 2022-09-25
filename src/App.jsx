@@ -11,6 +11,7 @@ import { DashboardLayout } from './components/layout/dasbord/DashboardLayout';
 import { Challenge } from './pages/Challenge';
 
 const App = () => {
+  console.log('init')
   const { address } = useAccount()
   const { setOpen, open } = useModal()
   const { setBlocked, blocked } = useContext(Web3Context);

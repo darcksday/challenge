@@ -26,8 +26,7 @@ import { ItemsListHead, ItemsFilterToolbar, ItemsMoreMenu } from '/src/component
 import { useContractRead } from 'wagmi';
 import Abi from '/src/contractsData/Challenge.json'
 import ContractAddress from '/src/contractsData/Challenge-address.json'
-import { data } from 'autoprefixer';
-import { transformChallenges } from '../utilits/transform';
+import { filterEmpty, transformChallenges } from '../utilits/transform';
 import { dateFormat, isEmptyAddress } from '../utilits';
 // ----------------------------------------------------------------------
 
@@ -93,7 +92,7 @@ const Challenges = () => {
     addressOrName: ContractAddress?.address,
     contractInterface: Abi.abi,
     // enabled: isContractAddress(currentCommunity?.nftContract),
-    select: (data) => data.map((item) => transformChallenges(item)),
+    select: (data) => data.filter((item) => filterEmpty(item)).map((item) => transformChallenges(item)),
 
     cacheTime: 2_000,
     functionName: "allChallenges",
@@ -180,8 +179,8 @@ const Challenges = () => {
                       </TableCell>
                       <TableCell className="text-green-500" align="left">{item.s_maker}</TableCell>
                       <TableCell className="text-red-500" align="left">{(isEmptyAddress(item.taker)) ? 'not defined' : item.s_taker}</TableCell>
-                      <TableCell align="left"> <Typography variant="subtitle2" noWrap>{item.s_paid_maker}</Typography></TableCell>
-                      <TableCell align="left">{item.cof}</TableCell>
+                      <TableCell align="left"> <Typography variant="subtitle2" noWrap>{item.s_paid_maker}Ξ</Typography></TableCell>
+                      <TableCell align="left">{item.s_cof}</TableCell>
                       <TableCell align="left">{dateFormat(item.created_date)}</TableCell>
                       <TableCell align="left">{dateFormat(item.deadline_date)}</TableCell>
                       <TableCell align="left">
@@ -191,7 +190,8 @@ const Challenges = () => {
                         {(item.status === 'finished') && (<Chip className="font-semibold capitalize" label={item.status} size="small" color="success" />)}
                         {(item.status === 'taken') && (<Chip className="font-semibold capitalize" label={item.status} size="small" color="primary" />)}
 
-
+                        {(item.status === 'in review') && (
+                          <Chip variant="outlined" className="font-semibold capitalize" label={item.status} size="small" color="success" />)}
                       </TableCell>
 
 

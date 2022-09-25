@@ -11,18 +11,18 @@ export const RequestContext = React.createContext();
 
 export const RequestProvider = ({ children }) => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-
-  let [transactions, setTransactions] = useState([]);
-  let callAlert = useAlert();
-  let [config, setConfig] = useState({
+  const DEFAULT_CONF = {
     enabled: false,
     functionName: null,
     args: null,
-  });
+  }
+  let [transactions, setTransactions] = useState([]);
+  let callAlert = useAlert();
+  let [config, setConfig] = useState(DEFAULT_CONF);
   let snackbarId;
 
 
-  const { config: prepare } = usePrepareContractWrite({
+  const { config: prepare, status: prepStatus } = usePrepareContractWrite({
     addressOrName: ContractAddress?.address,
     contractInterface: Abi.abi,
     ...config,
@@ -30,9 +30,8 @@ export const RequestProvider = ({ children }) => {
       value: config['ether'] ? ethers.utils.parseEther(config['ether']) : undefined,
     },
     onSuccess: (res) => {
-      if (res) {
-      }
     },
+
     onError: ({ message }) => {
       console.log('onError message', message);
     },
@@ -69,12 +68,16 @@ export const RequestProvider = ({ children }) => {
 
 
   useEffect(() => {
-    if (prepare['args']) {
+    if (prepStatus === 'success') {
       callReq?.()
+      setConfig(DEFAULT_CONF);
+
     }
-  }, [callReq]);
+
+  }, [prepStatus]);
 
   useEffect(() => {
+    console.log(config)
     //set enabled if is function name TODO:: on validate
     if (config['functionName'] && config['enabled'] === false) {
       setConfig({ ...config, 'enabled': true })

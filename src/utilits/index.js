@@ -1,11 +1,11 @@
 import { ethers } from 'ethers';
 
-export const formatAmount = (amount,decimals) => {
-  return ethers.utils.formatUnits(amount,decimals);
+export const formatAmount = (amount, decimals) => {
+  return ethers.utils.formatUnits(amount, decimals);
 }
 export const dateFormat = (timestamp) => {
   const date = new Date(parseInt(timestamp * 1000));
-  return new Intl.DateTimeFormat().format(date);
+  return date.toLocaleString();
 }
 export const isExpired = (timestamp) => {
   const date = new Date(parseInt(timestamp) * 1000);

@@ -4,15 +4,21 @@ import { Slider, Avatar } from '@mui/material';
 import { deepOrange, deepPurple } from '@mui/material/colors';
 import Page from '../components/Page';
 import { RequestContext } from '../context/RequestContext';
+import { ethers } from 'ethers';
 
 export const Create = () => {
   const [betData, setBetData] = useState({ paid_maker: 0, cof: 1, op_bet: '' });
   const { setConfig, txSuccess } = useContext(RequestContext);
 
 
-  const tomorrow = () => {
-    let tomorrow = new Date();
-    tomorrow.setDate(tomorrow.getDate() + 1);
+  const minDate = () => {
+    let tomorrow = new Date(Date.now() + (60 * 60 * 1000));
+    let isoString = tomorrow.toISOString();
+    return isoString.substring(0, isoString.indexOf("T") + 6);
+
+  }
+  const defaultDate = () => {
+    let tomorrow = new Date(Date.now() + 3 * (60 * 60 * 1000))
     let isoString = tomorrow.toISOString();
     return isoString.substring(0, isoString.indexOf("T") + 6);
 
@@ -37,7 +43,7 @@ export const Create = () => {
     setConfig(
       {
         'functionName': 'create',
-        'args': [data['name'], data['description'], data['cof'], data['oracle_fee'], data['deadline_date'], data['oracle']],
+        'args': [data['name'], data['description'], ethers.utils.parseEther(data['cof']), data['oracle_fee'], data['deadline_date'], data['oracle']],
         'ether': data['paid_maker']
       }
     )
@@ -91,12 +97,13 @@ export const Create = () => {
               <div>
                 <Input
                   name="deadline_date"
+                  value={defaultDate()}
                   required className="h-[44px]"
                   id="datetime-local"
                   label="Deadline"
                   type="datetime-local"
-                  min={tomorrow()}
-                  defaultValue={tomorrow()}
+                  min={minDate()}
+                  defaultValue={defaultDate()}
                 />
               </div>
 
@@ -110,7 +117,8 @@ export const Create = () => {
               <label className="justify-center flex font-semibold	">Challenge reward coefficient</label>
 
               <div className="flex justify-between items-center my-4 	">
-                <Avatar sx={{ width: 65, height: 65, bgcolor: deepOrange[500], fontSize: "14px" }}>
+                <Avatar className="bg-gradient-to-b from-[#FF512F] via-[#FF512F] to-[#F09819]"
+                        sx={{ width: 65, height: 65, bgcolor: deepOrange[500], fontSize: "14px" }}>
 
                   Opponent
                 </Avatar>
@@ -156,7 +164,7 @@ export const Create = () => {
               </div>
 
               <div>
-                <Input name="oracle" label="Oracle EVM address (0x28fa••••f7b9)" />
+                <Input required name="oracle" label="Oracle EVM address (0x28fa••••f7b9)" />
               </div>
 
 
