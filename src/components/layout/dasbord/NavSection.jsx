@@ -89,6 +89,12 @@ const navConfig = [
     icon: getIcon('eva:shopping-bag-fill'),
   },
 
+  {
+    title: 'My Challenges',
+    path: '/my/challenges',
+    icon: getIcon('eva:shopping-bag-fill'),
+  },
+
 ];
 
 const NavSection = () => {

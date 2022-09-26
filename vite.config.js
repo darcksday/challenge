@@ -1,8 +1,16 @@
 import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import reactPlugin from '@vitejs/plugin-react'
 
-// https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [react()],
-  envPrefix: 'V'
+export default defineConfig(async () => {
+  // const { default: mdx } = await import('@mdx-js/rollup')
+
+  return {
+    plugins: [reactPlugin()],
+    optimizeDeps: {
+      include: ['react/jsx-runtime'],
+    },
+    build: { minify: true },
+
+
+  }
 })

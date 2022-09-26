@@ -18,33 +18,31 @@ export const Web3Context = React.createContext();
 export const Web3Provider = ({ children }) => {
 
 
-  const [
-    CHAIN_ID,
-    CHAIN_NAME,
-    RPC_URL,
-    EXPLORER_URL,
-    TOKEN_SYMBOL,
-    TOKEN_DECIMALS
-  ] = [import.meta.env.V_CHAIN_ID, import.meta.env.V_CHAIN_NAME, import.meta.env.V_RPC_URL, import.meta.env.V_EXPLORER_URL, import.meta.env.V_TOKEN_SYMBOL, import.meta.env.V_TOKEN_DECIMALS];
-  const evmosChain = {
-    id: parseInt(CHAIN_ID),
-    name: CHAIN_NAME,
-    network: CHAIN_NAME,
-    nativeCurrency: {
-      decimals: TOKEN_DECIMALS,
-      name: CHAIN_NAME,
-      symbol: TOKEN_SYMBOL,
-    },
+  // const [
+  //   CHAIN_ID,
+  //   CHAIN_NAME,
+  //   RPC_URL,
+  //   EXPLORER_URL,
+  //   TOKEN_SYMBOL,
+  //   TOKEN_DECIMALS
+  // ] = [import.meta.env.V_CHAIN_ID, import.meta.env.V_CHAIN_NAME, import.meta.env.V_RPC_URL, import.meta.env.V_EXPLORER_URL, import.meta.env.V_TOKEN_SYMBOL, import.meta.env.V_TOKEN_DECIMALS];
+
+  const auroraTestnet = {
+    /** ID in number form */
+    id: 1313161555,
+    /** Human-readable name */
+    name: 'Aurora Testnet',
+    /** Internal network name */
+    network: 'auroratest',
+    /** Currency used by chain */
+    nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
+    /** Collection of RPC endpoints */
     rpcUrls: {
-      default: RPC_URL,
+      infura:
+        'https://aurora-testnet.infura.io/v3'
     },
-    blockExplorers: {
-      default: { name: 'SnowTrace', url: EXPLORER_URL },
-    },
-    testnet: false,
+    testnet: true
   }
-
-
   const localChain = {
     id: 31337,
     name: 'Local',
@@ -65,7 +63,7 @@ export const Web3Provider = ({ children }) => {
 
 
   const { chains, provider } = configureChains([
-    chain.mainnet, chain.polygon, evmosChain, localChain
+    chain.mainnet, chain.polygon,chain.optimism ,localChain,
   ], [
     publicProvider(),
   ])

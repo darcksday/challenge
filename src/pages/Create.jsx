@@ -97,7 +97,7 @@ export const Create = () => {
               <div>
                 <Input
                   name="deadline_date"
-                  value={defaultDate()}
+                  // value={defaultDate()}
                   required className="h-[44px]"
                   id="datetime-local"
                   label="Deadline"
@@ -173,18 +173,6 @@ export const Create = () => {
               <Button type="submit" variant="gradient" fullWidth>
                 Create
               </Button>
-              <Typography variant="small" className="mt-6 flex justify-center">
-                Don't have an account?
-                <Typography
-                  as="a"
-                  href="#signup"
-                  variant="small"
-                  color="blue"
-                  className="ml-1 font-bold"
-                >
-                  Sign up
-                </Typography>
-              </Typography>
             </CardFooter>
           </form>
         </section>
