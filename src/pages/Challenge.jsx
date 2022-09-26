@@ -39,7 +39,7 @@ import Abi from '../contractsData/Challenge.json';
 import { canAccept, transformChallenges, canDelete, canJudge, isOracle, isTaker, isMaker } from '../utilits/transform';
 import { dateFormat, isEmptyAddress } from '../utilits';
 import { RequestContext } from '../context/RequestContext';
-import { Communication } from '../components/Communication';
+// import { Communication } from '../components/Communication';
 
 export const Challenge = () => {
   const [value, setValue] = useState('1');
@@ -375,7 +375,7 @@ export const Challenge = () => {
 
 
               <TabPanel value={value}>
-                <Communication convAddress={value} />
+                {/*<Communication convAddress={value} />*/}
               </TabPanel>
 
             </TabContext>
