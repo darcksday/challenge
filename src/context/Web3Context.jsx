@@ -10,22 +10,15 @@ import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
 import { InjectedConnector } from 'wagmi/connectors/injected'
 
-import { ConnectKitProvider } from 'connectkit';
 import { publicProvider } from 'wagmi/providers/public'
 import { SnackbarProvider } from 'notistack';
+import {
+  getDefaultWallets,
+  RainbowKitProvider,
+} from '@rainbow-me/rainbowkit';
 
 export const Web3Context = React.createContext();
 export const Web3Provider = ({ children }) => {
-
-
-  // const [
-  //   CHAIN_ID,
-  //   CHAIN_NAME,
-  //   RPC_URL,
-  //   EXPLORER_URL,
-  //   TOKEN_SYMBOL,
-  //   TOKEN_DECIMALS
-  // ] = [import.meta.env.V_CHAIN_ID, import.meta.env.V_CHAIN_NAME, import.meta.env.V_RPC_URL, import.meta.env.V_EXPLORER_URL, import.meta.env.V_TOKEN_SYMBOL, import.meta.env.V_TOKEN_DECIMALS];
 
   const auroraTestnet = {
     /** ID in number form */
@@ -66,28 +59,24 @@ export const Web3Provider = ({ children }) => {
     localChain, chain.mainnet, chain.polygon, chain.optimism,
   ], [
     publicProvider(),
-  ])
+  ]);
+  const { connectors } = getDefaultWallets({
+    appName: 'Web3 Challenge',
+    chains
+  });
 
 
   // Set up client
   const client = createClient({
     autoConnect: true,
-    connectors: [
-      new MetaMaskConnector({ chains }),
-      new InjectedConnector({ chains }),
-      new WalletConnectConnector({
-        chains,
-        options: {
-          qrcode: true,
-        },
-      }),
-    ],
+    connectors,
     provider,
     // webSocketProvider,
   })
   return (
     <WagmiConfig client={client}>
-      <ConnectKitProvider>
+      <RainbowKitProvider chains={chains}>
+
         <SnackbarProvider autoHideDuration={8000} anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
                           maxSnack={5}>
           <Web3Context.Provider
@@ -95,7 +84,7 @@ export const Web3Provider = ({ children }) => {
             {children}
           </Web3Context.Provider>
         </SnackbarProvider>
-      </ConnectKitProvider>
+      </RainbowKitProvider>
     </WagmiConfig>
 
   )

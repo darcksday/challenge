@@ -9,18 +9,19 @@ import { useContext, useEffect, useState } from 'react';
 import Challenges from './pages/Challenges';
 import { Dashboard } from './components/layout/dasbord/Dashboard';
 import { Challenge } from './pages/Challenge';
+import { useConnectModal } from '@rainbow-me/rainbowkit';
 
 const App = () => {
   const { address } = useAccount()
-  const { setOpen, open } = useModal()
   const { setBlocked, blocked } = useContext(Web3Context);
   const location = useLocation();
-  const { chains, error, isLoading, pendingChainId, switchNetwork } =
-    useSwitchNetwork()
+  const { openConnectModal } = useConnectModal();
+
   const ProtectedRoute = ({ children }) => {
-    if (!address && !open) {
+    if (!address) {
+      console.log(123)
       setTimeout(() => {
-        setOpen(true);
+        openConnectModal();
       }, 300)
       return <Navigate to="/" replace />;
     }

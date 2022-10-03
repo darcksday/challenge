@@ -13,6 +13,7 @@ import {
 } from "@material-tailwind/react";
 import { ConnectKitButton } from "connectkit";
 import { Link } from 'react-router-dom';
+import { ConnectButton, darkTheme, lightTheme } from '@rainbow-me/rainbowkit';
 
 export const Navbar = ({}) => {
 
@@ -94,10 +95,15 @@ export const Navbar = ({}) => {
 
 
       <li className="flex">
-          <span className="max-h-[70px]">
+          <span className="h-[42px]">
 
-            <ConnectKitButton showBalance={true} />
-
+            {/*<ConnectKitButton showBalance={true} />*/}
+            <ConnectButton theme={lightTheme({
+              shadows: {
+                connectButton: '...',
+                walletLogo: '...',
+              },
+            })} showBalance={false} />
 
           </span>
       </li>

@@ -7,6 +7,7 @@ import { Web3Provider } from "./context/Web3Context";
 import { RequestProvider } from './context/RequestContext';
 import { BrowserRouter } from 'react-router-dom';
 import ThemeProvider from './theme';
+import '@rainbow-me/rainbowkit/styles.css';
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
