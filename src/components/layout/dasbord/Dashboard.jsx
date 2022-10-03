@@ -12,9 +12,8 @@ import useResponsive from '../../../hooks/useResponsive';
 import Scrollbar from '../../Scrollbar';
 import NavSection from './NavSection';
 import Iconify from '../../Iconify';
-import { Navbar } from '../navbar';
 
-export const DashboardLayout = () => {
+export const Dashboard = () => {
 
   const [open, setOpen] = useState(false);
   const { pathname } = useLocation();
@@ -43,13 +42,6 @@ export const DashboardLayout = () => {
 
   const DRAWER_WIDTH = 280;
 
-  const RootStyle = styled('div')(({ theme }) => ({
-    [theme.breakpoints.up('lg')]: {
-      flexShrink: 0,
-      width: DRAWER_WIDTH,
-    },
-  }));
-
 
   const isDesktop = useResponsive('up', 'lg');
 
@@ -70,48 +62,42 @@ export const DashboardLayout = () => {
 
 
   return (
-    <div className="flex justify-left">
+    <div className="flex-row shrink  ">
 
-      <RootStyle>
+      <IconButton className="absolute z-[10]" onClick={(e) => setOpen(true)} sx={{ mr: 1, color: 'text.primary', display: { lg: 'none' } }}>
+        <Iconify icon="eva:menu-2-fill" />
+      </IconButton>
 
-        <IconButton onClick={(e) => setOpen(true)} sx={{ mr: 1, color: 'text.primary', display: { lg: 'none' } }}>
-          <Iconify icon="eva:menu-2-fill" />
-        </IconButton>
+      {!isDesktop && (<>
 
-        {!isDesktop && (<>
-
-            <Drawer
-              open={open}
-              onClose={(e) => setOpen(false)}
-              PaperProps={{
-                sx: { width: DRAWER_WIDTH },
-              }}
-            >
-              {renderContent}
-            </Drawer>
-          </>
-        )}
-
-        {isDesktop && (
           <Drawer
-            open
-            variant="persistent"
-
+            open={open}
+            onClose={(e) => setOpen(false)}
             PaperProps={{
-              sx: {
-                width: DRAWER_WIDTH,
-                bgcolor: 'background.default',
-                borderRightStyle: 'dashed',
-              },
+              sx: { width: DRAWER_WIDTH },
             }}
           >
             {renderContent}
           </Drawer>
-        )}
-      </RootStyle>
-      <MainStyle className="max-w-[100%]">
-        <Outlet />
-      </MainStyle>
+        </>
+      )}
+
+      {isDesktop && (
+        <Drawer className="w-[280px]"
+                open
+                variant="persistent"
+
+                PaperProps={{
+                  sx: {
+                    width: DRAWER_WIDTH,
+                    bgcolor: 'background.default',
+                    borderRightStyle: 'dashed',
+                  },
+                }}
+        >
+          {renderContent}
+        </Drawer>
+      )}
     </div>
   )
 

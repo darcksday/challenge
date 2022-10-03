@@ -94,10 +94,9 @@ export const Navbar = ({}) => {
 
 
       <li className="flex">
-          <span className={`w-40`}>
+          <span className="max-h-[70px]">
 
-            {/*<CustomButton />*/}
-            <ConnectKitButton />
+            <ConnectKitButton showBalance={true} />
 
 
           </span>
@@ -108,10 +107,9 @@ export const Navbar = ({}) => {
   );
 
   return (
-    <div
-      className="absolute  z-[999]  lg:fixed  my-4 flex w-full max-w-full sm:-right-5 items-center px-4 mx-auto justify-center"
+    <div className="z-[5]   my-4 flex w-full max-w-full max-w-full  sm:-right-5 items-center px-4  justify-center"
     >
-      <MTNavbar className="py-4 pl-6 pr-5 lg:py-2 shadow-2xl max-w-screen-2xl shadow-blue-gray-500/10" shadow={true}>
+      <MTNavbar className="py-4 pl-6 pr-5 lg:py-2  shadow-2xl max-w-screen-2xl shadow-blue-gray-500/10" shadow={true}>
         <div
           className={`flex w-full items-center !justify-between text-[#1A237E]`}
         >

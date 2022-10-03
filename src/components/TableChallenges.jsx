@@ -115,7 +115,7 @@ const TableChallenges = (items) => {
 
 
   return (
-    <Page class="max-w-[1350px] mx-auto" title="Challenges">
+    <Page className="max-w-[1350px] mx-auto" title="Challenges">
       <div>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>

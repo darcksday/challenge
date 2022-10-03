@@ -63,7 +63,7 @@ export const Web3Provider = ({ children }) => {
 
 
   const { chains, provider } = configureChains([
-    chain.mainnet, chain.polygon,chain.optimism ,localChain,
+    localChain, chain.mainnet, chain.polygon, chain.optimism,
   ], [
     publicProvider(),
   ])

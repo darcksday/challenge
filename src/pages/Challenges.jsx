@@ -135,102 +135,100 @@ const Challenges = () => {
   }, [items])
 
   return (
-    <Page class="max-w-[1350px] mx-auto" title="Challenges">
-      <div>
-        <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-          <Typography variant="h4" gutterBottom>
-            Challenges
-          </Typography>
-          <Button variant="contained" component={RouterLink} to="/create" startIcon={''}>
-            New Challenges
-          </Button>
-        </Stack>
+    <Page className="max-w-[1350px] mx-auto" title="Challenges">
+      <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
+        <Typography variant="h4" gutterBottom>
+          Challenges
+        </Typography>
+        <Button variant="contained" component={RouterLink} to="/create" startIcon={''}>
+          New Challenges
+        </Button>
+      </Stack>
 
-        <Card>
-          <ItemsFilterToolbar filterName={filterName} onFilterName={handleFilterByName} />
+      <Card>
+        <ItemsFilterToolbar filterName={filterName} onFilterName={handleFilterByName} />
 
-          <TableContainer sx={{ minWidth: 800 }}>
-            <Table>
-              <ItemsListHead
-                order={order}
-                orderBy={orderBy}
-                headLabel={TABLE_HEAD}
-                rowCount={items.length}
-                onRequestSort={handleRequestSort}
-              />
-              <TableBody>
-                {filteredItems.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item) => {
+        <TableContainer sx={{ minWidth: 800 }}>
+          <Table>
+            <ItemsListHead
+              order={order}
+              orderBy={orderBy}
+              headLabel={TABLE_HEAD}
+              rowCount={items.length}
+              onRequestSort={handleRequestSort}
+            />
+            <TableBody>
+              {filteredItems.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item) => {
 
-                  return (
-                    <TableRow
-                      hover
-                      key={item.id}
-                      tabIndex={-1}
-                      role="checkbox"
-                    >
-                      <TableCell component="th" scope="row">
-                        <Link underline="none" component={RouterLink} to={`/challenges/${item.id}`}>
-                          <Stack direction="row" alignItems="center" spacing={2}>
-                            <Typography variant="subtitle2" noWrap>
-                              {item.name}
-                            </Typography>
-                          </Stack>
-                        </Link>
-                      </TableCell>
-                      <TableCell className="text-green-500" align="left">{item.s_maker}</TableCell>
-                      <TableCell className="text-red-500" align="left">{(isEmptyAddress(item.taker)) ? 'not defined' : item.s_taker}</TableCell>
-                      <TableCell align="left"> <Typography variant="subtitle2" noWrap>{item.s_paid_maker}Ξ</Typography></TableCell>
-                      <TableCell align="left">{item.s_cof}</TableCell>
-                      <TableCell align="left">{dateFormat(item.created_date)}</TableCell>
-                      <TableCell align="left">{dateFormat(item.deadline_date)}</TableCell>
-                      <TableCell align="left">
+                return (
+                  <TableRow
+                    hover
+                    key={item.id}
+                    tabIndex={-1}
+                    role="checkbox"
+                  >
+                    <TableCell component="th" scope="row">
+                      <Link underline="none" component={RouterLink} to={`/challenges/${item.id}`}>
+                        <Stack direction="row" alignItems="center" spacing={2}>
+                          <Typography variant="subtitle2" noWrap>
+                            {item.name}
+                          </Typography>
+                        </Stack>
+                      </Link>
+                    </TableCell>
+                    <TableCell className="text-green-500" align="left">{item.s_maker}</TableCell>
+                    <TableCell className="text-red-500" align="left">{(isEmptyAddress(item.taker)) ? 'not defined' : item.s_taker}</TableCell>
+                    <TableCell align="left"> <Typography variant="subtitle2" noWrap>{item.s_paid_maker}Ξ</Typography></TableCell>
+                    <TableCell align="left">{item.s_cof}</TableCell>
+                    <TableCell align="left">{dateFormat(item.created_date)}</TableCell>
+                    <TableCell align="left">{dateFormat(item.deadline_date)}</TableCell>
+                    <TableCell align="left">
 
-                        {(item.status === 'waiting') && (
-                          <Chip variant="outlined" className="font-semibold capitalize" label={item.status} size="small" color="primary" />)}
-                        {(item.status === 'finished') && (<Chip className="font-semibold capitalize" label={item.status} size="small" color="success" />)}
-                        {(item.status === 'taken') && (<Chip className="font-semibold capitalize" label={item.status} size="small" color="primary" />)}
+                      {(item.status === 'waiting') && (
+                        <Chip variant="outlined" className="font-semibold capitalize" label={item.status} size="small" color="primary" />)}
+                      {(item.status === 'finished') && (<Chip className="font-semibold capitalize" label={item.status} size="small" color="success" />)}
+                      {(item.status === 'taken') && (<Chip className="font-semibold capitalize" label={item.status} size="small" color="primary" />)}
 
-                        {(item.status === 'in review') && (
-                          <Chip variant="outlined" className="font-semibold capitalize" label={item.status} size="small" color="success" />)}
-                      </TableCell>
+                      {(item.status === 'in review') && (
+                        <Chip variant="outlined" className="font-semibold capitalize" label={item.status} size="small" color="success" />)}
+                    </TableCell>
 
 
-                      <TableCell align="right">
-                        <ItemsMoreMenu item={item} />
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
-                {emptyRows > 0 && (
-                  <TableRow style={{ height: 53 * emptyRows }}>
-                    <TableCell colSpan={6} />
-                  </TableRow>
-                )}
-              </TableBody>
-
-              {isItemNotFound && (
-                <TableBody>
-                  <TableRow>
-                    <TableCell align="center" colSpan={6} sx={{ py: 3 }}>
-                      <SearchNotFound searchQuery={filterName} />
+                    <TableCell align="right">
+                      <ItemsMoreMenu item={item} />
                     </TableCell>
                   </TableRow>
-                </TableBody>
+                );
+              })}
+              {emptyRows > 0 && (
+                <TableRow style={{ height: 53 * emptyRows }}>
+                  <TableCell colSpan={6} />
+                </TableRow>
               )}
-            </Table>
-          </TableContainer>
+            </TableBody>
 
-          <TablePagination
-            rowsPerPageOptions={[10, 25, 50]}
-            component="div"
-            count={items.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          />
-        </Card>
-      </div>
+            {isItemNotFound && (
+              <TableBody>
+                <TableRow>
+                  <TableCell align="center" colSpan={6} sx={{ py: 3 }}>
+                    <SearchNotFound searchQuery={filterName} />
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+            )}
+          </Table>
+        </TableContainer>
+
+        <TablePagination
+          rowsPerPageOptions={[10, 25, 50]}
+          component="div"
+          count={items.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
+      </Card>
     </Page>
   );
 }

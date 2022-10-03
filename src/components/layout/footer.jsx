@@ -71,7 +71,7 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="bg-gray-100 flex z-50 pt-16 pb-6 text-[#1A237E]">
+    <footer className="bg-gray-100 flex z-[11] pt-6 pb-6 text-[#1A237E]">
       <div className="container mx-auto">
         <div className="flex flex-wrap">
           <div className="w-full px-4 md:w-6/12">

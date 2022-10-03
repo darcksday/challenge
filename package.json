@@ -3,9 +3,11 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "cleanup": "rm -rf ./dist && rm -rf .parcel-cache",
+    "parcel:build": "parcel build ./index.html --public-url ./",
+    "build": "NODE_ENV=production npm run parcel:build",
+    "local": "env $(cat .env) npx hardhat node",
+    "start": "npm run cleanup && NODE_ENV=localhost parcel ./index.html --open"
   },
   "dependencies": {
     "@chatscope/chat-ui-kit-react": "^1.9.7",
@@ -17,15 +19,19 @@
     "@mui/lab": "^5.0.0-alpha.100",
     "@mui/material": "^5.10.4",
     "@openzeppelin/contracts": "^4.7.1",
+    "@web3-react/core": "^6.1.9",
+    "@web3-react/injected-connector": "^6.0.7",
     "@xmtp/xmtp-js": "^6.3.2",
     "connectkit": "^0.0.2",
     "dotenv": "^16.0.1",
     "ethers": "^5.6.9",
     "lodash": "^4.17.21",
     "notistack": "^2.0.5",
+    "parcel": "^2.6.2",
     "process": "^0.11.10",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
+    "react-hooks-identicons": "^1.0.4",
     "react-router-dom": "^6.3.0",
     "simplebar-react": "^2.4.1",
     "wagmi": "^0.6.4"
@@ -37,12 +43,10 @@
     "@nomiclabs/hardhat-waffle": "^2.0.3",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
-    "@vitejs/plugin-react": "^1.3.0",
     "autoprefixer": "^10.4.7",
     "ethereum-waffle": "^3.4.4",
     "hardhat": "^2.10.0",
     "postcss": "^8.4.14",
-    "tailwindcss": "^3.1.8",
-    "vite": "^2.9.9"
+    "tailwindcss": "^3.1.8"
   }
 }
