@@ -21,7 +21,7 @@ export const MainLayout = () => {
 
 
   return (<>
-      <div className="flex flex-col  h-screen bg-gray-100  bg-[url('/src/assets/img/bg-header.jpg')]  bg-cover bg-center bg-no-repeat ">
+      <div className="flex flex-col  h-screen bg-gray-100 h-[100%]  bg-[url('/src/assets/img/bg-header.jpg')]  bg-cover bg-center bg-no-repeat ">
         <div className="flex justify-between">
           {(location.pathname !== '/') && (
             <Dashboard />

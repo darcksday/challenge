@@ -11,13 +11,15 @@ import '@rainbow-me/rainbowkit/styles.css';
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <Web3Provider>
-    <BrowserRouter>
-      <RequestProvider>
-        <ThemeProvider>
-          <App />
-        </ThemeProvider>
-      </RequestProvider>
-    </BrowserRouter>
-  </Web3Provider>
+  <React.StrictMode>
+    <Web3Provider>
+      <BrowserRouter>
+        <RequestProvider>
+          <ThemeProvider>
+            <App />
+          </ThemeProvider>
+        </RequestProvider>
+      </BrowserRouter>
+    </Web3Provider>
+  </React.StrictMode>
 )

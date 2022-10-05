@@ -1,7 +1,8 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState, memo, useMemo } from 'react';
 
 import { useAccount, useContractRead, useProvider, useSigner } from 'wagmi';
 import { Client } from '@xmtp/xmtp-js'
+import { from } from 'rxjs';
 
 import styles from "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 
@@ -16,14 +17,13 @@ import {
 } from "@chatscope/chat-ui-kit-react";
 import { shortAddress } from '../utilits';
 
-export const Communication = ({ convAddress }) => {
+export const Communication = memo(({ convAddress }) => {
+
   const { data: signer } = useSigner();
   const [client, setClient] = useState(false);
   const [conversation, setConversation] = useState(false);
-  const [allMess, setAllMess] = useState(false);
-  const [listenMess, setListenMess] = useState(false);
-  const { address } = useAccount()
-
+  const [allMess, setAllMess] = useState([]);
+  const { address } = useAccount();
 
   const initClient = async (signer) => {
     if (signer && !client) {
@@ -42,21 +42,49 @@ export const Communication = ({ convAddress }) => {
 
   }
 
-  const loadMessages = () => {
-    conversation.messages().then((messages) => setAllMess(messages));
-  }
+  const mutateMessage = (item) => {
+    return {
+      'content': item['content'],
+      'header': item['header'],
+      'senderAddress': item['senderAddress'],
+      'id': item['id'],
 
-  const listenMessages = async () => {
-    for await (const message of await conversation.streamMessages()) {
-      setListenMess(message);
     }
 
 
   }
 
-  useEffect(() => {
-    if (signer && !client) {
+  const loadMessages = async () => {
+    let messages = await conversation.messages();
+    console.log('loaded')
+    setAllMess(messages.map(item => mutateMessage(item)))
+  }
 
+
+  const listenMessages = async () => {
+    let streamM = await conversation.streamMessages();
+    let subj = from(streamM);
+    subj.subscribe((rez) => {
+      setAllMess(prevState => {
+        return prevState.concat([mutateMessage(rez)])
+
+      })
+    });
+  }
+
+  const destroyListener = async () => {
+    let st = await conversation.streamMessages()
+    console.log(st);
+    if (st) {
+      console.log('destroyed')
+      st.unsubscribeFn();
+    }
+  }
+
+
+  useEffect(() => {
+
+    if (convAddress && signer && !client) {
       initClient(signer);
     }
 
@@ -73,58 +101,55 @@ export const Communication = ({ convAddress }) => {
 
   useEffect(() => {
     if (conversation) {
+      destroyListener();
       loadMessages();
-      listenMessages();
+      listenMessages()
+
     }
   }, [conversation])
 
-  useEffect(() => {
-    if (listenMess) {
-      setAllMess(oldArray => [...oldArray, listenMess]);
-    }
-  }, [listenMess])
+
+  return (convAddress) && <div className=" justify-center h-[500px] ">
+    <MainContainer>
+
+      <ChatContainer>
+        <ConversationHeader>
+          <Avatar className="border-2" src={`https://avatars.dicebear.com/api/jdenticon/${convAddress}.svg`} />
+          <ConversationHeader.Content userName={shortAddress(convAddress)} />
+        </ConversationHeader>
+        <MessageList>
+          {allMess.map((mess) => {
+              return (
+                <Message key={mess.id}
+                         model={{
+                           sentTime: "j12312321",
+                           message: mess.content,
+                           direction: ((mess.senderAddress === address)) ? 'outgoing' : "incoming",
+
+                         }}>
+                  <Message.Footer sender="Emily" sentTime="just now" />
 
 
-  return (<div className=" justify-center h-[500px] ">
-      {
-        conversation && (
-          <MainContainer>
+                  <Avatar className="border-2" src={`https://avatars.dicebear.com/api/jdenticon/${mess.senderAddress}.svg`} />
+                </Message>
 
-            <ChatContainer>
-              <ConversationHeader>
-                <Avatar className="border-2" src={`https://avatars.dicebear.com/api/jdenticon/${convAddress}.svg`} />
-                <ConversationHeader.Content userName={shortAddress(convAddress)} />
-              </ConversationHeader>
-              <MessageList>
-                {allMess && allMess.map((mess) => {
-                    return (
-                      <Message key={mess.id}
-                               model={{
-                                 sentTime: "j12312321",
-                                 message: mess.content,
-                                 direction: ((mess.senderAddress === address)) ? 'outgoing' : "incoming",
-
-                               }}>
-                        <Message.Footer sender="Emily" sentTime="just now" />
+              )
+            }
+          )}
+        </MessageList>
 
 
-                        <Avatar className="border-2" src={`https://avatars.dicebear.com/api/jdenticon/${mess.senderAddress}.svg`} />
-                      </Message>
+        <MessageInput attachButton={false} autoFocus onSend={(msg) => {
+          conversation.send(msg)
+        }} placeholder="Type message here" />
+      </ChatContainer>
 
-                    )
-                  }
-                )}
-              </MessageList>
-              <MessageInput attachButton={false} autoFocus onSend={(msg) => {
-                conversation.send(msg)
-              }} placeholder="Type message here" />
-            </ChatContainer>
-          </MainContainer>
-        )
-      }
+    </MainContainer>
 
 
-    </div>
+  </div>
 
-  )
-}
+}, (prevProps, nextProp) => {
+  return prevProps.convAddress === nextProp.convAddress;
+
+})

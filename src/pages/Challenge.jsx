@@ -40,10 +40,10 @@ import { canAccept, transformChallenges, canDelete, canJudge, isOracle, isTaker,
 import { dateFormat, isEmptyAddress } from '../utilits';
 import { RequestContext } from '../context/RequestContext';
 import { Communication } from '../components/Communication';
-// import { Communication } from '../components/Communication';
 
 export const Challenge = () => {
-  const [value, setValue] = useState('1');
+  const [tab, setTab] = useState('0');
+  const [value, setValue] = useState(false);
   let { id } = useParams();
   const { setConfig, txSuccess } = useContext(RequestContext);
 
@@ -110,15 +110,13 @@ export const Challenge = () => {
 
 
   const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
-  useEffect(() => {
-    if (item) {
-
-
+    setTab(newValue);
+    if (newValue !== '0') {
+      setValue(newValue);
     }
-  }, [item])
+
+
+  };
 
 
   return (
@@ -132,12 +130,12 @@ export const Challenge = () => {
 
         {(item) && (<Card>
           <Box sx={{ width: '100%', typography: 'body1' }}>
-            <TabContext value={value}>
+            <TabContext value={tab}>
               <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                 {(isOracle(item, address)) && (
                   <TabList onChange={handleChange} aria-label="lab API tabs example">
 
-                    <Tab label="Main Detail" value="1" />
+                    <Tab label="Main Detail" value="0" />
                     {(!isEmptyAddress(item.taker)) && (
                       <Tab label="Communication with Opponent" value={item.taker} />)
                     }
@@ -148,7 +146,7 @@ export const Challenge = () => {
 
                 {(isMaker(item, address)) && (
                   <TabList onChange={handleChange} aria-label="lab API tabs example">
-                    <Tab label="Main Detail" value="1" />
+                    <Tab label="Main Detail" value="0" />
                     <Tab label="Communication with Oracle" value={item.oracle} />
                     {(!isEmptyAddress(item.taker)) && (
                       <Tab label="Communication with Opponent" value={item.taker} />
@@ -159,7 +157,7 @@ export const Challenge = () => {
 
                 {(isTaker(item, address)) && (
                   <TabList onChange={handleChange} aria-label="lab API tabs example">
-                    <Tab label="Main Detail" value="1" />
+                    <Tab label="Main Detail" value="0" />
                     <Tab label="Communication with Oracle" value={item.oracle} />
                     <Tab label="Communication with Initiator" value={item.maker} />
                   </TabList>
@@ -167,7 +165,7 @@ export const Challenge = () => {
                 )}
 
               </Box>
-              <TabPanel value="1">
+              <TabPanel value="0">
                 <div className="flex w-full">
                   <div className="flex-row w-1/2 mr-4">
                     <Grid container alignItems="center" justifyContent="space-between">
@@ -375,11 +373,10 @@ export const Challenge = () => {
               </TabPanel>
 
 
-              <TabPanel value={value}>
-                <Communication convAddress={value} />
-              </TabPanel>
-
             </TabContext>
+            <div className={tab === '0' ? 'hidden' : ''}>
+              <Communication convAddress={value} />
+            </div>
           </Box>
 
         </Card>)}

@@ -6,7 +6,7 @@ import SectionTestimonials from '../components/sections/testimonials';
 
 export const Home = () => {
   return (<>
-      <div className="h-screen min-h-screen bg-[url('/src/assets/img/bg-header.jpg')] bg-cover bg-center bg-no-repeat">
+      <div className="h-screen min-h-screen  bg-cover bg-center bg-no-repeat">
         <div className="relative z-50 h-fit py-20 lg:py-32">
           <div className="container mx-auto px-4">
           </div>

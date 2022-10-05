@@ -10,6 +10,7 @@ import Challenges from './pages/Challenges';
 import { Dashboard } from './components/layout/dasbord/Dashboard';
 import { Challenge } from './pages/Challenge';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
+import { Communication } from './components/Communication';
 
 const App = () => {
   const { address } = useAccount()
@@ -37,6 +38,8 @@ const App = () => {
           <Route path="create" element={<Create />} />
           <Route path="challenges" element={<Challenges />} />
           <Route path="challenges/:id" element={<Challenge />} />
+          <Route path="challenges/:id/messages1/:address" element={<Challenge />} />
+          {/*<Route path="challenges/:id/messages2/:address" element={<Challenge />} />*/}
         </Route>
       </Route>
     </Routes>
