@@ -1,6 +1,6 @@
 require("@nomiclabs/hardhat-waffle");
 require("dotenv").config();
-
+console.log(process.env)
 task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
   const accounts = await hre.ethers.getSigners();
 
@@ -26,10 +26,7 @@ module.exports = {
       accounts: [process.env.V_PRIVATE_KEY],
     },
 
-    cosmos: {
-      url: process.env.V_COSMOS_RPC,
-      accounts: [process.env.V_PRIVATE_KEY],
-    },
+
   },
 
   paths: {

@@ -15,14 +15,14 @@ async function main() {
   // await hre.run('compile');
 
   // We get the contract to deploy
-  const Contract = await hre.ethers.getContractFactory("Challenge");
+  const Contract = await hre.ethers.getContractFactory("Verification");
   const contract = await Contract.deploy();
 
   await contract.deployed();
 
   console.log("Contract deployed to:", contract.address);
 
-  saveFrontendFiles(contract, "Challenge");
+  saveFrontendFiles(contract, "Verification");
 
 }
 
