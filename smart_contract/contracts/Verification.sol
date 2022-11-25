@@ -2,12 +2,12 @@
 
 pragma solidity ^0.8.12;
 
-/**
- * Based upon ECDSA library from OpenZeppelin Solidity
- * https://github.com/OpenZeppelin/openzeppelin-solidity/blob/master/contracts/cryptography/ECDSA.sol
- */
+import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
 
 contract Verification {
+
+
+  uint[] public bla ;
 
   /**
    * @dev Recover signer address from a message by using their signature
@@ -20,7 +20,7 @@ contract Verification {
     bytes32 r;
     bytes32 s;
     uint8 v;
-
+    
     // Check the signature length
     if (signature.length != 65) {
       return (address(0));
@@ -49,4 +49,20 @@ contract Verification {
       return ecrecover(hash, v, r, s);
     }
   }
+
+
+
+  function recover2(bytes32 hash,bytes memory _signature)
+        public
+        view
+        returns (address)
+    {
+      
+        address signer = ECDSA.recover(hash,_signature);
+
+       return signer;
+    }
+
+
+
 }
