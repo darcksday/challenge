@@ -30,6 +30,7 @@ dist-ssr
 *.sw?
 
 .env.production
+.env.localhost
 .env
 coverage
 coverage.json
