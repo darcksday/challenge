@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { ethers } from 'ethers';
-import Abi from '/src/contractsData/Challenge.json'
-import ContractAddress from '/src/contractsData/Challenge-address.json'
+import Abi from '/src/contractsData/CustomChallenge.json'
+import ContractAddress from '/src/contractsData/CustomChallenge-address.json'
 import { useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi';
 import useAlert from '../hooks/useAlert';
 import { useSnackbar } from 'notistack';
@@ -23,13 +23,12 @@ export const RequestProvider = ({ children }) => {
 
 
   const { config: prepare, status: prepStatus } = usePrepareContractWrite({
-    addressOrName: ContractAddress?.address,
-    contractInterface: Abi.abi,
     ...config,
     overrides: {
       value: config['ether'] ? ethers.utils.parseEther(config['ether']) : undefined,
     },
     onSuccess: (res) => {
+      console.log(config);
     },
 
     onError: ({ message }) => {
@@ -77,10 +76,9 @@ export const RequestProvider = ({ children }) => {
   }, [prepStatus]);
 
   useEffect(() => {
-    console.log(config)
     //set enabled if is function name TODO:: on validate
     if (config['functionName'] && config['enabled'] === false) {
-      setConfig({ ...config, 'enabled': true })
+      // setConfig({ ...config, 'enabled': true });
     }
     //
   }, [config]);

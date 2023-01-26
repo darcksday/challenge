@@ -18,7 +18,7 @@ exports.saveFrontendFiles = (contract, name, networkDir) => {
     JSON.stringify(contractArtifact, null, 2)
   );
 
-  if (!networkDir) {
-    this.saveFrontendFiles(contract, name, process.env.HARDHAT_NETWORK);
-  }
+  // if (!networkDir) {
+  //   this.saveFrontendFiles(contract, name, process.env.HARDHAT_NETWORK);
+  // }
 }

@@ -1,26 +1,22 @@
-import { BrowserRouter, Routes, Route, Navigate, Outlet, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, Outlet, useLocation ,useNavigate} from "react-router-dom";
 import { Home } from './pages/Home';
 import { MainLayout } from './components/layout/MainLayout';
 import { useAccount, useConnect, useDisconnect, useSwitchNetwork } from 'wagmi'
-import { Create } from './pages/Create';
-import { useModal } from "connectkit";
-import { Web3Context } from './context/Web3Context';
+import { CreateCustom } from './pages/custom/CreateCustom';
 import { useContext, useEffect, useState } from 'react';
-import Challenges from './pages/Challenges';
-import { Dashboard } from './components/layout/dasbord/Dashboard';
-import { Challenge } from './pages/Challenge';
+import CustomList from './pages/custom/CustomList';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
-import { Communication } from './components/Communication';
+import { CreatePrice } from "./pages/price/CreatePrice";
+import PriceList from "./pages/price/PriceList";
+import { ViewCustom } from "./pages/custom/ViewCustom";
+import { ViewPrice } from "./pages/price/ViewPrice";
 
 const App = () => {
   const { address } = useAccount()
-  const { setBlocked, blocked } = useContext(Web3Context);
-  const location = useLocation();
   const { openConnectModal } = useConnectModal();
-
+  const navigate=useNavigate();
   const ProtectedRoute = ({ children }) => {
     if (!address) {
-      console.log(123)
       setTimeout(() => {
         openConnectModal();
       }, 300)
@@ -30,15 +26,44 @@ const App = () => {
     return <Outlet />;
   };
 
+
+
+  useEffect(()=>{
+    if (address){
+      navigate('/custom/list')
+    }
+
+  },[address])
+
+
+
   return (
     <Routes>
       <Route element={<MainLayout />}>
         <Route path="/" element={<Home />} />
         <Route element={<ProtectedRoute />}>
-          <Route path="create" element={<Create />} />
-          <Route path="challenges" element={<Challenges />} />
-          <Route path="challenges/:id" element={<Challenge />} />
-          <Route path="challenges/:id/messages1/:address" element={<Challenge />} />
+
+          <Route path="custom/">
+            <Route path="create" element={<CreateCustom />} />
+            <Route path="view/:id" element={<ViewCustom />} />
+            <Route path="list" element={<CustomList />} />
+            </Route>
+
+
+          <Route path="price/">
+            <Route path="create" element={<CreatePrice />} />
+            <Route path="view/:id" element={<ViewPrice />} />
+            <Route path="list" element={<PriceList />} />
+          </Route>
+
+
+          <Route path="my/">
+            <Route path="view/:id" element={<ViewPrice />} />
+
+          </Route>
+
+
+          {/*<Route path="challenges/:id/messages1/:address" element={<Challenge />} />*/}
           {/*<Route path="challenges/:id/messages2/:address" element={<Challenge />} />*/}
         </Route>
       </Route>

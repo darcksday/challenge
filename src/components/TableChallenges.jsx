@@ -25,7 +25,7 @@ import { ItemsListHead, ItemsFilterToolbar, ItemsMoreMenu } from '/src/component
 // mock
 import { useContractRead } from 'wagmi';
 import Abi from '/src/contractsData/Challenge.json'
-import ContractAddress from '/src/contractsData/Challenge-address.json'
+import ContractAddress from '/src/contractsData/CustomChallenge-address.json'
 import { filterEmpty, transformChallenges } from '../utilits/transform';
 import { dateFormat, isEmptyAddress } from '../utilits';
 // ----------------------------------------------------------------------

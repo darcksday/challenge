@@ -44,6 +44,9 @@ const NavItem = ({ item, active }) => {
     setOpen((prev) => !prev);
   };
 
+
+
+
   const activeRootStyle = {
     color: 'primary.main',
     fontWeight: 'fontWeightMedium',
@@ -79,10 +82,17 @@ const navConfig = [
     icon: getIcon('eva:pie-chart-2-fill'),
   },
   {
-    title: 'create',
-    path: '/create',
+    title: 'Create Custom Bet',
+    path: '/create/custom',
     icon: getIcon('eva:people-fill'),
   },
+
+  {
+    title: 'Create Price Bet',
+    path: '/create/price',
+    icon: getIcon('eva:people-fill'),
+  },
+
   {
     title: 'oracles',
     path: '/oracles/',

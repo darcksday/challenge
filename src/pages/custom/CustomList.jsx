@@ -24,10 +24,10 @@ import SearchNotFound from '/src/components/SearchNotFound';
 import { ItemsListHead, ItemsFilterToolbar, ItemsMoreMenu } from '/src/components/sections/dashboard/item';
 // mock
 import { useContractRead } from 'wagmi';
-import Abi from '/src/contractsData/Challenge.json'
-import ContractAddress from '/src/contractsData/Challenge-address.json'
-import { filterEmpty, transformChallenges } from '../utilits/transform';
-import { dateFormat, isEmptyAddress } from '../utilits';
+import Abi from '/src/contractsData/CustomChallenge.json'
+import ContractAddress from '/src/contractsData/CustomChallenge-address.json'
+import { filterEmpty, transformChallenges } from '../../utilits/transform';
+import { dateFormat, isEmptyAddress } from '../../utilits';
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
@@ -61,7 +61,6 @@ const getComparator = (order, orderBy) => {
 }
 
 const applySortFilter = (array, comparator, query) => {
-  console.log(array);
   const stabilizedThis = array.map((el, index) => [el, index]);
   stabilizedThis.sort((a, b) => {
     const order = comparator(a[0], b[0]);
@@ -75,7 +74,7 @@ const applySortFilter = (array, comparator, query) => {
 }
 
 
-const Challenges = () => {
+const CustomList = () => {
   const [page, setPage] = useState(0);
 
   const [order, setOrder] = useState('asc');
@@ -97,6 +96,9 @@ const Challenges = () => {
     cacheTime: 2_000,
     functionName: "allChallenges",
     watch: true,
+    onSuccess: (data) => {
+      console.log('data', data)
+    }
 
   });
 
@@ -127,12 +129,6 @@ const Challenges = () => {
 
   const isItemNotFound = filteredItems.length === 0;
 
-
-  useEffect(() => {
-    console.log(items);
-
-
-  }, [items])
 
   return (
     <Page className="max-w-[1350px] mx-auto" title="Challenges">
@@ -232,4 +228,4 @@ const Challenges = () => {
     </Page>
   );
 }
-export default Challenges;
+export default CustomList;

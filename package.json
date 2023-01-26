@@ -10,6 +10,7 @@
     "start": "npm run cleanup && NODE_ENV=localhost parcel ./index.html --open"
   },
   "dependencies": {
+    "@chainlink/contracts": "^0.5.1",
     "@chatscope/chat-ui-kit-react": "^1.9.7",
     "@chatscope/chat-ui-kit-styles": "^1.4.0",
     "@emotion/react": "^11.10.4",

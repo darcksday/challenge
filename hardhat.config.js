@@ -26,10 +26,13 @@ module.exports = {
       accounts: [process.env.V_PRIVATE_KEY],
     },
 
-    cosmos: {
-      url: process.env.V_COSMOS_RPC,
+    goerli: {
+      url: process.env.V_RPC_URL,
       accounts: [process.env.V_PRIVATE_KEY],
     },
+
+
+
   },
 
   paths: {

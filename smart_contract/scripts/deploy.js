@@ -7,7 +7,7 @@ const { saveFrontendFiles } = require('./utils');
 const hre = require("hardhat");
 
 async function main() {
-  // Hardhat always runs the compile task when running scripts with its command
+  // Hardhat always runs to compile task when running scripts with its command
   // line interface.
   //
   // If this script is run directly using `node` you may want to call compile
@@ -15,14 +15,20 @@ async function main() {
   // await hre.run('compile');
 
   // We get the contract to deploy
-  const Contract = await hre.ethers.getContractFactory("Challenge");
-  const contract = await Contract.deploy();
+  const CustomChallenge = await hre.ethers.getContractFactory("CustomChallenge");
+  const customChallenge = await CustomChallenge.deploy();
+  await customChallenge.deployed();
 
-  await contract.deployed();
+  const PriceChallenge = await hre.ethers.getContractFactory("PriceChallenge");
+  const priceChallenge = await PriceChallenge.deploy();
+  await priceChallenge.deployed();
 
-  console.log("Contract deployed to:", contract.address);
 
-  saveFrontendFiles(contract, "Challenge");
+  console.log("CustomChallenge deployed to:", customChallenge.address);
+  saveFrontendFiles(customChallenge, "CustomChallenge");
+
+  console.log("PriceChallenge deployed to:", priceChallenge.address);
+  saveFrontendFiles(priceChallenge, "PriceChallenge");
 
 }
 

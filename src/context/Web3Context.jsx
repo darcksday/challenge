@@ -20,22 +20,7 @@ import {
 export const Web3Context = React.createContext();
 export const Web3Provider = ({ children }) => {
 
-  const auroraTestnet = {
-    /** ID in number form */
-    id: 1313161555,
-    /** Human-readable name */
-    name: 'Aurora Testnet',
-    /** Internal network name */
-    network: 'auroratest',
-    /** Currency used by chain */
-    nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
-    /** Collection of RPC endpoints */
-    rpcUrls: {
-      infura:
-        'https://aurora-testnet.infura.io/v3'
-    },
-    testnet: true
-  }
+
   const localChain = {
     id: 31337,
     name: 'Local',
@@ -56,7 +41,7 @@ export const Web3Provider = ({ children }) => {
 
 
   const { chains, provider } = configureChains([
-    localChain, chain.mainnet, chain.polygon, chain.optimism,
+    localChain, chain.polygonMumbai,chain.goerli
   ], [
     publicProvider(),
   ]);

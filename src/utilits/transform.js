@@ -2,6 +2,8 @@ import { formatAmount, isEmptyAddress, shortAddress } from './index';
 import { useAccount } from 'wagmi';
 
 export const transformChallenges = (item) => {
+  console.log('item', item);
+
   if (!item.paid_maker) {
     return false;
   }
@@ -50,7 +52,6 @@ export const transformChallenges = (item) => {
     s_maker: shortAddress(item.maker),
     s_taker: shortAddress(item.taker),
     s_oracle: shortAddress(item.oracle),
-    c_type: item.c_type,
     created_date: parseInt(item.created_date),
     deadline_date: parseInt(item.deadline_date),
     finished: item.finished,

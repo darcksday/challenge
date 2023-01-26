@@ -1,5 +1,5 @@
 import { useContractRead } from 'wagmi';
-import ContractAddress from '../contractsData/Challenge-address.json';
+import ContractAddress from '../contractsData/CustomChallenge-address.json';
 import Abi from '../contractsData/Challenge.json';
 import { filterEmpty, transformChallenges } from '../utilits/transform';
 import TableChallenges from '../components/TableChallenges';
