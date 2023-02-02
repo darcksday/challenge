@@ -4,12 +4,12 @@ import { MainLayout } from './components/layout/MainLayout';
 import { useAccount, useConnect, useDisconnect, useSwitchNetwork } from 'wagmi'
 import { CreateCustom } from './pages/custom/CreateCustom';
 import { useContext, useEffect, useState } from 'react';
-import CustomList from './pages/custom/CustomList';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
 import { CreatePrice } from "./pages/price/CreatePrice";
-import PriceList from "./pages/price/PriceList";
 import { ViewCustom } from "./pages/custom/ViewCustom";
 import { ViewPrice } from "./pages/price/ViewPrice";
+import { CustomList } from "./pages/custom/CustomList";
+import { PriceList } from "./pages/price/PriceList";
 
 const App = () => {
   const { address } = useAccount()
@@ -30,7 +30,7 @@ const App = () => {
 
   useEffect(()=>{
     if (address){
-      navigate('/custom/list')
+      // navigate('/custom/list')
     }
 
   },[address])

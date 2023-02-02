@@ -30,13 +30,16 @@ export default function ItemsListHead({
   orderBy,
   headLabel,
   onRequestSort,
+  className
 }) {
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
 
   return (
-    <TableHead>
+    <TableHead
+      class="bg-[#f4f6f8]"
+    >
       <TableRow>
         {headLabel.map((headCell) => (
           <TableCell

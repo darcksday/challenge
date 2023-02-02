@@ -6,7 +6,6 @@ import priceFeed from '../../utilits/priceFeed.json';
 import { useContractRead, useNetwork } from 'wagmi'
 import ContractAddress from "../../contractsData/PriceChallenge-address.json";
 import Abi from "../../contractsData/PriceChallenge.json";
-import { filterEmpty } from "../../utilits/transform";
 import { formatAmount,minDate } from "../../utilits";
 // import {  Select as Select1 } from "@mui/material";
 

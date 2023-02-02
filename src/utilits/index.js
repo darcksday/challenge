@@ -8,7 +8,7 @@ export const formatAmount = (amount, decimals) => {
 }
 export const dateFormat = (timestamp) => {
   const date = new Date(parseInt(timestamp * 1000));
-  return date.toLocaleString();
+  return date.toLocaleDateString();
 }
 export const isExpired = (timestamp) => {
   const date = new Date(parseInt(timestamp) * 1000);

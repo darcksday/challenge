@@ -31,7 +31,7 @@ export default function ItemsMoreMenu({ item }) {
       >
 
 
-        <MenuItem component={RouterLink} to={`/challenges/${item.id}`} sx={{ color: 'text.secondary' }}>
+        <MenuItem component={RouterLink} to={`view/${item.id}`} sx={{ color: 'text.secondary' }}>
           <ListItemIcon>
             <Iconify icon="eva:edit-fill" width={24} height={24} />
           </ListItemIcon>

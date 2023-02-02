@@ -1,7 +1,7 @@
 import { useContractRead } from 'wagmi';
 import ContractAddress from '../contractsData/CustomChallenge-address.json';
 import Abi from '../contractsData/Challenge.json';
-import { filterEmpty, transformChallenges } from '../utilits/transform';
+import { filterEmpty, customTransform } from '../utilits/customTransform';
 import TableChallenges from '../components/TableChallenges';
 
 export const MyChallenges = () => {
@@ -9,7 +9,7 @@ export const MyChallenges = () => {
     addressOrName: ContractAddress?.address,
     contractInterface: Abi.abi,
     // enabled: isContractAddress(currentCommunity?.nftContract),
-    select: (data) => data.filter((item) => filterEmpty(item)).map((item) => transformChallenges(item)),
+    select: (data) => data.filter((item) => filterEmpty(item)).map((item) => customTransform(item)),
 
     cacheTime: 2_000,
     functionName: "allChallenges",

@@ -26,8 +26,9 @@ import { ItemsListHead, ItemsFilterToolbar, ItemsMoreMenu } from '/src/component
 import { useContractRead } from 'wagmi';
 import Abi from '/src/contractsData/Challenge.json'
 import ContractAddress from '/src/contractsData/CustomChallenge-address.json'
-import { filterEmpty, transformChallenges } from '../utilits/transform';
+import { filterEmpty, customTransform } from '../utilits/customTransform';
 import { dateFormat, isEmptyAddress } from '../utilits';
+import { customTransform } from "../utilits/customTransform";
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [

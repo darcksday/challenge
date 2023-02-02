@@ -3,18 +3,11 @@ import challengeSvg from '/src/assets/img/chalange.svg'
 import {
   Navbar as MTNavbar,
   MobileNav,
-  IconButton,
-  Menu,
-  MenuHandler,
-  MenuList,
-  MenuItem,
-  Button,
-  Avatar
+  IconButton, MenuList, MenuItem, MenuHandler, Menu,
 } from "@material-tailwind/react";
-import { ConnectKitButton } from "connectkit";
 import { Link } from 'react-router-dom';
-import { ConnectButton, darkTheme, lightTheme } from '@rainbow-me/rainbowkit';
-
+import { ConnectButton, lightTheme } from '@rainbow-me/rainbowkit';
+import InsertChartIcon from '@mui/icons-material/InsertChart';
 export const Navbar = ({}) => {
 
 
@@ -27,7 +20,6 @@ export const Navbar = ({}) => {
       window.innerWidth >= 960 && setOpen(false);
     });
   }, []);
-
 
   const menuOpenIcon = (
     <svg
@@ -66,11 +58,11 @@ export const Navbar = ({}) => {
     <ul
       className={`${
         open ? "mt-4" : ""
-      } mb-0 flex list-none flex-col gap-2 pl-0 text-inherit transition-all lg:ml-auto lg:flex-row lg:gap-4`}
+      }  mb-0 flex list-none flex-col gap-2  text-inherit transition-all justify-center  lg:flex-row lg:gap-4`}
     >
 
 
-      <li className="flex">
+      <li className="flex px-2">
         <Link to={'/'}>
           <span className={navbarItemClasses}>
             <i className="material-icons mr-2 !text-base opacity-60">
@@ -81,35 +73,100 @@ export const Navbar = ({}) => {
         </Link>
       </li>
 
-      <li className="flex">
-        <Link to={'/challenges'}>
+      <Menu>
+        <MenuHandler >
+      <li className="flex px-2">
+
+           <span className={navbarItemClasses}>
+            <i className=" material-icons  mr-2 !text-base opacity-60">
+              insert_chart
+            </i>
+            <span>Bets Market</span>
+          </span>
+
+      </li>
+        </MenuHandler>
+        <MenuList>
+        <MenuItem>
+
+          <Link to={'/price'}>
           <span className={navbarItemClasses}>
             <i className="material-icons mr-2 !text-base opacity-60">
-              home
+              price_change
             </i>
-            <span>Challenges</span>
+            <span>Price Prediction</span>
           </span>
-        </Link>
+          </Link>
 
-      </li>
+        </MenuItem>
+        <MenuItem>
 
-
-      <li className="flex">
-          <span className="h-[42px]">
-
-            {/*<ConnectKitButton showBalance={true} />*/}
-            <ConnectButton theme={lightTheme({
-              shadows: {
-                connectButton: '...',
-                walletLogo: '...',
-              },
-            })} showBalance={false} />
-
+          <Link to={'/custom'}>
+          <span className={navbarItemClasses}>
+            <i className="material-icons mr-2 !text-base opacity-60">
+              text_snippet
+            </i>
+            <span>Custom Bets</span>
           </span>
-      </li>
+          </Link>
+
+        </MenuItem>
+        </MenuList>
+      </Menu>
+
+
+      <Menu>
+        <MenuHandler >
+          <li className="flex px-2">
+
+           <span className={navbarItemClasses}>
+            <i className=" material-icons  mr-2 !text-base opacity-60">
+              account_circle
+            </i>
+            <span>My Bets</span>
+          </span>
+
+          </li>
+        </MenuHandler>
+        <MenuList>
+          <MenuItem>
+
+            <Link to={'/price/list'}>
+          <span className={navbarItemClasses}>
+            <i className="material-icons mr-2 !text-base opacity-60">
+              price_change
+            </i>
+            <span>Price Prediction</span>
+          </span>
+            </Link>
+
+          </MenuItem>
+          <MenuItem>
+
+            <Link to={'/custom/list'}>
+          <span className={navbarItemClasses}>
+            <i className="material-icons mr-2 !text-base opacity-60">
+              text_snippet
+            </i>
+            <span>Custom Bets</span>
+          </span>
+            </Link>
+
+          </MenuItem>
+        </MenuList>
+      </Menu>
+
+
+
+
+
+
 
 
     </ul>
+
+
+
   );
 
   return (
@@ -117,7 +174,7 @@ export const Navbar = ({}) => {
     >
       <MTNavbar className="py-4 pl-6 pr-5 lg:py-2  shadow-2xl max-w-screen-2xl shadow-blue-gray-500/10" shadow={true}>
         <div
-          className={`flex w-full items-center !justify-between text-[#1A237E]`}
+          className="flex w-full items-center justify-between  text-[#1A237E]"
         >
           <a className="flex items-center  text-size-sm mr-4 whitespace-nowrap font-bold text-inherit lg:ml-0">
             <img className="h-11 mr-2 w-auto mb-2" width="50" src={challengeSvg} alt="Challenge" />
@@ -131,12 +188,25 @@ export const Navbar = ({}) => {
           >
             {open ? menuCloseIcon : menuOpenIcon}
           </IconButton>
-          <div className="lg:base-auto hidden flex-grow basis-full items-center overflow-hidden lg:flex lg-max:max-h-0">
+          <div className="lg:base-auto hidden ml-[8rem]  items-center overflow-hidden lg:flex lg-max:max-h-0">
             {navbarMenu}
+          </div>
+
+          <div className="flex">
+          <span className="h-[42px]">
+
+            <ConnectButton theme={lightTheme({
+              shadows: {
+                connectButton: '...',
+                walletLogo: '...',
+              },
+            })} showBalance={false} />
+
+          </span>
           </div>
         </div>
 
-        <MobileNav open={open} className="text-[#1A237E]">
+        <MobileNav open={open} className=" text-[#1A237E]">
           {navbarMenu}
         </MobileNav>
       </MTNavbar>

@@ -36,10 +36,10 @@ import { useAccount, useContractRead } from 'wagmi';
 
 import ContractAddress from '../../contractsData/CustomChallenge-address.json';
 import Abi from '../../contractsData/CustomChallenge.json';
-import { canAccept, transformChallenges, canDelete, canJudge, isOracle, isTaker, isMaker } from '../../utilits/transform';
 import { dateFormat, isEmptyAddress } from '../../utilits';
 import { RequestContext } from '../../context/RequestContext';
 import { Communication } from '../../components/Communication';
+import { Custom } from "../../models/custom";
 
 export const ViewCustom = () => {
   const [tab, setTab] = useState('0');
@@ -53,7 +53,7 @@ export const ViewCustom = () => {
     addressOrName: ContractAddress?.address,
     contractInterface: Abi.abi,
     // enabled: isContractAddress(currentCommunity?.nftContract),
-    select: (data) => transformChallenges(data),
+    select: (data) => new Custom(data),
     cacheTime: 5_000,
     args: [id],
     functionName: "getById",
@@ -132,7 +132,7 @@ export const ViewCustom = () => {
           <Box sx={{ width: '100%', typography: 'body1' }}>
             <TabContext value={tab}>
               <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                {(isOracle(item, address)) && (
+                {item.isOracle(address) && (
                   <TabList onChange={handleChange} aria-label="lab API tabs example">
 
                     <Tab label="Main Detail" value="0" />
@@ -144,7 +144,7 @@ export const ViewCustom = () => {
                 )}
 
 
-                {(isMaker(item, address)) && (
+                {item.isMaker(address) && (
                   <TabList onChange={handleChange} aria-label="lab API tabs example">
                     <Tab label="Main Detail" value="0" />
                     <Tab label="Communication with Oracle" value={item.oracle} />
@@ -155,7 +155,7 @@ export const ViewCustom = () => {
 
                 )}
 
-                {(isTaker(item, address)) && (
+                {item.isTaker( address) && (
                   <TabList onChange={handleChange} aria-label="lab API tabs example">
                     <Tab label="Main Detail" value="0" />
                     <Tab label="Communication with Oracle" value={item.oracle} />
@@ -343,7 +343,7 @@ export const ViewCustom = () => {
                     </Card>
                   </div>
                 </div>
-                {canJudge(item, address) && (
+                {item.canJudge( address) && (
 
                   <div className="flex w-full gap-4 justify-center mt-8">
                     <Button size="lg" onClick={() => setWinner(item.maker)} className=" bg-gradient-to-b from-[#FF512F] via-[#FF512F] to-[#F09819]">Initiator
@@ -356,14 +356,14 @@ export const ViewCustom = () => {
                   </div>
                 )
                 }
-                {canDelete(item, address) && (
+                {item.canDelete( address) && (
                   <div className="flex w-full gap-4 justify-center mt-8">
                     <Button onClick={remove} size="lg" color="red">Remove</Button>
 
                   </div>
                 )}
 
-                {canAccept(item, address) && (
+                {item.canAccept( address) && (
                   <div className="flex w-full gap-4 justify-center mt-8">
                     <Button onClick={accept} size="lg" color="green">Accept the challenge {item.accept_payment}Ξ</Button>
                   </div>
