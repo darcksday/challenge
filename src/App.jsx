@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate, Outlet, useLocation ,useNavigate} from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { Home } from './pages/Home';
 import { MainLayout } from './components/layout/MainLayout';
 import { useAccount, useConnect, useDisconnect, useSwitchNetwork } from 'wagmi'
@@ -10,56 +10,44 @@ import { ViewCustom } from "./pages/custom/ViewCustom";
 import { ViewPrice } from "./pages/price/ViewPrice";
 import { CustomList } from "./pages/custom/CustomList";
 import { PriceList } from "./pages/price/PriceList";
+import { MyCustomList } from "./pages/my/MyCustomList";
+import { MyPriceList } from "./pages/my/MyPriceList";
 
 const App = () => {
   const { address } = useAccount()
   const { openConnectModal } = useConnectModal();
-  const navigate=useNavigate();
   const ProtectedRoute = ({ children }) => {
     if (!address) {
       setTimeout(() => {
         openConnectModal();
       }, 300)
-      return <Navigate to="/" replace />;
+      return <Navigate to="/" replace/>;
     }
 
-    return <Outlet />;
+    return <Outlet/>;
   };
 
-
-
-  useEffect(()=>{
-    if (address){
-      // navigate('/custom/list')
-    }
-
-  },[address])
 
 
 
   return (
     <Routes>
-      <Route element={<MainLayout />}>
-        <Route path="/" element={<Home />} />
-        <Route element={<ProtectedRoute />}>
+      <Route element={<MainLayout/>}>
+        <Route path="/" element={<Home/>}/>
+        <Route element={<ProtectedRoute/>}>
 
-          <Route path="custom/">
-            <Route path="create" element={<CreateCustom />} />
-            <Route path="view/:id" element={<ViewCustom />} />
-            <Route path="list" element={<CustomList />} />
-            </Route>
+          <Route path="custom/" element={<CustomList/>}/>
+          <Route path="custom/create" element={<CreateCustom/>}/>
+          <Route path="custom/:id" element={<ViewCustom/>}/>
 
-
-          <Route path="price/">
-            <Route path="create" element={<CreatePrice />} />
-            <Route path="view/:id" element={<ViewPrice />} />
-            <Route path="list" element={<PriceList />} />
-          </Route>
+          <Route path="price" element={<PriceList/>}/>
+          <Route path="price/create" element={<CreatePrice/>}/>
+          <Route path="price/:id" element={<ViewPrice/>}/>
 
 
           <Route path="my/">
-            <Route path="view/:id" element={<ViewPrice />} />
-
+            <Route path="price" element={<MyPriceList/>}/>
+            <Route path="custom" element={<MyCustomList/>}/>
           </Route>
 
 

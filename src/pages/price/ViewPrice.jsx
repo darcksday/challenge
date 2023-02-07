@@ -32,14 +32,13 @@ import TabContext from '@mui/lab/TabContext';
 import { TabList } from '@mui/lab';
 
 import TabPanel from '@mui/lab/TabPanel';
-import { useAccount, useContractRead } from 'wagmi';
+import { useAccount, useContractRead, useNetwork } from 'wagmi';
 
-import ContractAddress from '../../contractsData/CustomChallenge-address.json';
-import Abi from '../../contractsData/CustomChallenge.json';
+import ContractAddress from '../../contractsData/PriceChallenge-address.json';
+import Abi from '../../contractsData/PriceChallenge.json';
 import { dateFormat, isEmptyAddress } from '../../utilits';
 import { RequestContext } from '../../context/RequestContext';
 import { Communication } from '../../components/Communication';
-import { Custom } from "../../models/custom";
 import { Price } from "../../models/price";
 
 export const ViewPrice = () => {
@@ -49,6 +48,8 @@ export const ViewPrice = () => {
   const { setConfig, txSuccess } = useContext(RequestContext);
 
   const { address } = useAccount()
+  const chain = useNetwork();
+  const nativeCurrency = chain.chain.nativeCurrency;
 
   const { data: item, refetch: refetchCollectionItems } = useContractRead({
     addressOrName: ContractAddress?.address,
@@ -133,34 +134,20 @@ export const ViewPrice = () => {
           <Box sx={{ width: '100%', typography: 'body1' }}>
             <TabContext value={tab}>
               <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                {item.isOracle(address) && (
-                  <TabList onChange={handleChange} aria-label="lab API tabs example">
-
-                    <Tab label="Main Detail" value="0" />
-                    {(!isEmptyAddress(item.taker)) && (
-                      <Tab label="Communication with Opponent" value={item.taker} />)
-                    }
-                    <Tab label="Communication with Initiator" value={item.maker} />
-                  </TabList>
-                )}
-
-
                 {item.isMaker(address) && (
                   <TabList onChange={handleChange} aria-label="lab API tabs example">
-                    <Tab label="Main Detail" value="0" />
-                    <Tab label="Communication with Oracle" value={item.oracle} />
+                    <Tab label="Main Detail" value="0"/>
                     {(!isEmptyAddress(item.taker)) && (
-                      <Tab label="Communication with Opponent" value={item.taker} />
+                      <Tab label="Communication with Opponent" value={item.taker}/>
                     )}
                   </TabList>
 
                 )}
 
-                {item.isTaker( address) && (
+                {item.isTaker(address) && (
                   <TabList onChange={handleChange} aria-label="lab API tabs example">
-                    <Tab label="Main Detail" value="0" />
-                    <Tab label="Communication with Oracle" value={item.oracle} />
-                    <Tab label="Communication with Initiator" value={item.maker} />
+                    <Tab label="Main Detail" value="0"/>
+                    <Tab label="Communication with Initiator" value={item.maker}/>
                   </TabList>
 
                 )}
@@ -169,12 +156,6 @@ export const ViewPrice = () => {
               <TabPanel value="0">
                 <div className="flex w-full">
                   <div className="flex-row w-1/2 mr-4">
-                    <Grid container alignItems="center" justifyContent="space-between">
-                      <Grid item>
-                        <Typography variant="h5">Challenge Details</Typography>
-                      </Grid>
-                      <Grid item />
-                    </Grid>
                     <Card sx={{ mt: 2 }}>
                       <List sx={{ p: 0, '& .MuiListItemButton-root': { py: 2 } }}>
                         <ListItemButton divider>
@@ -182,9 +163,9 @@ export const ViewPrice = () => {
                             color: 'primary.main',
                             bgcolor: 'primary.lighter'
                           }}>
-                            <ShortTextIcon />
+                            <ShortTextIcon/>
                           </Avatar>
-                          <ListItemText primary="Name" />
+                          <ListItemText primary="Name"/>
                           <Typography variant="subtitle1">{item.name}</Typography>
                         </ListItemButton>
 
@@ -194,9 +175,9 @@ export const ViewPrice = () => {
                             color: 'primary.main',
                             bgcolor: 'primary.lighter'
                           }}>
-                            <PersonIcon />
+                            <PersonIcon/>
                           </Avatar>
-                          <ListItemText primary="Initiator Address" />
+                          <ListItemText primary="Initiator Address"/>
                           <Typography variant="subtitle2">{item.maker}</Typography>
                         </ListItemButton>
                         <ListItemButton divider>
@@ -204,9 +185,9 @@ export const ViewPrice = () => {
                             color: 'error.main',
                             bgcolor: 'error.lighter'
                           }}>
-                            <GroupIcon />
+                            <GroupIcon/>
                           </Avatar>
-                          <ListItemText primary="Opponent Address" />
+                          <ListItemText primary="Opponent Address"/>
                           <Typography variant="subtitle2">{(isEmptyAddress(item.taker)) ? 'not defined' : item.taker}</Typography>
                         </ListItemButton>
 
@@ -216,21 +197,9 @@ export const ViewPrice = () => {
                             color: 'success.main',
                             bgcolor: 'success.lighter'
                           }}>
-                            <AdminPanelSettingsIcon />
+                            <CalendarMonthIcon/>
                           </Avatar>
-                          <ListItemText primary="Oracle Address" />
-                          <Typography variant="subtitle2">{(isEmptyAddress(item.oracle)) ? 'not defined' : item.oracle}</Typography>
-                        </ListItemButton>
-
-
-                        <ListItemButton divider>
-                          <Avatar className="mr-3" sx={{
-                            color: 'success.main',
-                            bgcolor: 'success.lighter'
-                          }}>
-                            <CalendarMonthIcon />
-                          </Avatar>
-                          <ListItemText primary="Created Date" />
+                          <ListItemText primary="Created Date"/>
                           <Typography variant="subtitle1">{dateFormat(item.created_date)}</Typography>
                         </ListItemButton>
 
@@ -239,9 +208,9 @@ export const ViewPrice = () => {
                             color: 'error.main',
                             bgcolor: 'error.lighter'
                           }}>
-                            <EventBusyIcon />
+                            <EventBusyIcon/>
                           </Avatar>
-                          <ListItemText primary="Deadline" />
+                          <ListItemText primary="Deadline"/>
                           <Typography variant="subtitle1">{dateFormat(item.deadline_date)}</Typography>
                         </ListItemButton>
 
@@ -249,19 +218,16 @@ export const ViewPrice = () => {
                     </Card>
                   </div>
                   <div className="flex-row w-1/2">
-                    <Grid container alignItems="center" justifyContent="space-between">
-                      <Typography variant="h5">Bet Details</Typography>
-                    </Grid>
                     <Card sx={{ mt: 2 }}>
                       <ListItemButton divider>
                         <Avatar className="mr-3" sx={{
                           color: 'success.main',
                           bgcolor: 'success.lighter'
                         }}>
-                          <PriceCheckIcon />
+                          <PriceCheckIcon/>
                         </Avatar>
-                        <ListItemText primary="Bet" />
-                        <Typography variant="subtitle1">{item.s_paid_maker}Ξ</Typography>
+                        <ListItemText primary="Bet Amount"/>
+                        <Typography variant="subtitle1">{item.s_paid_maker + '' + nativeCurrency.symbol}</Typography>
                       </ListItemButton>
 
                       <ListItemButton divider>
@@ -269,48 +235,65 @@ export const ViewPrice = () => {
                           color: 'primary.main',
                           bgcolor: 'primary.lighter'
                         }}>
-                          <CurrencyExchangeIcon />
+                          <CurrencyExchangeIcon/>
                         </Avatar>
-                        <ListItemText primary="Coefficient" />
+                        <ListItemText primary="Coefficient"/>
                         <Typography variant="subtitle1">{item.s_cof}</Typography>
                       </ListItemButton>
-                      <ListItemButton divider>
-                        <Avatar className="mr-3" sx={{
-                          color: 'primary.main',
-                          bgcolor: 'primary.lighter'
-                        }}>
-                          <PercentIcon />
-                        </Avatar>
-                        <ListItemText primary="Oracle fee" />
-                        <Typography variant="subtitle1">{item.oracle_fee}%</Typography>
-                      </ListItemButton>
 
                       <ListItemButton divider>
                         <Avatar className="mr-3" sx={{
                           color: 'primary.main',
                           bgcolor: 'primary.lighter'
                         }}>
-                          <ShortTextIcon />
+                          <ShortTextIcon/>
                         </Avatar>
-                        <ListItemText primary="Status" />
+                        <ListItemText primary="Status"/>
                         {(item.status === 'waiting') && (
-                          <Chip variant="outlined" className="font-semibold capitalize" label={item.status} size="small" color="primary" />)}
-                        {(item.status === 'finished') && (<Chip className="font-semibold capitalize" label={item.status} size="small" color="success" />)}
-                        {(item.status === 'taken') && (<Chip className="font-semibold capitalize" label={item.status} size="small" color="primary" />)}
+                          <Chip variant="outlined" className="font-semibold capitalize" label={item.status} size="small" color="primary"/>)}
+                        {(item.status === 'finished') && (
+                          <Chip className="font-semibold capitalize" label={item.status} size="small" color="success"/>)}
+                        {(item.status === 'taken') && (
+                          <Chip className="font-semibold capitalize" label={item.status} size="small" color="primary"/>)}
                         {(item.status === 'in review') && (
-                          <Chip variant="outlined" className="font-semibold capitalize" label={item.status} size="small" color="success" />)}
+                          <Chip variant="outlined" className="font-semibold capitalize" label={item.status} size="small" color="success"/>)}
                       </ListItemButton>
 
+                      <ListItemButton divider>
+                        <Avatar className="mr-3" sx={{
+                          color: 'primary.main',
+                          bgcolor: 'primary.lighter'
+                        }}>
+                          <CurrencyExchangeIcon/>
+                        </Avatar>
+                        <ListItemText primary="Prediction"/>
+                        <Typography variant="subtitle1">{item.s_cof}</Typography>
+                      </ListItemButton>
+
+
+                      {/*{*/}
+                      {/*  item.prediction_type?*/}
+                      {/*    (<>*/}
+                      {/*      <span>Less than </span>*/}
+                      {/*      <span className="text-red-500">{item.prediction_price}$</span>*/}
+                      {/*    </>)*/}
+                      {/*    :*/}
+                      {/*    (<>*/}
+                      {/*      <span>More than </span>*/}
+                      {/*      <span className="text-green-500">{item.prediction_price}$</span>*/}
+                      {/*    </>)*/}
+
+                      {/*}*/}
 
                       <ListItemButton divider>
                         <Avatar className="mr-3" sx={{
                           color: 'success.main',
                           bgcolor: 'success.lighter'
                         }}>
-                          <EmojiEventsIcon />
+                          <EmojiEventsIcon/>
                         </Avatar>
-                        <ListItemText primary={<Typography variant="subtitle1">Wining Amount</Typography>} secondary="Including your bet" />
-                        <Typography variant="subtitle1">{item.wining_amount}Ξ</Typography>
+                        <ListItemText primary={<Typography variant="subtitle1">Wining Amount</Typography>} secondary="Including your bet"/>
+                        <Typography variant="subtitle1">{item.winingAmount + '' + nativeCurrency.symbol}</Typography>
                       </ListItemButton>
 
                       {(item.finished) && (
@@ -319,9 +302,9 @@ export const ViewPrice = () => {
                             color: 'success.main',
                             bgcolor: 'success.lighter'
                           }}>
-                            <EmojiEventsIcon />
+                            <EmojiEventsIcon/>
                           </Avatar>
-                          <ListItemText primary={<Typography variant="subtitle1">Winner</Typography>} />
+                          <ListItemText primary={<Typography variant="subtitle1">Winner</Typography>}/>
                           <Typography variant="subtitle2">{(!isEmptyAddress(item.winner)) ? item.winner : 'draw'}</Typography>
                         </ListItemButton>
 
@@ -329,42 +312,17 @@ export const ViewPrice = () => {
                       )}
 
 
-                      <Card>
-                        <CardContent>
-                          <Typography gutterBottom variant="h5" component="div">
-                            Description
-                          </Typography>
-                          <Typography variant="body2" color="text.secondary">
-                            {item.description}
-                          </Typography>
-                        </CardContent>
-                      </Card>
-
-
                     </Card>
                   </div>
                 </div>
-                {item.canJudge( address) && (
-
-                  <div className="flex w-full gap-4 justify-center mt-8">
-                    <Button size="lg" onClick={() => setWinner(item.maker)} className=" bg-gradient-to-b from-[#FF512F] via-[#FF512F] to-[#F09819]">Initiator
-                      Won</Button>
-                    <IconButton onClick={setDraw} className="mx-5" size="lg">
-                      <BalanceIcon />
-                    </IconButton>
-                    <Button size="lg" onClick={() => setWinner(item.taker)} className="bg-gradient-to-b from-[#5e55d6] via-[#8554da] to-[#ab52de]">Opponent
-                      Won</Button>
-                  </div>
-                )
-                }
-                {item.canDelete( address) && (
+                {item.canDelete(address) && (
                   <div className="flex w-full gap-4 justify-center mt-8">
                     <Button onClick={remove} size="lg" color="red">Remove</Button>
 
                   </div>
                 )}
 
-                {item.canAccept( address) && (
+                {item.canAccept(address) && (
                   <div className="flex w-full gap-4 justify-center mt-8">
                     <Button onClick={accept} size="lg" color="green">Accept the challenge {item.accept_payment}Ξ</Button>
                   </div>
@@ -376,7 +334,7 @@ export const ViewPrice = () => {
 
             </TabContext>
             <div className={tab === '0' ? 'hidden' : ''}>
-              <Communication convAddress={value} />
+              <Communication convAddress={value}/>
             </div>
           </Box>
 

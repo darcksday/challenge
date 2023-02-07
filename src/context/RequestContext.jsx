@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { ethers } from 'ethers';
-import Abi from '/src/contractsData/CustomChallenge.json'
-import ContractAddress from '/src/contractsData/CustomChallenge-address.json'
 import { useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi';
 import useAlert from '../hooks/useAlert';
 import { useSnackbar } from 'notistack';
@@ -51,7 +49,7 @@ export const RequestProvider = ({ children }) => {
   });
 
 
-  const { isSuccess: txSuccess, error: txError, hash } = useWaitForTransaction({
+  const { isSuccess: txSuccess, error: txError, hash,isLoading } = useWaitForTransaction({
     hash: tx?.hash,
     onError: error => {
       closeSnackbar(hash)
@@ -86,7 +84,7 @@ export const RequestProvider = ({ children }) => {
 
   return (
     <RequestContext.Provider
-      value={{ config, setConfig, tx, txSuccess, txError, transactions, setTransactions }}>
+      value={{ config, setConfig, tx, txSuccess, txError, transactions, setTransactions,isLoading }}>
       {children}
     </RequestContext.Provider>)
 

@@ -33,8 +33,7 @@ contract CustomChallenge is Utils, ChallengeHelper {
 	}
 
 	mapping(uint => ChallengeStruct) challenges;
-	mapping(address => uint[]) makerChallenges;
-	mapping(address => uint[]) takerChallenges;
+	mapping(address => uint[]) userChallenges;
 
 
 
@@ -80,7 +79,7 @@ contract CustomChallenge is Utils, ChallengeHelper {
 
 		challenges[_id] = _newCl;
 
-		makerChallenges[msg.sender].push(_id);
+		userChallenges[msg.sender].push(_id);
 
 
 	}
@@ -99,6 +98,27 @@ contract CustomChallenge is Utils, ChallengeHelper {
 
 	}
 
+
+
+
+	function getUserChallenges(address u_address) external view returns (ChallengeStruct[] memory){
+
+
+
+		uint item_length=userChallenges[u_address].length;
+		ChallengeStruct[] memory _result = new ChallengeStruct[](item_length);
+		for (uint _i=0; _i < item_length; ++_i) {
+
+			uint item_id=userChallenges[u_address][_i];
+
+			_result[_i] = challenges[item_id];
+
+		}
+
+		return _result;
+
+	}
+
 	function getById(uint _id) public view returns (ChallengeStruct memory) {
 
 		return challenges[_id];
@@ -114,13 +134,13 @@ contract CustomChallenge is Utils, ChallengeHelper {
 		}
 
 		delete challenges[_id];
-		(uint _index,bool _isItem) = findIndByValue(_id, makerChallenges[msg.sender]);
+		(uint _index,bool _isItem) = findIndByValue(_id, userChallenges[msg.sender]);
 
 
 		if (_isItem) {
 			payable(msg.sender).transfer(_item.paid_maker);
 
-			deleteByIndex(_index, makerChallenges[msg.sender]);
+			deleteByIndex(_index, userChallenges[msg.sender]);
 
 		}
 
@@ -272,7 +292,7 @@ contract CustomChallenge is Utils, ChallengeHelper {
 		challenges[_id].taker = msg.sender;
 		challenges[_id].paid_taker = msg.value;
 
-		takerChallenges[msg.sender].push(_id);
+		userChallenges[msg.sender].push(_id);
 
 
 	}

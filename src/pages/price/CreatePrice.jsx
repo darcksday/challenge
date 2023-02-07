@@ -6,11 +6,11 @@ import Abi from '/src/contractsData/PriceChallenge.json'
 import ContractAddress from '/src/contractsData/PriceChallenge-address.json'
 import { ethers } from "ethers";
 import { parseUnits } from "@ethersproject/units/src.ts";
+import { useNavigate } from "react-router-dom";
 
 export const CreatePrice = () => {
   const { setConfig, txSuccess } = useContext(RequestContext);
-
-
+  const navigate = useNavigate();
 
 
   const handleSubmit = (e) => {
@@ -20,13 +20,12 @@ export const CreatePrice = () => {
     if (data.deadline_date) {
       data['deadline_date'] = Date.parse(data['deadline_date']) / 1000
     }
-    console.log(data)
     setConfig(
       {
-        'addressOrName':ContractAddress?.address,
-        'contractInterface':Abi.abi,
+        'addressOrName': ContractAddress?.address,
+        'contractInterface': Abi.abi,
         'functionName': 'create',
-        'args': [data['name'], ethers.utils.parseEther(data['cof']), data['deadline_date'], data['token_address'],parseUnits(data['price_prediction'],8),data['prediction_type']],
+        'args': [data['name'], ethers.utils.parseEther(data['cof']), data['deadline_date'], data['token_address'], parseUnits(data['price_prediction'], 8), data['prediction_type']],
         'ether': data['paid_maker']
       }
     );
@@ -34,9 +33,12 @@ export const CreatePrice = () => {
   }
 
 
+  useEffect(() => {
+
+    navigate('/custom')
 
 
-
+  }, [txSuccess]);
 
 
   return (

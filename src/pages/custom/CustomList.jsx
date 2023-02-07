@@ -13,29 +13,11 @@ import Abi from '/src/contractsData/CustomChallenge.json'
 import ContractAddress from '/src/contractsData/CustomChallenge-address.json'
 import { CommonTable } from "../../components/bet/CommonTable";
 import { Custom } from "../../models/custom";
-
-
-
-
+import { CreateRounded } from "@mui/icons-material";
 
 
 export const CustomList = () => {
 
-
-  const table_head = [
-    { id: 'name', label: 'Name', alignRight: false },
-    { id: 'bid', label: 'Bid Amount', alignRight: false },
-    { id: 'cof', label: 'Coefficient', alignRight: false },
-    { id: 'win_amount', label: 'Win Amount', alignRight: false },
-    { id: 'maker', label: 'Initiator', alignRight: false },
-    { id: 'taker', label: 'Opponent', alignRight: false },
-
-    // { id: 'created_date', label: 'Created at', alignRight: false },
-    { id: 'deadline_date', label: 'Deadline', alignRight: false },
-    { id: 'status', label: 'Status', alignRight: false },
-    { id: 'button', alignRight: false },
-
-  ];
 
   const { data: items = [], refetch: refetchCollectionItems } = useContractRead({
     addressOrName: ContractAddress?.address,
@@ -53,26 +35,17 @@ export const CustomList = () => {
   });
 
 
-
-
-
-
-
-
-
-
-
   return (
     <Page className="max-w-[1350px] mx-auto" title="Price Prediction">
       <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
         <Typography variant="h4" gutterBottom>
-          Challenges
+          Bets
         </Typography>
-        <Button variant="contained" component={RouterLink} to="/create" startIcon={''}>
-          New Challenges
+        <Button variant="contained" component={RouterLink} to="/custom/create" startIcon={<CreateRounded/>}>
+          Create Bet
         </Button>
       </Stack>
-      <CommonTable type={'custom'} items={items} table_head={table_head}/>
+      <CommonTable type={'custom'} items={items} table_head={Custom.TABLE_HEADERS}/>
 
 
     </Page>

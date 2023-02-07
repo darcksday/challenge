@@ -38,6 +38,7 @@
     "react-router-dom": "^6.3.0",
     "rxjs": "^7.5.7",
     "simplebar-react": "^2.4.1",
+    "use-react-router-breadcrumbs": "^4.0.1",
     "wagmi": "^0.6.4"
   },
   "devDependencies": {

@@ -31,7 +31,7 @@ export const   PriceRow = ({item}) => {
       role="checkbox"
     >
       <TableCell component="th" scope="row">
-        <Link underline="none" component={RouterLink} to={`/price/view/${item.id}`}>
+        <Link underline="none" component={RouterLink} to={`/price/${item.id}`}>
           <Stack direction="row" alignItems="center" spacing={2}>
             <Typography variant="subtitle2" noWrap>
               {item.name}
@@ -44,9 +44,28 @@ export const   PriceRow = ({item}) => {
       <TableCell align="left">{item.s_cof}</TableCell>
 
       <TableCell align="left"> <Typography variant="subtitle2" noWrap>{item.winingAmount+''+nativeCurrency.symbol}</Typography></TableCell>
-      <TableCell align="left"> <Typography variant="subtitle2" noWrap>{(item.prediction_type)?'More than > ':'Less than <'}
-        <span className="text-green-500">{item.prediction_price}$</span>
-      </Typography></TableCell>
+      <TableCell align="left">
+        <Typography variant="subtitle2" noWrap>
+          {
+            item.prediction_type?
+               (<>
+            <span>Less than </span>
+            <span className="text-red-500">{item.prediction_price}$</span>
+            </>)
+              :
+              (<>
+                <span>More than </span>
+                <span className="text-green-500">{item.prediction_price}$</span>
+              </>)
+
+          }
+
+
+
+      </Typography>
+
+
+      </TableCell>
 
       <TableCell className="text-green-500" align="left">{item.s_maker}</TableCell>
       <TableCell className="text-red-500" align="left">{(isEmptyAddress(item.taker)) ? 'not defined' : item.s_taker}</TableCell>

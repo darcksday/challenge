@@ -131,24 +131,24 @@ export const Navbar = ({}) => {
         <MenuList>
           <MenuItem>
 
-            <Link to={'/price/list'}>
+            <Link to={'/my/price'}>
           <span className={navbarItemClasses}>
             <i className="material-icons mr-2 !text-base opacity-60">
               price_change
             </i>
-            <span>Price Prediction</span>
+            <span>My Price Prediction</span>
           </span>
             </Link>
 
           </MenuItem>
           <MenuItem>
 
-            <Link to={'/custom/list'}>
+            <Link to={'/my/custom'}>
           <span className={navbarItemClasses}>
             <i className="material-icons mr-2 !text-base opacity-60">
               text_snippet
             </i>
-            <span>Custom Bets</span>
+            <span>My Custom Bets</span>
           </span>
             </Link>
 

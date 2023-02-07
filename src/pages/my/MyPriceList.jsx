@@ -8,41 +8,37 @@ import {
 // components
 import Page from '/src/components/Page';
 // mock
-import { useContractRead } from 'wagmi';
+import { useAccount, useContractRead } from 'wagmi';
 import Abi from '/src/contractsData/PriceChallenge.json'
 import ContractAddress from '/src/contractsData/PriceChallenge-address.json'
 import { CommonTable } from "../../components/bet/CommonTable";
 import { Price } from "../../models/price";
-import {
-  CreateRounded
-} from '@mui/icons-material';
+import { CreateRounded } from "@mui/icons-material";
 
 
 
 
 
-export const PriceList = () => {
+
+export const MyPriceList = () => {
+
+  const { address } = useAccount()
+
 
   const { data: items = [], refetch: refetchCollectionItems } = useContractRead({
     addressOrName: ContractAddress?.address,
     contractInterface: Abi.abi,
-    // enabled: isContractAddress(currentCommunity?.nftContract),
-    select: (data) => data.filter((item) => parseInt(item.paid_maker)).map((item) => new Price(item)),
-    args: [true],
+    enabled: address?.length ,
+    select: (data) => data.map((item) => new Price(item)),
+    args: [address],
     cacheTime: 4000,
-    functionName: "allChallenges",
+    functionName: "getUserChallenges",
     watch: true,
     onSuccess: (data) => {
       console.log('data', data)
     }
 
   });
-
-
-
-
-
-
 
 
 

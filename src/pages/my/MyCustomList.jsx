@@ -8,29 +8,31 @@ import {
 // components
 import Page from '/src/components/Page';
 // mock
-import { useContractRead } from 'wagmi';
-import Abi from '/src/contractsData/PriceChallenge.json'
-import ContractAddress from '/src/contractsData/PriceChallenge-address.json'
+import { useAccount, useContractRead } from 'wagmi';
+import Abi from '/src/contractsData/CustomChallenge.json'
+import ContractAddress from '/src/contractsData/CustomChallenge-address.json'
 import { CommonTable } from "../../components/bet/CommonTable";
-import { Price } from "../../models/price";
-import {
-  CreateRounded
-} from '@mui/icons-material';
+import { Custom } from "../../models/custom";
+import { CreateRounded } from "@mui/icons-material";
 
 
 
 
 
-export const PriceList = () => {
+
+export const MyCustomList = () => {
+
+  const { address } = useAccount()
+
 
   const { data: items = [], refetch: refetchCollectionItems } = useContractRead({
     addressOrName: ContractAddress?.address,
     contractInterface: Abi.abi,
-    // enabled: isContractAddress(currentCommunity?.nftContract),
-    select: (data) => data.filter((item) => parseInt(item.paid_maker)).map((item) => new Price(item)),
-    args: [true],
+    enabled: address.length ,
+    select: (data) => data.filter((item) => parseInt(item.paid_maker)).map((item) => new Custom(item)),
+    args: [address],
     cacheTime: 4000,
-    functionName: "allChallenges",
+    functionName: "getUserChallenges",
     watch: true,
     onSuccess: (data) => {
       console.log('data', data)
@@ -54,11 +56,11 @@ export const PriceList = () => {
         <Typography variant="h4" gutterBottom>
           Bets
         </Typography>
-        <Button variant="contained" component={RouterLink} to="/price/create" startIcon={<CreateRounded/>}>
+        <Button variant="contained" component={RouterLink} to="/custom/create" startIcon={<CreateRounded/>}>
           Create Bet
         </Button>
       </Stack>
-      <CommonTable type={'price'} items={items} table_head={Price.TABLE_HEADERS}/>
+      <CommonTable type={'custom'} items={items} table_head={Custom.TABLE_HEADERS}/>
 
 
     </Page>

@@ -2,6 +2,21 @@ import { formatAmount, isEmptyAddress, shortAddress } from "../utilits";
 import { Base } from "./base";
 
 export class Price extends Base{
+
+static TABLE_HEADERS = [
+  { id: 'name', label: 'Name', alignRight: false },
+  { id: 'bid', label: 'Bid Amount', alignRight: false },
+  { id: 'cof', label: 'Coefficient', alignRight: false },
+  { id: 'win_amount', label: 'Win Amount', alignRight: false },
+  { id: 'prediction_price', label: 'Opponent Prediction', alignRight: false },
+  { id: 'maker', label: 'Initiator', alignRight: false },
+  { id: 'taker', label: 'Opponent', alignRight: false },
+  { id: 'deadline', label: 'Deadline', alignRight: false },
+  { id: 'status', label: 'Status', alignRight: false },
+  { id: 'button', alignRight: false },
+
+];
+
   constructor(item) {
     super(item);
 

@@ -30,7 +30,7 @@ export const   CustomRow = ({item}) => {
       role="checkbox"
     >
       <TableCell component="th" scope="row">
-        <Link underline="none" component={RouterLink} to={`/custom/view/${item.id}`}>
+        <Link underline="none" component={RouterLink} to={`/custom/${item.id}`}>
           <Stack direction="row" alignItems="center" spacing={2}>
             <Typography variant="subtitle2" noWrap>
               {item.name}
