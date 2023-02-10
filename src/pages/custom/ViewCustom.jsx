@@ -37,23 +37,23 @@ import { useAccount, useContractRead, useNetwork } from 'wagmi';
 import ContractAddress from '../../contractsData/CustomChallenge-address.json';
 import Abi from '../../contractsData/CustomChallenge.json';
 import { dateFormat, isEmptyAddress } from '../../utilits';
-import { RequestContext } from '../../context/RequestContext';
 import { Communication } from '../../components/Communication';
 import { Custom } from "../../models/custom";
+import useWriteWagmi from "../../hooks/useWriteWagmi";
 
 export const ViewCustom = () => {
   const [tab, setTab] = useState('0');
   const [value, setValue] = useState(false);
   let { id } = useParams();
-  const { setConfig, txSuccess } = useContext(RequestContext);
+  const { setConfig, txSuccess } = useWriteWagmi();
 
   const { address } = useAccount()
   const chain = useNetwork();
   const nativeCurrency = chain.chain.nativeCurrency;
 
   const { data: item, refetch: refetchCollectionItems } = useContractRead({
-    addressOrName: ContractAddress?.address,
-    contractInterface: Abi.abi,
+    address: ContractAddress?.address,
+    abi: Abi.abi,
     // enabled: isContractAddress(currentCommunity?.nftContract),
     select: (data) => new Custom(data),
     cacheTime: 5_000,
@@ -67,6 +67,8 @@ export const ViewCustom = () => {
   const remove = () => {
     setConfig(
       {
+        'address': ContractAddress?.address,
+        'abi': Abi.abi,
         'functionName': 'remove',
         'args': [id],
       }
@@ -78,6 +80,8 @@ export const ViewCustom = () => {
   const accept = () => {
     setConfig(
       {
+        'address': ContractAddress?.address,
+        'abi': Abi.abi,
         'functionName': 'accept',
         'args': [id],
         'ether': item['accept_payment']
@@ -90,6 +94,8 @@ export const ViewCustom = () => {
   const setDraw = () => {
     setConfig(
       {
+        'address': ContractAddress?.address,
+        'abi': Abi.abi,
         'functionName': 'setDraw',
         'args': [id],
 
@@ -101,6 +107,8 @@ export const ViewCustom = () => {
 
     setConfig(
       {
+        'address': ContractAddress?.address,
+        'abi': Abi.abi,
         'functionName': 'setWinner',
         'args': [id, address],
 

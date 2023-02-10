@@ -26,8 +26,8 @@ export const MyCustomList = () => {
 
 
   const { data: items = [], refetch: refetchCollectionItems } = useContractRead({
-    addressOrName: ContractAddress?.address,
-    contractInterface: Abi.abi,
+    address: ContractAddress?.address,
+    abi: Abi.abi,
     enabled: address.length ,
     select: (data) => data.filter((item) => parseInt(item.paid_maker)).map((item) => new Custom(item)),
     args: [address],

@@ -37,23 +37,23 @@ import { useAccount, useContractRead, useNetwork } from 'wagmi';
 import ContractAddress from '../../contractsData/PriceChallenge-address.json';
 import Abi from '../../contractsData/PriceChallenge.json';
 import { dateFormat, isEmptyAddress } from '../../utilits';
-import { RequestContext } from '../../context/RequestContext';
 import { Communication } from '../../components/Communication';
 import { Price } from "../../models/price";
+import useWriteWagmi from "../../hooks/useWriteWagmi";
 
 export const ViewPrice = () => {
   const [tab, setTab] = useState('0');
   const [value, setValue] = useState(false);
   let { id } = useParams();
-  const { setConfig, txSuccess } = useContext(RequestContext);
+  const { setConfig, txSuccess } = useWriteWagmi();
 
   const { address } = useAccount()
   const chain = useNetwork();
   const nativeCurrency = chain.chain.nativeCurrency;
 
   const { data: item, refetch: refetchCollectionItems } = useContractRead({
-    addressOrName: ContractAddress?.address,
-    contractInterface: Abi.abi,
+    address: ContractAddress?.address,
+    abi: Abi.abi,
     // enabled: isContractAddress(currentCommunity?.nftContract),
     select: (data) => new Price(data),
     cacheTime: 5_000,
@@ -67,6 +67,8 @@ export const ViewPrice = () => {
   const remove = () => {
     setConfig(
       {
+        'address': ContractAddress?.address,
+        'abi': Abi.abi,
         'functionName': 'remove',
         'args': [id],
       }
@@ -78,6 +80,8 @@ export const ViewPrice = () => {
   const accept = () => {
     setConfig(
       {
+        'address': ContractAddress?.address,
+        'abi': Abi.abi,
         'functionName': 'accept',
         'args': [id],
         'ether': item['accept_payment']
@@ -90,6 +94,8 @@ export const ViewPrice = () => {
   const setDraw = () => {
     setConfig(
       {
+        'address': ContractAddress?.address,
+        'abi': Abi.abi,
         'functionName': 'setDraw',
         'args': [id],
 
@@ -101,6 +107,8 @@ export const ViewPrice = () => {
 
     setConfig(
       {
+        'address': ContractAddress?.address,
+        'abi': Abi.abi,
         'functionName': 'setWinner',
         'args': [id, address],
 
@@ -261,29 +269,71 @@ export const ViewPrice = () => {
 
                       <ListItemButton divider>
                         <Avatar className="mr-3" sx={{
-                          color: 'primary.main',
-                          bgcolor: 'primary.lighter'
+                          color: 'error.main',
+                          bgcolor: 'error.lighter'
                         }}>
-                          <CurrencyExchangeIcon/>
+                          <AdminPanelSettingsIcon/>
                         </Avatar>
-                        <ListItemText primary="Prediction"/>
-                        <Typography variant="subtitle1">{item.s_cof}</Typography>
+                        <ListItemText primary="Opponent Prediction"/>
+                        <Typography variant="subtitle1">
+
+                          {item.prediction_type ?
+                            (<div className="flex items-stretch">
+                              <Avatar className="mr-2 h-[23px] w-[23px] " alt={item.name} src={item.tokenDetails?.logo}/>
+                              <span>{item.tokenDetails.symbol} </span>
+
+
+                              <span className="ml-2">Less Than </span>
+                              <span className=" ml-2 text-red-500">{item.prediction_price}$</span>
+                            </div>)
+                            :
+                            (<div className="flex items-stretch">
+                              <Avatar className="mr-2 h-[23px] w-[23px] " alt={item.name} src={item.tokenDetails?.logo}/>
+                              <span>{item.tokenDetails.symbol} </span>
+
+
+                              <span className="ml-2">More Than </span>
+                              <span className=" ml-2 text-green-500">{item.prediction_price}$</span>
+                            </div>)}
+
+
+                        < /Typography>
                       </ListItemButton>
 
 
-                      {/*{*/}
-                      {/*  item.prediction_type?*/}
-                      {/*    (<>*/}
-                      {/*      <span>Less than </span>*/}
-                      {/*      <span className="text-red-500">{item.prediction_price}$</span>*/}
-                      {/*    </>)*/}
-                      {/*    :*/}
-                      {/*    (<>*/}
-                      {/*      <span>More than </span>*/}
-                      {/*      <span className="text-green-500">{item.prediction_price}$</span>*/}
-                      {/*    </>)*/}
+                      <ListItemButton divider>
+                        <Avatar className="mr-3" sx={{
+                          color: 'success.main',
+                          bgcolor: 'success.lighter'
+                        }}>
+                          <CurrencyExchangeIcon/>
+                        </Avatar>
+                        <ListItemText primary="Your Prediction"/>
+                        <Typography variant="subtitle1">
 
-                      {/*}*/}
+                          {!item.prediction_type ?
+                            (<div className="flex items-stretch">
+                              <Avatar className="mr-2 h-[23px] w-[23px] " alt={item.name} src={item.tokenDetails?.logo}/>
+                              <span>{item.tokenDetails.symbol} </span>
+
+
+                              <span className="ml-2">Less Than </span>
+                              <span className=" ml-2 text-red-500">{item.prediction_price}$</span>
+                            </div>)
+                            :
+                            (<div className="flex items-stretch">
+                              <Avatar className="mr-2 h-[23px] w-[23px] " alt={item.name} src={item.tokenDetails?.logo}/>
+                              <span>{item.tokenDetails.symbol} </span>
+
+
+                              <span className="ml-2">More Than </span>
+                              <span className=" ml-2 text-green-500">{item.prediction_price}$</span>
+                            </div>)}
+
+
+                        < /Typography>
+                      </ListItemButton>
+
 
                       <ListItemButton divider>
                         <Avatar className="mr-3" sx={{

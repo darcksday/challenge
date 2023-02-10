@@ -1,13 +1,13 @@
 import { useContext } from 'react';
 import Page from '../../components/Page';
-import { RequestContext } from '../../context/RequestContext';
 import { ethers } from 'ethers';
 import { CustomForm } from "../../components/bet/CustomForm";
 import Abi from '/src/contractsData/CustomChallenge.json'
 import ContractAddress from '/src/contractsData/CustomChallenge-address.json'
+import useWriteWagmi from "../../hooks/useWriteWagmi";
 
 export const CreateCustom = () => {
-  const { setConfig, txSuccess } = useContext(RequestContext);
+  const { setConfig, txSuccess } = useWriteWagmi();
 
 
 
@@ -18,12 +18,11 @@ export const CreateCustom = () => {
     if (data.deadline_date) {
       data['deadline_date'] = Date.parse(data['deadline_date']) / 1000
     }
-    console.log(data)
 
     setConfig(
       {
-        'addressOrName':ContractAddress?.address,
-        'contractInterface':Abi.abi,
+        'address':ContractAddress?.address,
+        'abi':Abi.abi,
         'functionName': 'create',
         'args': [data['name'], data['description'], ethers.utils.parseEther(data['cof']), data['oracle_fee'], data['deadline_date'], data['oracle']],
         'ether': data['paid_maker']

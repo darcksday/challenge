@@ -26,8 +26,8 @@ export const MyPriceList = () => {
 
 
   const { data: items = [], refetch: refetchCollectionItems } = useContractRead({
-    addressOrName: ContractAddress?.address,
-    contractInterface: Abi.abi,
+    address: ContractAddress?.address,
+    abi: Abi.abi,
     enabled: address?.length ,
     select: (data) => data.map((item) => new Price(item)),
     args: [address],

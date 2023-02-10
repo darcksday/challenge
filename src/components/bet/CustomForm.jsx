@@ -4,15 +4,15 @@ import { Avatar, CircularProgress, Slider } from "@mui/material";
 import { deepOrange, deepPurple } from "@mui/material/colors";
 import { useNetwork } from "wagmi";
 import { minDate } from "../../utilits";
-import { RequestContext } from "../../context/RequestContext";
 import { useNavigate } from "react-router-dom";
+import useWriteWagmi from "../../hooks/useWriteWagmi";
 
 
 export const CustomForm = ({ handleSubmit }) => {
   const [betData, setBetData] = useState({ paid_maker: 0, cof: 1, op_bet: '' });
   const chain = useNetwork();
   const nativeCurrency = chain.chain.nativeCurrency;
-  const { isLoading, txSuccess } = useContext(RequestContext);
+  const { isLoading, txSuccess } = useWriteWagmi();
   const navigate = useNavigate();
 
 

@@ -3,7 +3,6 @@ import { Alert, Button, CircularProgress } from '@mui/material';
 
 export default function useAlert() {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-  // const [alert, setAlert] = useState();
   const txAlert = (message,key) => {
     return enqueueSnackbar(message, {
       // variant: 'info',

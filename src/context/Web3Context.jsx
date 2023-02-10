@@ -3,12 +3,13 @@ import { ethers, BigNumber } from 'ethers';
 import {
   WagmiConfig,
   createClient,
-  chain,
   configureChains,
 } from 'wagmi'
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
 import { InjectedConnector } from 'wagmi/connectors/injected'
+
+import { polygonMumbai, goerli } from 'wagmi/chains'
 
 import { publicProvider } from 'wagmi/providers/public'
 import { SnackbarProvider } from 'notistack';
@@ -21,27 +22,27 @@ export const Web3Context = React.createContext();
 export const Web3Provider = ({ children }) => {
 
 
-  const localChain = {
-    id: 31337,
-    name: 'Local',
-    network: 'Local',
-    nativeCurrency: {
-      decimals: 18,
-      name: 'Local',
-      symbol: 'GO',
-    },
-    rpcUrls: {
-      default: 'http://localhost:8545',
-    },
-    blockExplorers: {
-      default: { name: 'SnowTrace', url: 'https://etherscan.io' },
-    },
-    testnet: false,
-  }
+  // const localChain = {
+  //   id: 31337,
+  //   name: 'Local',
+  //   network: 'Local',
+  //   nativeCurrency: {
+  //     decimals: 18,
+  //     name: 'Local',
+  //     symbol: 'GO',
+  //   },
+  //   rpcUrls: {
+  //     default: 'http://localhost:8545',
+  //   },
+  //   blockExplorers: {
+  //     default: { name: 'SnowTrace', url: 'https://etherscan.io' },
+  //   },
+  //   testnet: false,
+  // }
 
 
   const { chains, provider } = configureChains([
-    localChain, chain.polygonMumbai,chain.goerli
+    polygonMumbai, goerli
   ], [
     publicProvider(),
   ]);

@@ -6,25 +6,27 @@ import priceFeed from '../../utilits/priceFeed.json';
 import { useContractRead, useNetwork } from 'wagmi'
 import ContractAddress from "../../contractsData/PriceChallenge-address.json";
 import Abi from "../../contractsData/PriceChallenge.json";
-import { formatAmount, minDate } from "../../utilits";
-import { RequestContext } from "../../context/RequestContext";
+import { formatAmount, getLogo, minDate } from "../../utilits";
 import { useNavigate } from "react-router-dom";
 // import {  Select as Select1 } from "@mui/material";
+import { Price } from "../../models/price";
+import useWaitWagmi from "../../hooks/useWaitWagmi";
 
 
-export const PriceForm = ({ handleSubmit }) => {
+export const PriceForm = ({ handleSubmit, tx }) => {
   const [betData, setBetData] = useState({ paid_maker: 0, cof: 1, op_bet: '' });
   const [contractFeed, setContractFeed] = useState([]);
   const chain = useNetwork();
   const networks = priceFeed[chain.chain.id];
   const nativeCurrency = chain.chain.nativeCurrency;
-  const { setConfig, txSuccess, isLoading } = useContext(RequestContext);
   const navigate = useNavigate();
+
+  const { txSuccess, isLoading } = useWaitWagmi(tx);
 
 
   const { data: price = '', refetch: refetchCollectionItems } = useContractRead({
-    addressOrName: ContractAddress?.address,
-    contractInterface: Abi.abi,
+    address: ContractAddress?.address,
+    abi: Abi.abi,
     select: (data) => parseFloat(formatAmount(data, 8)).toFixed(2),
     args: [contractFeed],
     functionName: "cronPriceFeed",
@@ -46,12 +48,6 @@ export const PriceForm = ({ handleSubmit }) => {
         return { ...prevState, [e.target.name]: e.target.value }
       }
     );
-  }
-
-  const getLogo = (item) => {
-    return `https://s2.coinmarketcap.com/static/img/coins/64x64/${item.logo_id}.png
-`
-
   }
 
 
@@ -76,10 +72,12 @@ export const PriceForm = ({ handleSubmit }) => {
 
 
   useEffect(() => {
-    if (txSuccess) {
-      navigate('/price')
+    console.log(isLoading)
 
-    }
+  }, [isLoading])
+  useEffect(() => {
+    console.log(txSuccess)
+
   }, [txSuccess])
 
   return (
@@ -151,7 +149,7 @@ export const PriceForm = ({ handleSubmit }) => {
                   return (
                     <MenuItem value={item.feedContract} key={item.symbol}>
                       <div className="flex items-center">
-                        <Avatar className="mr-2 h-[20px] w-[20px]" alt={item.name} src={getLogo(item)}/>
+                        <Avatar className="mr-2 h-[20px] w-[20px]" alt={item.name} src={Price.getLogo(item.logo_id)}/>
                         <span className="uppercase">{item.symbol}</span>
                       </div>
                     </MenuItem>)

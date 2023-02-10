@@ -1,7 +1,9 @@
 import { ethers } from 'ethers';
+import priceFeed from './priceFeed.json';
+
 
 export const formatAmount = (amount, decimals) => {
-  if (!amount){
+  if (!amount) {
     return 0;
   }
   return ethers.utils.formatUnits(amount, decimals);
@@ -23,9 +25,11 @@ export const shortAddress = (address) => {
 }
 
 export const minDate = () => {
-  let date=new Date();
-  date.setDate(date.getDate()+1);
+  let date = new Date();
+  date.setDate(date.getDate() + 1);
   return date.toLocaleDateString('fr-CA')
 
 }
+
+
 
