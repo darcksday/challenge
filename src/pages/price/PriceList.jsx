@@ -32,9 +32,6 @@ export const PriceList = () => {
     cacheTime: 4000,
     functionName: "allChallenges",
     watch: true,
-    onSuccess: (data) => {
-      console.log('data', data)
-    }
 
   });
 

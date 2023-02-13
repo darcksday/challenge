@@ -5,15 +5,15 @@ import { deepOrange, deepPurple } from "@mui/material/colors";
 import { useNetwork } from "wagmi";
 import { minDate } from "../../utilits";
 import { useNavigate } from "react-router-dom";
-import useWriteWagmi from "../../hooks/useWriteWagmi";
+import useWaitWagmi from "../../hooks/useWaitWagmi";
 
 
-export const CustomForm = ({ handleSubmit }) => {
+export const CustomForm = ({ handleSubmit ,tx}) => {
   const [betData, setBetData] = useState({ paid_maker: 0, cof: 1, op_bet: '' });
   const chain = useNetwork();
   const nativeCurrency = chain.chain.nativeCurrency;
-  const { isLoading, txSuccess } = useWriteWagmi();
   const navigate = useNavigate();
+  const { txSuccess, isLoading } = useWaitWagmi(tx);
 
 
   const handleChangeBetData = (e) => {

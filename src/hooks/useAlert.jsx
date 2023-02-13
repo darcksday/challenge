@@ -53,9 +53,9 @@ export default function useAlert() {
     if (mType === 'error') {
       return txErrorAlert(message,key);
     } else if (mType === 'success') {
-      return txSuccessAlert(message)
+      return txSuccessAlert(message,key)
     } else {
-      return txAlert(message)
+      return txAlert(message,key)
     }
 
 

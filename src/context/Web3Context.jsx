@@ -17,6 +17,7 @@ import {
   getDefaultWallets,
   RainbowKitProvider,
 } from '@rainbow-me/rainbowkit';
+import { TransactionProvider } from "./TransactionContext";
 
 export const Web3Context = React.createContext();
 export const Web3Provider = ({ children }) => {
@@ -58,17 +59,20 @@ export const Web3Provider = ({ children }) => {
     connectors,
     provider,
     // webSocketProvider,
-  })
+  });
+
   return (
     <WagmiConfig client={client}>
       <RainbowKitProvider chains={chains}>
 
         <SnackbarProvider autoHideDuration={8000} anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
                           maxSnack={5}>
-          <Web3Context.Provider
-            value={{}}>
-            {children}
-          </Web3Context.Provider>
+          <TransactionProvider>
+            <Web3Context.Provider
+              value={{}}>
+              {children}
+            </Web3Context.Provider>
+          </TransactionProvider>
         </SnackbarProvider>
       </RainbowKitProvider>
     </WagmiConfig>

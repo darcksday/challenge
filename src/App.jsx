@@ -14,6 +14,8 @@ import { MyCustomList } from "./pages/my/MyCustomList";
 import { MyPriceList } from "./pages/my/MyPriceList";
 
 const App = () => {
+  console.log('top level')
+
   const { address } = useAccount()
   const { openConnectModal } = useConnectModal();
   const ProtectedRoute = ({ children }) => {
@@ -28,6 +30,9 @@ const App = () => {
   };
 
 
+  useEffect(() => {
+    console.log('test')
+  }, [])
 
 
   return (

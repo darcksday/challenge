@@ -11,17 +11,17 @@ import { useNavigate } from "react-router-dom";
 // import {  Select as Select1 } from "@mui/material";
 import { Price } from "../../models/price";
 import useWaitWagmi from "../../hooks/useWaitWagmi";
+import { TransactionContext } from "../../context/TransactionContext";
 
 
-export const PriceForm = ({ handleSubmit, tx }) => {
+export const PriceForm = ({ handleSubmit }) => {
   const [betData, setBetData] = useState({ paid_maker: 0, cof: 1, op_bet: '' });
   const [contractFeed, setContractFeed] = useState([]);
   const chain = useNetwork();
   const networks = priceFeed[chain.chain.id];
   const nativeCurrency = chain.chain.nativeCurrency;
-  const navigate = useNavigate();
 
-  const { txSuccess, isLoading } = useWaitWagmi(tx);
+  const { isLoading } = useContext(TransactionContext);
 
 
   const { data: price = '', refetch: refetchCollectionItems } = useContractRead({
@@ -70,15 +70,6 @@ export const PriceForm = ({ handleSubmit, tx }) => {
     }
   }, [betData['paid_maker'], betData['cof']])
 
-
-  useEffect(() => {
-    console.log(isLoading)
-
-  }, [isLoading])
-  useEffect(() => {
-    console.log(txSuccess)
-
-  }, [txSuccess])
 
   return (
 

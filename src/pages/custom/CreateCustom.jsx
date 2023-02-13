@@ -1,14 +1,17 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import Page from '../../components/Page';
 import { ethers } from 'ethers';
 import { CustomForm } from "../../components/bet/CustomForm";
 import Abi from '/src/contractsData/CustomChallenge.json'
 import ContractAddress from '/src/contractsData/CustomChallenge-address.json'
 import useWriteWagmi from "../../hooks/useWriteWagmi";
+import useWaitWagmi from "../../hooks/useWaitWagmi";
+import { useNavigate } from "react-router-dom";
 
 export const CreateCustom = () => {
-  const { setConfig, txSuccess } = useWriteWagmi();
-
+  const { setConfig, tx } = useWriteWagmi();
+  const { txSuccess, isLoading } = useWaitWagmi(tx);
+  const navigate = useNavigate();
 
 
   const handleSubmit = (e) => {
@@ -21,8 +24,8 @@ export const CreateCustom = () => {
 
     setConfig(
       {
-        'address':ContractAddress?.address,
-        'abi':Abi.abi,
+        'address': ContractAddress?.address,
+        'abi': Abi.abi,
         'functionName': 'create',
         'args': [data['name'], data['description'], ethers.utils.parseEther(data['cof']), data['oracle_fee'], data['deadline_date'], data['oracle']],
         'ether': data['paid_maker']
@@ -30,9 +33,13 @@ export const CreateCustom = () => {
     );
 
   }
+  useEffect(() => {
+    if (txSuccess) {
+      navigate('/price')
 
+    }
 
-
+  }, [txSuccess])
 
   return (
     <Page
@@ -40,7 +47,7 @@ export const CreateCustom = () => {
     >
       <div className="container z-20 mx-auto px-4">
         <section className="py-5 lg:py-10">
-          <CustomForm handleSubmit={handleSubmit}/>
+          <CustomForm handleSubmit={handleSubmit} tx={tx}/>
         </section>
       </div>
     </Page>

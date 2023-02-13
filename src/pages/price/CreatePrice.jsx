@@ -8,10 +8,11 @@ import { parseUnits } from "@ethersproject/units/src.ts";
 import { useNavigate } from "react-router-dom";
 import useWriteWagmi from "../../hooks/useWriteWagmi";
 import useWaitWagmi from "../../hooks/useWaitWagmi";
+import { TransactionContext } from "../../context/TransactionContext";
 
 export const CreatePrice = () => {
   const { setConfig, tx } = useWriteWagmi();
-  const { txSuccess } =useWaitWagmi(tx);
+  const { txSuccess, isLoading, txs } = useContext(TransactionContext);
 
 
   const navigate = useNavigate();
@@ -37,13 +38,15 @@ export const CreatePrice = () => {
   }
 
   useEffect(() => {
-    if (txSuccess) {
-      console.log(txSuccess)
-      navigate('/price')
+    if (txs[tx]) {
+      console.log(txs[tx])
+      console.log(txs)
+      // navigate('/price');
+
 
     }
 
-  }, [txSuccess])
+  }, [txs[tx]])
 
 
   return (
