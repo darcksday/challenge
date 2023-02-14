@@ -1,8 +1,13 @@
 import { formatAmount, isEmptyAddress, shortAddress } from "../utilits";
 import { Base } from "./base";
 import priceFeed from "../utilits/priceFeed.json";
+import ContractAddress from "../contractsData/PriceChallenge-address.json";
+import Abi from "../contractsData/PriceChallenge.json";
 
 export class Price extends Base {
+
+  static CONTRACT=ContractAddress?.address;
+  static ABI=Abi.abi;
 
   static TABLE_HEADERS = [
     { id: 'name', label: 'Name', alignRight: false },
@@ -86,6 +91,15 @@ export class Price extends Base {
 
   static  getLogo = (logoId) => {
     return `https://s2.coinmarketcap.com/static/img/coins/64x64/${logoId}.png`
+
+  }
+
+  get contract(){
+    return Price.CONTRACT
+  }
+
+  get abi(){
+    return Price.ABI
 
   }
 

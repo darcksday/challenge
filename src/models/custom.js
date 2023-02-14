@@ -1,8 +1,12 @@
 import { formatAmount, isEmptyAddress, shortAddress } from "../utilits";
 
 import {Base} from "./base";
+import ContractAddress from "../contractsData/CustomChallenge-address.json";
+import Abi from "../contractsData/CustomChallenge.json";
 export class Custom extends Base {
 
+  static CONTRACT=ContractAddress?.address;
+  static ABI=Abi.abi;
    static TABLE_HEADERS = [
     { id: 'name', label: 'Name', alignRight: false },
     { id: 'bid', label: 'Bid Amount', alignRight: false },
@@ -72,7 +76,14 @@ export class Custom extends Base {
     return this.paid_taker === 0 && isEmptyAddress(this.taker) && address !== this.oracle && address !== this.maker
   }
 
+  get contract(){
+    return Custom.CONTRACT
+  }
 
+  get abi(){
+    return Custom.ABI
+
+  }
 
 
 

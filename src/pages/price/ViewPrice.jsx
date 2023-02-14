@@ -91,32 +91,7 @@ export const ViewPrice = () => {
 
   }
 
-  const setDraw = () => {
-    setConfig(
-      {
-        'address': ContractAddress?.address,
-        'abi': Abi.abi,
-        'functionName': 'setDraw',
-        'args': [id],
 
-      }
-    )
-  }
-
-  const setWinner = (address) => {
-
-    setConfig(
-      {
-        'address': ContractAddress?.address,
-        'abi': Abi.abi,
-        'functionName': 'setWinner',
-        'args': [id, address],
-
-      }
-    )
-
-
-  }
 
 
   const handleChange = (event, newValue) => {

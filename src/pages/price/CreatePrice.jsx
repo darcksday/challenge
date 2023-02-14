@@ -7,12 +7,11 @@ import { ethers } from "ethers";
 import { parseUnits } from "@ethersproject/units/src.ts";
 import { useNavigate } from "react-router-dom";
 import useWriteWagmi from "../../hooks/useWriteWagmi";
-import useWaitWagmi from "../../hooks/useWaitWagmi";
 import { TransactionContext } from "../../context/TransactionContext";
 
 export const CreatePrice = () => {
   const { setConfig, tx } = useWriteWagmi();
-  const { txSuccess, isLoading, txs } = useContext(TransactionContext);
+  const { txSuccess, isLoading } = useContext(TransactionContext);
 
 
   const navigate = useNavigate();
@@ -38,15 +37,12 @@ export const CreatePrice = () => {
   }
 
   useEffect(() => {
-    if (txs[tx]) {
-      console.log(txs[tx])
-      console.log(txs)
-      // navigate('/price');
-
+    if (txSuccess && txSuccess === tx?.hash) {
+      navigate('/price');
 
     }
 
-  }, [txs[tx]])
+  }, [txSuccess])
 
 
   return (

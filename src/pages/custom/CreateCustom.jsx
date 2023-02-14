@@ -5,7 +5,6 @@ import { CustomForm } from "../../components/bet/CustomForm";
 import Abi from '/src/contractsData/CustomChallenge.json'
 import ContractAddress from '/src/contractsData/CustomChallenge-address.json'
 import useWriteWagmi from "../../hooks/useWriteWagmi";
-import useWaitWagmi from "../../hooks/useWaitWagmi";
 import { useNavigate } from "react-router-dom";
 
 export const CreateCustom = () => {

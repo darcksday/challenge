@@ -10,7 +10,6 @@ import { formatAmount, getLogo, minDate } from "../../utilits";
 import { useNavigate } from "react-router-dom";
 // import {  Select as Select1 } from "@mui/material";
 import { Price } from "../../models/price";
-import useWaitWagmi from "../../hooks/useWaitWagmi";
 import { TransactionContext } from "../../context/TransactionContext";
 
 
