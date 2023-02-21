@@ -38,7 +38,7 @@ export default function ItemsListHead({
 
   return (
     <TableHead
-      class="bg-[#f4f6f8]"
+      className="bg-[#f4f6f8]"
     >
       <TableRow>
         {headLabel.map((headCell) => (

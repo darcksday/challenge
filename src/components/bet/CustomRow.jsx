@@ -12,15 +12,14 @@ import { ItemsMoreMenu } from '/src/components/sections/dashboard/item';
 // mock
 import { dateFormat, isEmptyAddress } from '../../utilits';
 import { useNetwork } from "wagmi";
+import { Status } from "./Status";
 // ----------------------------------------------------------------------
 
 
-
-
-export const   CustomRow = ({item}) => {
+export const CustomRow = ({ item }) => {
 
   const chain = useNetwork();
-  const nativeCurrency=chain.chain.nativeCurrency;
+  const nativeCurrency = chain.chain.nativeCurrency;
 
   return (
     <TableRow
@@ -38,27 +37,23 @@ export const   CustomRow = ({item}) => {
           </Stack>
         </Link>
       </TableCell>
-      <TableCell align="left"> <Typography variant="subtitle2" noWrap>{item.s_paid_maker+''+nativeCurrency.symbol}</Typography></TableCell>
+      <TableCell align="left"> <Typography variant="subtitle2"
+                                           noWrap>{item.s_paid_maker + '' + nativeCurrency.symbol}</Typography></TableCell>
       <TableCell align="left">{item.s_cof}</TableCell>
-      <TableCell align="left"> <Typography variant="subtitle2" noWrap>{item.winingAmount+''+nativeCurrency.symbol}</Typography></TableCell>
+      <TableCell align="left"> <Typography variant="subtitle2"
+                                           noWrap>{item.winingAmount + '' + nativeCurrency.symbol}</Typography></TableCell>
       <TableCell className="text-green-500" align="left">{item.s_maker}</TableCell>
       <TableCell className="text-red-500" align="left">{(isEmptyAddress(item.taker)) ? 'not defined' : item.s_taker}</TableCell>
       {/*<TableCell align="left">{dateFormat(item.created_date)}</TableCell>*/}
       <TableCell align="left">{dateFormat(item.deadline_date)}</TableCell>
       <TableCell align="left">
+        <Status item={item}/>
 
-        {(item.status === 'waiting') && (
-          <Chip variant="outlined" className="font-semibold capitalize" label={item.status} size="small" color="primary" />)}
-        {(item.status === 'finished') && (<Chip className="font-semibold capitalize" label={item.status} size="small" color="success" />)}
-        {(item.status === 'taken') && (<Chip className="font-semibold capitalize" label={item.status} size="small" color="primary" />)}
-
-        {(item.status === 'in review') && (
-          <Chip variant="outlined" className="font-semibold capitalize" label={item.status} size="small" color="success" />)}
       </TableCell>
 
 
       <TableCell align="right">
-        <ItemsMoreMenu item={item} />
+        <ItemsMoreMenu item={item}/>
       </TableCell>
     </TableRow>
   );

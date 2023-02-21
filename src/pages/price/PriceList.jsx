@@ -18,9 +18,6 @@ import {
 } from '@mui/icons-material';
 
 
-
-
-
 export const PriceList = () => {
 
   const { data: items = [], refetch: refetchCollectionItems } = useContractRead({
@@ -28,21 +25,12 @@ export const PriceList = () => {
     abi: Abi.abi,
     // enabled: isContractAddress(currentCommunity?.nftContract),
     select: (data) => data.filter((item) => parseInt(item.paid_maker)).map((item) => new Price(item)),
-    args: [true],
+    args: [false],
     cacheTime: 4000,
     functionName: "allChallenges",
     watch: true,
 
   });
-
-
-
-
-
-
-
-
-
 
 
   return (

@@ -5,6 +5,7 @@ import { deepOrange, deepPurple } from "@mui/material/colors";
 import { useNetwork } from "wagmi";
 import { minDate } from "../../utilits";
 import { useNavigate } from "react-router-dom";
+import { TransactionContext } from "../../context/TransactionContext";
 
 
 export const CustomForm = ({ handleSubmit, tx }) => {
@@ -12,7 +13,7 @@ export const CustomForm = ({ handleSubmit, tx }) => {
   const chain = useNetwork();
   const nativeCurrency = chain.chain.nativeCurrency;
   const navigate = useNavigate();
-  const { txSuccess, isLoading } = useWaitWagmi(tx);
+  const { isLoading } = useContext(TransactionContext);
 
 
   const handleChangeBetData = (e) => {
@@ -38,14 +39,6 @@ export const CustomForm = ({ handleSubmit, tx }) => {
   }, [betData['paid_maker'], betData['cof']])
 
 
-  useEffect(() => {
-    if (txSuccess) {
-      navigate('/custom')
-
-    }
-  }, [txSuccess])
-
-
   return (
 
     <form onSubmit={(e) => handleSubmit(e)}>
@@ -64,7 +57,7 @@ export const CustomForm = ({ handleSubmit, tx }) => {
             name="deadline_date"
             required className="h-[44px]"
             id="datetime-local"
-            label="Expiration date"
+            label="Expiration date UTC"
             type="date"
             min={minDate()}
             defaultValue={minDate()}

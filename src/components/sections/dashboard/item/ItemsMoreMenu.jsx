@@ -29,6 +29,20 @@ export default function ItemsMoreMenu({ item }) {
     )
 
   }
+
+  const accept = () => {
+    setConfig(
+      {
+        'address': item.contract,
+        'abi': item.abi,
+        'functionName': 'accept',
+        'args': [item.id],
+        'ether': item.accept_payment
+
+      }
+    )
+
+  }
   return (
     <>
       <IconButton ref={ref} onClick={() => setIsOpen(true)}>
@@ -49,11 +63,24 @@ export default function ItemsMoreMenu({ item }) {
 
         <MenuItem component={RouterLink} to={`${item.id}`} sx={{ color: 'text.secondary' }}>
           <ListItemIcon>
-            <Iconify icon="eva:edit-fill" width={24} height={24}/>
+            <Iconify icon="eva:eye-outline" width={24} height={24}/>
           </ListItemIcon>
           <ListItemText primary="View" primaryTypographyProps={{ variant: 'body2' }}/>
         </MenuItem>
+        {(item.canAccept(address)) && (
 
+          <MenuItem onClick={() => {
+            accept();
+            setIsOpen(false);
+          }
+          } sx={{ color: 'text.secondary' }}>
+            <ListItemIcon>
+              <Iconify icon="eva:checkmark-outline" width={24} height={24}/>
+            </ListItemIcon>
+            <ListItemText primary="Accept" primaryTypographyProps={{ variant: 'body2' }}/>
+          </MenuItem>
+
+        )}
         {(item.canDelete(address)) && (
 
           <MenuItem onClick={() => {
@@ -68,6 +95,8 @@ export default function ItemsMoreMenu({ item }) {
           </MenuItem>
 
         )}
+
+
       </Menu>
     </>
   );

@@ -40,6 +40,7 @@ import { dateFormat, isEmptyAddress } from '../../utilits';
 import { Communication } from '../../components/Communication';
 import { Price } from "../../models/price";
 import useWriteWagmi from "../../hooks/useWriteWagmi";
+import { Status } from "../../components/bet/Status";
 
 export const ViewPrice = () => {
   const [tab, setTab] = useState('0');
@@ -78,6 +79,14 @@ export const ViewPrice = () => {
 
 
   const accept = () => {
+    console.log({
+      'address': ContractAddress?.address,
+      'abi': Abi.abi,
+      'functionName': 'accept',
+      'args': [id],
+      'ether': item['accept_payment']
+
+    })
     setConfig(
       {
         'address': ContractAddress?.address,
@@ -89,9 +98,8 @@ export const ViewPrice = () => {
       }
     )
 
+
   }
-
-
 
 
   const handleChange = (event, newValue) => {
@@ -170,6 +178,7 @@ export const ViewPrice = () => {
                           }}>
                             <GroupIcon/>
                           </Avatar>
+
                           <ListItemText primary="Opponent Address"/>
                           <Typography variant="subtitle2">{(isEmptyAddress(item.taker)) ? 'not defined' : item.taker}</Typography>
                         </ListItemButton>
@@ -193,7 +202,7 @@ export const ViewPrice = () => {
                           }}>
                             <EventBusyIcon/>
                           </Avatar>
-                          <ListItemText primary="Deadline"/>
+                          <ListItemText primary="Expiration UTC"/>
                           <Typography variant="subtitle1">{dateFormat(item.deadline_date)}</Typography>
                         </ListItemButton>
 
@@ -232,14 +241,8 @@ export const ViewPrice = () => {
                           <ShortTextIcon/>
                         </Avatar>
                         <ListItemText primary="Status"/>
-                        {(item.status === 'waiting') && (
-                          <Chip variant="outlined" className="font-semibold capitalize" label={item.status} size="small" color="primary"/>)}
-                        {(item.status === 'finished') && (
-                          <Chip className="font-semibold capitalize" label={item.status} size="small" color="success"/>)}
-                        {(item.status === 'taken') && (
-                          <Chip className="font-semibold capitalize" label={item.status} size="small" color="primary"/>)}
-                        {(item.status === 'in review') && (
-                          <Chip variant="outlined" className="font-semibold capitalize" label={item.status} size="small" color="success"/>)}
+                        <Status item={item}/>
+
                       </ListItemButton>
 
                       <ListItemButton divider>
@@ -249,8 +252,19 @@ export const ViewPrice = () => {
                         }}>
                           <AdminPanelSettingsIcon/>
                         </Avatar>
-                        <ListItemText primary="Opponent Prediction"/>
-                        <Typography variant="subtitle1">
+                        <ListItemText
+                          primary={
+                            <span>Initiator Prediction
+                              {item.winner === item.maker && (
+                                <Chip variant="outlined" className="font-semibold capitalize ml-1" label="Winning" size="small"
+                                      color="success"/>)}
+                            </span>
+
+                          }
+                        />
+
+
+                        <Typography variant="subtitle2">
 
                           {item.prediction_type ?
                             (<div className="flex items-stretch">
@@ -283,8 +297,17 @@ export const ViewPrice = () => {
                         }}>
                           <CurrencyExchangeIcon/>
                         </Avatar>
-                        <ListItemText primary="Your Prediction"/>
-                        <Typography variant="subtitle1">
+                        <ListItemText
+                          primary={
+                            <span>Opponent Prediction
+                              {item.winner === item.taker && (
+                                <Chip variant="outlined" className="font-semibold capitalize ml-1" label="Winning" size="small"
+                                      color="success"/>)}
+                            </span>
+
+                          }
+                        />
+                        <Typography variant="subtitle2">
 
                           {!item.prediction_type ?
                             (<div className="flex items-stretch">
@@ -321,37 +344,46 @@ export const ViewPrice = () => {
                         <Typography variant="subtitle1">{item.winingAmount + '' + nativeCurrency.symbol}</Typography>
                       </ListItemButton>
 
-                      {(item.finished) && (
-                        <ListItemButton divider>
-                          <Avatar className="mr-3" sx={{
-                            color: 'success.main',
-                            bgcolor: 'success.lighter'
-                          }}>
-                            <EmojiEventsIcon/>
-                          </Avatar>
-                          <ListItemText primary={<Typography variant="subtitle1">Winner</Typography>}/>
-                          <Typography variant="subtitle2">{(!isEmptyAddress(item.winner)) ? item.winner : 'draw'}</Typography>
-                        </ListItemButton>
+                      {
+                        (item.finished) && (
+                          <ListItemButton divider>
+                            <Avatar className="mr-3" sx={{
+                              color: 'success.main',
+                              bgcolor: 'success.lighter'
+                            }}>
+                              <EmojiEventsIcon/>
+                            </Avatar>
+                            <ListItemText primary={<Typography variant="subtitle1">Winner</Typography>}/>
+                            <Typography variant="subtitle2">{
+                              item.winner
+
+                            }</Typography>
+                          </ListItemButton>
 
 
-                      )}
+                        )
+                      }
 
 
                     </Card>
                   </div>
                 </div>
-                {item.canDelete(address) && (
-                  <div className="flex w-full gap-4 justify-center mt-8">
-                    <Button onClick={remove} size="lg" color="red">Remove</Button>
+                {
+                  item.canDelete(address) && (
+                    <div className="flex w-full gap-4 justify-center mt-8">
+                      <Button onClick={remove} size="lg" color="red">Remove</Button>
 
-                  </div>
-                )}
+                    </div>
+                  )
+                }
 
-                {item.canAccept(address) && (
-                  <div className="flex w-full gap-4 justify-center mt-8">
-                    <Button onClick={accept} size="lg" color="green">Accept the challenge {item.accept_payment}Ξ</Button>
-                  </div>
-                )}
+                {
+                  item.canAccept(address) && (
+                    <div className="flex w-full gap-4 justify-center mt-8">
+                      <Button onClick={accept} size="lg" color="blue">Bet {item.accept_payment + nativeCurrency.symbol}</Button>
+                    </div>
+                  )
+                }
 
 
               </TabPanel>
@@ -369,5 +401,6 @@ export const ViewPrice = () => {
     </Page>
 
 
-  );
+  )
+    ;
 }

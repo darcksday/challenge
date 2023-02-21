@@ -3,10 +3,16 @@ import Page from '../../components/Page';
 import {
   Avatar,
   Box,
-  Card, CardActionArea, CardActions, CardContent, CardMedia, Chip,
+  Card,
+  CardActionArea,
+  CardActions,
+  CardContent,
+  CardMedia,
+  Chip,
   Grid,
   List,
-  ListItemButton, ListItemSecondaryAction,
+  ListItemButton,
+  ListItemSecondaryAction,
   ListItemText,
   Stack,
   Tab,
@@ -40,6 +46,7 @@ import { dateFormat, isEmptyAddress } from '../../utilits';
 import { Communication } from '../../components/Communication';
 import { Custom } from "../../models/custom";
 import useWriteWagmi from "../../hooks/useWriteWagmi";
+import { Status } from "../../components/bet/Status";
 
 export const ViewCustom = () => {
   const [tab, setTab] = useState('0');
@@ -52,68 +59,41 @@ export const ViewCustom = () => {
   const nativeCurrency = chain.chain.nativeCurrency;
 
   const { data: item, refetch: refetchCollectionItems } = useContractRead({
-    address: ContractAddress?.address,
-    abi: Abi.abi,
-    // enabled: isContractAddress(currentCommunity?.nftContract),
-    select: (data) => new Custom(data),
-    cacheTime: 5_000,
-    args: [id],
-    functionName: "getById",
-    watch: true,
+    address: ContractAddress?.address, abi: Abi.abi, // enabled: isContractAddress(currentCommunity?.nftContract),
+    select: (data) => new Custom(data), cacheTime: 5_000, args: [id], functionName: "getById", watch: true,
 
   });
 
 
   const remove = () => {
-    setConfig(
-      {
-        'address': ContractAddress?.address,
-        'abi': Abi.abi,
-        'functionName': 'remove',
-        'args': [id],
-      }
-    )
+    setConfig({
+      'address': ContractAddress?.address, 'abi': Abi.abi, 'functionName': 'remove', 'args': [id],
+    })
 
   }
 
 
   const accept = () => {
-    setConfig(
-      {
-        'address': ContractAddress?.address,
-        'abi': Abi.abi,
-        'functionName': 'accept',
-        'args': [id],
-        'ether': item['accept_payment']
+    setConfig({
+      'address': ContractAddress?.address, 'abi': Abi.abi, 'functionName': 'accept', 'args': [id], 'ether': item['accept_payment']
 
-      }
-    )
+    })
 
   }
 
   const setDraw = () => {
-    setConfig(
-      {
-        'address': ContractAddress?.address,
-        'abi': Abi.abi,
-        'functionName': 'setDraw',
-        'args': [id],
+    setConfig({
+      'address': ContractAddress?.address, 'abi': Abi.abi, 'functionName': 'setDraw', 'args': [id],
 
-      }
-    )
+    })
   }
 
   const setWinner = (address) => {
 
-    setConfig(
-      {
-        'address': ContractAddress?.address,
-        'abi': Abi.abi,
-        'functionName': 'setWinner',
-        'args': [id, address],
+    setConfig({
+      'address': ContractAddress?.address, 'abi': Abi.abi, 'functionName': 'setWinner', 'args': [id, address],
 
-      }
-    )
+    })
 
 
   }
@@ -129,8 +109,7 @@ export const ViewCustom = () => {
   };
 
 
-  return (
-    <Page className="max-w-[1350px] pt-0 mx-auto" title="Challenges">
+  return (<Page className="max-w-[1350px] pt-0 mx-auto" title="Challenges">
       <div>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
@@ -142,30 +121,22 @@ export const ViewCustom = () => {
           <Box sx={{ width: '100%', typography: 'body1' }}>
             <TabContext value={tab}>
               <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                {item.isOracle(address) && (
-                  <TabList onChange={handleChange} aria-label="lab API tabs example">
+                {item.isOracle(address) && (<TabList onChange={handleChange} aria-label="lab API tabs example">
 
+                  <Tab label="Main Detail" value="0"/>
+                  {(!isEmptyAddress(item.taker)) && (<Tab label="Communication with Opponent" value={item.taker}/>)}
+                  <Tab label="Communication with Initiator" value={item.maker}/>
+                </TabList>)}
+
+
+                {item.isMaker(address) && (<TabList onChange={handleChange} aria-label="lab API tabs example">
                     <Tab label="Main Detail" value="0"/>
-                    {(!isEmptyAddress(item.taker)) && (
-                      <Tab label="Communication with Opponent" value={item.taker}/>)
-                    }
-                    <Tab label="Communication with Initiator" value={item.maker}/>
-                  </TabList>
-                )}
-
-
-                {item.isMaker(address) && (
-                  <TabList onChange={handleChange} aria-label="lab API tabs example">
-                    <Tab label="Main Detail" value="0"/>
-                    {(!isEmptyAddress(item.taker)) && (
-                      <Tab label="Communication with Opponent" value={item.taker}/>
-                    )}
+                    {(!isEmptyAddress(item.taker)) && (<Tab label="Communication with Opponent" value={item.taker}/>)}
                   </TabList>
 
                 )}
 
-                {item.isTaker(address) && (
-                  <TabList onChange={handleChange} aria-label="lab API tabs example">
+                {item.isTaker(address) && (<TabList onChange={handleChange} aria-label="lab API tabs example">
                     <Tab label="Main Detail" value="0"/>
                     <Tab label="Communication with Initiator" value={item.maker}/>
                   </TabList>
@@ -180,8 +151,7 @@ export const ViewCustom = () => {
                       <List sx={{ p: 0, '& .MuiListItemButton-root': { py: 2 } }}>
                         <ListItemButton divider>
                           <Avatar className="mr-3" sx={{
-                            color: 'primary.main',
-                            bgcolor: 'primary.lighter'
+                            color: 'primary.main', bgcolor: 'primary.lighter'
                           }}>
                             <ShortTextIcon/>
                           </Avatar>
@@ -192,8 +162,7 @@ export const ViewCustom = () => {
 
                         <ListItemButton divider>
                           <Avatar className="mr-3" sx={{
-                            color: 'primary.main',
-                            bgcolor: 'primary.lighter'
+                            color: 'primary.main', bgcolor: 'primary.lighter'
                           }}>
                             <PersonIcon/>
                           </Avatar>
@@ -202,8 +171,7 @@ export const ViewCustom = () => {
                         </ListItemButton>
                         <ListItemButton divider>
                           <Avatar className="mr-3" sx={{
-                            color: 'error.main',
-                            bgcolor: 'error.lighter'
+                            color: 'error.main', bgcolor: 'error.lighter'
                           }}>
                             <GroupIcon/>
                           </Avatar>
@@ -214,8 +182,7 @@ export const ViewCustom = () => {
 
                         <ListItemButton divider>
                           <Avatar className="mr-3" sx={{
-                            color: 'success.main',
-                            bgcolor: 'success.lighter'
+                            color: 'success.main', bgcolor: 'success.lighter'
                           }}>
                             <AdminPanelSettingsIcon/>
                           </Avatar>
@@ -226,8 +193,7 @@ export const ViewCustom = () => {
 
                         <ListItemButton divider>
                           <Avatar className="mr-3" sx={{
-                            color: 'success.main',
-                            bgcolor: 'success.lighter'
+                            color: 'success.main', bgcolor: 'success.lighter'
                           }}>
                             <CalendarMonthIcon/>
                           </Avatar>
@@ -237,8 +203,7 @@ export const ViewCustom = () => {
 
                         <ListItemButton>
                           <Avatar className="mr-3" sx={{
-                            color: 'error.main',
-                            bgcolor: 'error.lighter'
+                            color: 'error.main', bgcolor: 'error.lighter'
                           }}>
                             <EventBusyIcon/>
                           </Avatar>
@@ -253,8 +218,7 @@ export const ViewCustom = () => {
                     <Card sx={{ mt: 2 }}>
                       <ListItemButton divider>
                         <Avatar className="mr-3" sx={{
-                          color: 'success.main',
-                          bgcolor: 'success.lighter'
+                          color: 'success.main', bgcolor: 'success.lighter'
                         }}>
                           <PriceCheckIcon/>
                         </Avatar>
@@ -264,8 +228,7 @@ export const ViewCustom = () => {
 
                       <ListItemButton divider>
                         <Avatar className="mr-3" sx={{
-                          color: 'primary.main',
-                          bgcolor: 'primary.lighter'
+                          color: 'primary.main', bgcolor: 'primary.lighter'
                         }}>
                           <CurrencyExchangeIcon/>
                         </Avatar>
@@ -274,8 +237,7 @@ export const ViewCustom = () => {
                       </ListItemButton>
                       <ListItemButton divider>
                         <Avatar className="mr-3" sx={{
-                          color: 'primary.main',
-                          bgcolor: 'primary.lighter'
+                          color: 'primary.main', bgcolor: 'primary.lighter'
                         }}>
                           <PercentIcon/>
                         </Avatar>
@@ -285,27 +247,19 @@ export const ViewCustom = () => {
 
                       <ListItemButton divider>
                         <Avatar className="mr-3" sx={{
-                          color: 'primary.main',
-                          bgcolor: 'primary.lighter'
+                          color: 'primary.main', bgcolor: 'primary.lighter'
                         }}>
                           <ShortTextIcon/>
                         </Avatar>
                         <ListItemText primary="Status"/>
-                        {(item.status === 'waiting') && (
-                          <Chip variant="outlined" className="font-semibold capitalize" label={item.status} size="small" color="primary"/>)}
-                        {(item.status === 'finished') && (
-                          <Chip className="font-semibold capitalize" label={item.status} size="small" color="success"/>)}
-                        {(item.status === 'taken') && (
-                          <Chip className="font-semibold capitalize" label={item.status} size="small" color="primary"/>)}
-                        {(item.status === 'in review') && (
-                          <Chip variant="outlined" className="font-semibold capitalize" label={item.status} size="small" color="success"/>)}
+                        <Status item={item}/>
+
                       </ListItemButton>
 
 
                       <ListItemButton divider>
                         <Avatar className="mr-3" sx={{
-                          color: 'success.main',
-                          bgcolor: 'success.lighter'
+                          color: 'success.main', bgcolor: 'success.lighter'
                         }}>
                           <EmojiEventsIcon/>
                         </Avatar>
@@ -313,11 +267,9 @@ export const ViewCustom = () => {
                         <Typography variant="subtitle1">{item.winingAmount + '' + nativeCurrency.symbol}</Typography>
                       </ListItemButton>
 
-                      {(item.finished) && (
-                        <ListItemButton divider>
+                      {(item.finished) && (<ListItemButton divider>
                           <Avatar className="mr-3" sx={{
-                            color: 'success.main',
-                            bgcolor: 'success.lighter'
+                            color: 'success.main', bgcolor: 'success.lighter'
                           }}>
                             <EmojiEventsIcon/>
                           </Avatar>
@@ -356,21 +308,15 @@ export const ViewCustom = () => {
                     <Button size="lg" onClick={() => setWinner(item.taker)}
                             className="bg-gradient-to-b from-[#5e55d6] via-[#8554da] to-[#ab52de]">Opponent
                       Won</Button>
-                  </div>
-                )
-                }
-                {item.canDelete(address) && (
-                  <div className="flex w-full gap-4 justify-center mt-8">
-                    <Button onClick={remove} size="lg" color="red">Remove</Button>
+                  </div>)}
+                {item.canDelete(address) && (<div className="flex w-full gap-4 justify-center mt-8">
+                  <Button onClick={remove} size="lg" color="red">Remove</Button>
 
-                  </div>
-                )}
+                </div>)}
 
-                {item.canAccept(address) && (
-                  <div className="flex w-full gap-4 justify-center mt-8">
-                    <Button onClick={accept} size="lg" color="green">Accept the challenge {item.accept_payment}Ξ</Button>
-                  </div>
-                )}
+                {item.canAccept(address) && (<div className="flex w-full gap-4 justify-center mt-8">
+                  <Button onClick={accept} size="lg" color="blue">Bet {item.accept_payment + nativeCurrency.symbol}</Button>
+                </div>)}
 
 
               </TabPanel>

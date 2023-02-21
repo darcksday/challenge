@@ -13,6 +13,7 @@ import { ItemsMoreMenu } from '/src/components/sections/dashboard/item';
 import { dateFormat, isEmptyAddress, priceFeedByContract } from '../../utilits';
 import { useNetwork } from "wagmi";
 import { Price } from "../../models/price";
+import { Status } from "./Status";
 // ----------------------------------------------------------------------
 
 
@@ -73,13 +74,7 @@ export const PriceRow = ({ item }) => {
       <TableCell align="left">{dateFormat(item.deadline_date)}</TableCell>
       <TableCell align="left">
 
-        {(item.status === 'waiting') && (
-          <Chip variant="outlined" className="font-semibold capitalize" label={item.status} size="small" color="primary"/>)}
-        {(item.status === 'finished') && (<Chip className="font-semibold capitalize" label={item.status} size="small" color="success"/>)}
-        {(item.status === 'taken') && (<Chip className="font-semibold capitalize" label={item.status} size="small" color="primary"/>)}
-
-        {(item.status === 'in review') && (
-          <Chip variant="outlined" className="font-semibold capitalize" label={item.status} size="small" color="success"/>)}
+        <Status item={item}/>
       </TableCell>
 
 

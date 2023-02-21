@@ -8,43 +8,37 @@ export class Base {
   }
 
 
-
-  isMaker = ( address) => {
+  isMaker = (address) => {
     return address === this.maker;
   }
 
-   isTaker = ( address) => {
+  isTaker = (address) => {
     return address === this.taker;
   }
 
 
-
-   canDelete = ( address) => {
+  canDelete = (address) => {
     return address === this.maker && this.paid_taker === 0 && isEmptyAddress(this.taker)
   }
 
 
-
-
-   status() {
-    let status = 'waiting';
+  status() {
+    let status = 'open';
     if (this.finished) {
-      status = 'finished';
+      status = 'closed';
+    } else if (!parseInt(this.paid_taker) && this.deadline_date < new Date() / 1000) {
+      status = 'expired';
+
     } else if (parseInt(this.paid_taker) && this.deadline_date < new Date() / 1000) {
       status = 'in review';
 
     } else if (parseInt(this.paid_taker)) {
-      status = 'taken';
+      status = 'in play';
 
     }
 
-
-
     return status;
   }
-
-
-
 
 
 }

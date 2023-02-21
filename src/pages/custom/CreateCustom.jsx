@@ -4,12 +4,13 @@ import { ethers } from 'ethers';
 import { CustomForm } from "../../components/bet/CustomForm";
 import Abi from '/src/contractsData/CustomChallenge.json'
 import ContractAddress from '/src/contractsData/CustomChallenge-address.json'
-import useWriteWagmi from "../../hooks/useWriteWagmi";
 import { useNavigate } from "react-router-dom";
+import useWriteWagmi from "../../hooks/useWriteWagmi";
+import { TransactionContext } from "../../context/TransactionContext";
 
 export const CreateCustom = () => {
   const { setConfig, tx } = useWriteWagmi();
-  const { txSuccess, isLoading } = useWaitWagmi(tx);
+  const { txSuccess, isLoading } = useContext(TransactionContext);
   const navigate = useNavigate();
 
 
@@ -34,7 +35,7 @@ export const CreateCustom = () => {
   }
   useEffect(() => {
     if (txSuccess) {
-      navigate('/price')
+      navigate('/custom')
 
     }
 

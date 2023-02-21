@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useContext } from "react";
-import challengeSvg from '/src/assets/img/chalange.svg'
+import logopng from '/src/assets/img/logo2.png'
 import {
   Navbar as MTNavbar,
   MobileNav,
@@ -7,7 +7,7 @@ import {
 } from "@material-tailwind/react";
 import { Link } from 'react-router-dom';
 import { ConnectButton, lightTheme } from '@rainbow-me/rainbowkit';
-import InsertChartIcon from '@mui/icons-material/InsertChart';
+
 export const Navbar = ({}) => {
 
 
@@ -74,8 +74,8 @@ export const Navbar = ({}) => {
       </li>
 
       <Menu>
-        <MenuHandler >
-      <li className="flex px-2">
+        <MenuHandler>
+          <li className="flex px-2">
 
            <span className={navbarItemClasses}>
             <i className=" material-icons  mr-2 !text-base opacity-60">
@@ -84,39 +84,39 @@ export const Navbar = ({}) => {
             <span>Bets Market</span>
           </span>
 
-      </li>
+          </li>
         </MenuHandler>
         <MenuList>
-        <MenuItem>
+          <MenuItem>
 
-          <Link to={'/price'}>
+            <Link to={'/price'}>
           <span className={navbarItemClasses}>
             <i className="material-icons mr-2 !text-base opacity-60">
               price_change
             </i>
             <span>Price Prediction</span>
           </span>
-          </Link>
+            </Link>
 
-        </MenuItem>
-        <MenuItem>
+          </MenuItem>
+          <MenuItem>
 
-          <Link to={'/custom'}>
+            <Link to={'/custom'}>
           <span className={navbarItemClasses}>
             <i className="material-icons mr-2 !text-base opacity-60">
               text_snippet
             </i>
             <span>Custom Bets</span>
           </span>
-          </Link>
+            </Link>
 
-        </MenuItem>
+          </MenuItem>
         </MenuList>
       </Menu>
 
 
       <Menu>
-        <MenuHandler >
+        <MenuHandler>
           <li className="flex px-2">
 
            <span className={navbarItemClasses}>
@@ -157,14 +157,7 @@ export const Navbar = ({}) => {
       </Menu>
 
 
-
-
-
-
-
-
     </ul>
-
 
 
   );
@@ -172,13 +165,12 @@ export const Navbar = ({}) => {
   return (
     <div className="z-[5]   my-4 flex w-full max-w-full max-w-full  sm:-right-5 items-center px-4  justify-center"
     >
-      <MTNavbar className="py-4 pl-6 pr-5 lg:py-2  shadow-2xl max-w-screen-2xl shadow-blue-gray-500/10" shadow={true}>
+      <MTNavbar className="py-0 pl-6 pr-5  shadow-2xl max-w-screen-2xl shadow-blue-gray-500/10" shadow={true}>
         <div
           className="flex w-full items-center justify-between  text-[#1A237E]"
         >
           <a className="flex items-center  text-size-sm mr-4 whitespace-nowrap font-bold text-inherit lg:ml-0">
-            <img className="h-11 mr-2 w-auto mb-2" width="50" src={challengeSvg} alt="Challenge" />
-            <span>Web3 Challenge</span>
+            <img className="h-[3.8rem] mr-2 w-auto " src={logopng} alt="Challenge"/>
           </a>
           <IconButton
             variant="text"
@@ -200,7 +192,7 @@ export const Navbar = ({}) => {
                 connectButton: '...',
                 walletLogo: '...',
               },
-            })} showBalance={false} />
+            })} showBalance={false}/>
 
           </span>
           </div>

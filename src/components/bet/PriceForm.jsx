@@ -129,6 +129,7 @@ export const PriceForm = ({ handleSubmit }) => {
             <InputLabel id="demo-simple-select-outlined-label">Select Coin</InputLabel>
             <Select
               name="token_address"
+
               onChange={(e) => {
                 changeCoin(e.target.value)
               }}
@@ -170,7 +171,7 @@ export const PriceForm = ({ handleSubmit }) => {
             name="deadline_date"
             required className="h-[44px]"
             id="datetime-local"
-            label="Expiration date"
+            label="Expiration date UTC"
             type="date"
             min={minDate()}
             defaultValue={minDate()}
