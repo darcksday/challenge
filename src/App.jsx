@@ -12,9 +12,9 @@ import { CustomList } from "./pages/custom/CustomList";
 import { PriceList } from "./pages/price/PriceList";
 import { MyCustomList } from "./pages/my/MyCustomList";
 import { MyPriceList } from "./pages/my/MyPriceList";
+import { DashboardLayout } from "./components/layout/DashboardLayout";
 
 const App = () => {
-  console.log('top level')
 
   const { address } = useAccount()
   const { openConnectModal } = useConnectModal();
@@ -31,7 +31,6 @@ const App = () => {
 
 
   useEffect(() => {
-    console.log('test')
   }, [])
 
 
@@ -39,6 +38,10 @@ const App = () => {
     <Routes>
       <Route element={<MainLayout/>}>
         <Route path="/" element={<Home/>}/>
+      </Route>
+
+
+      <Route element={<DashboardLayout/>}>
         <Route element={<ProtectedRoute/>}>
 
           <Route path="custom/" element={<CustomList/>}/>
@@ -58,6 +61,7 @@ const App = () => {
 
           {/*<Route path="challenges/:id/messages1/:address" element={<Challenge />} />*/}
           {/*<Route path="challenges/:id/messages2/:address" element={<Challenge />} />*/}
+
         </Route>
       </Route>
     </Routes>

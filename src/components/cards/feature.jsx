@@ -1,5 +1,3 @@
-import { ReactNode } from "react";
-
 // @material-tailwind/react components
 import {
   Card,
@@ -9,13 +7,13 @@ import {
 } from "@material-tailwind/react";
 
 
-export const   Feature=({
+export const Feature = ({
   icon,
   iconClass = "material-icons",
   title,
   className,
   children,
-})=> {
+}) => {
   return (
     <Card
       className={`border border-white/80 bg-white/80 shadow-lg backdrop-blur-2xl backdrop-saturate-200 ${className}`}

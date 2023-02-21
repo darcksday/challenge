@@ -1,10 +1,10 @@
 // @material-tailwind/react components
 import { Typography } from "@material-tailwind/react";
+import { Feature } from "../cards/feature";
 
 // page components
-import Feature from "components/cards/feature";
 
-export default function SectionCommnunity() {
+export const SectionCommnunity = () => {
   return (
     <section className="relative z-50 pb-64 md:pt-12">
       <div className="mx-auto w-full text-center text-[#1A237E] md:w-3/4">
