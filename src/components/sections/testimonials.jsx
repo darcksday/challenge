@@ -3,6 +3,11 @@
 // @material-tailwind/react components
 import { Typography } from "@material-tailwind/react";
 import { Testimonial } from '../cards/testimonial';
+import logo1 from '/src/assets/img/logos/logo-amazon.webp';
+import logo2 from '/src/assets/img/logos/logo-ibm.webp';
+import logo3 from '/src/assets/img/logos/logo-microsoft.webp';
+import logo4 from '/src/assets/img/logos/logo-cisco.webp';
+import logo5 from '/src/assets/img/logos/logo-vodafone.webp';
 
 // page components
 
@@ -14,7 +19,7 @@ export default function SectionTestimonials() {
           variant="h2"
           className="mb-2 font-black tracking-normal text-[#1A237E]"
         >
-          Trusted by over <br />
+          Trusted by over <br/>
           <Typography
             as="span"
             variant="h2"
@@ -25,7 +30,7 @@ export default function SectionTestimonials() {
             1,855,822+ web developers
           </Typography>
         </Typography>
-        <Typography className="text-lg text-[#1A237E]/60">
+        <Typography variant="lead" className="text-lg text-[#1A237E]/60">
           Many Fortune 500 companies, startups, universities and governmental
           institutions love Creative Tim&apos;s products.
         </Typography>
@@ -56,35 +61,35 @@ export default function SectionTestimonials() {
           <div className="mr-8 w-full px-12 md:w-1/5 md:px-4">
             <img
               className="w-auto"
-              src="/src/assets/img/logos/logo-amazon.webp"
+              src={logo1}
               alt="tailwind_logo_amazon"
             />
           </div>
           <div className="mr-8 w-full px-12 md:w-1/5 md:px-4">
             <img
               className="w-auto"
-              src="/src/assets/img/logos/logo-ibm.webp"
+              src={logo2}
               alt="tailwind_logo_ibm"
             />
           </div>
           <div className="mr-8 w-full px-12 md:w-1/5 md:px-4">
             <img
               className="w-auto"
-              src="/src/assets/img/logos/logo-microsoft.webp"
+              src={logo3}
               alt="tailwind_logo_microsoft"
             />
           </div>
           <div className="mr-8 w-full px-12 md:w-1/5 md:px-4">
             <img
               className="w-auto"
-              src="/src/assets/img/logos/logo-cisco.webp"
+              src={logo4}
               alt="tailwind_logo_cisco"
             />
           </div>
           <div className="w-full px-12 md:w-1/5 md:px-4">
             <img
               className="w-auto"
-              src="/src/assets/img/logos/logo-vodafone.webp"
+              src={logo5}
               alt="tailwind_logo_vodafone"
             />
           </div>

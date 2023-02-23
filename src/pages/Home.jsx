@@ -1,7 +1,6 @@
 import { Button, Card, Tab, Tabs, TabsHeader, Typography } from '@material-tailwind/react';
 import SectionFeatures from '../components/sections/features';
-import { SectionButton } from '../components/sections/button';
-import SectionShadow from '../components/sections/shadow';
+import { SectionCustom } from '../components/sections/custom';
 import SectionTestimonials from '../components/sections/testimonials';
 import { Link } from "@mui/material";
 
@@ -9,6 +8,7 @@ import { Link } from "@mui/material";
 import compHeaderImg from '/src/assets/img/components-header.png';
 import compFooter from '/src/assets/img/pre-footer.jpg';
 import { SectionCommnunity } from "../components/sections/community";
+import { SectionPrice } from "../components/sections/price";
 
 export const Home = () => {
   return (<>
@@ -20,7 +20,7 @@ export const Home = () => {
                 <div className="w-full max-w-full sm:my-auto md:w-5/6 md:flex-none lg:w-1/2">
                   <Tabs value="react" className="mb-6">
                     <TabsHeader
-                      className="h-10 w-auto rounded-full border border-white/80 bg-white/80 shadow-2xl shadow-blue-gray-500/40 backdrop-blur-2xl backdrop-saturate-200"
+                      className="h-10 w-auto rounded-full border border-white/60 bg-white/60 shadow-2xl shadow-blue-gray-500/40 backdrop-blur-2xl backdrop-saturate-200"
                       indicatorProps={{
                         className: "rounded-full",
                       }}
@@ -48,11 +48,12 @@ export const Home = () => {
                   variant="h1"
                   className="mb-2 font-black tracking-normal text-[#1A237E]"
                 >
-                  Material Tailwind
+                  BetMe
                 </Typography>
-                <Typography className="mb-6 text-lg font-light text-[#1A237E] lg:pr-12">
-                  Material Tailwind is an easy to use components library for
-                  Tailwind CSS and Material Design.
+                <Typography className="mb-6 text-lg  text-[#1A237E] lg:pr-12">
+                  BetMe is is a decentralised, peer-to-peer prediction market, giving you the freedom to bet: how much you want, all at you
+                  want and against whom you want
+
                 </Typography>
                 <div className="flex flex-col-reverse gap-2 lg:flex-row">
                   <Link
@@ -63,7 +64,7 @@ export const Home = () => {
                     </Button>
                   </Link>
                   <div
-                    className="flex rounded-lg border border-white/80 bg-white/80 py-2.5 px-5 text-[#1A237E] shadow-2xl shadow-blue-gray-500/20 backdrop-blur-2xl backdrop-saturate-200">
+                    className="flex rounded-lg border border-white/60 bg-white/60 py-2.5 px-5 text-[#1A237E] shadow-2xl shadow-blue-gray-500/20 backdrop-blur-2xl backdrop-saturate-200">
                   </div>
                 </div>
               </div>
@@ -84,12 +85,15 @@ export const Home = () => {
 
       <Card
         shadow={false}
-        className="mx-6 -mt-20 bg-white md:mx-12 md:-mt-48"
+        className="mx-6  bg-white md:mx-12 -mt-20 bg-white md:mx-12 md:-mt-[18rem]"
       >
         <div className="container z-20 mx-auto px-4">
           <SectionFeatures/>
-          {/*<SectionButton/>*/}
-          {/*<SectionShadow/>*/}
+          <SectionCustom/>
+          <SectionPrice/>
+          {/*<SectionComponents />*/}
+          {/*<SectionFramework />*/}
+
           <SectionTestimonials/>
           <SectionCommnunity/>
 

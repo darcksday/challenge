@@ -16,7 +16,7 @@ export const Feature = ({
 }) => {
   return (
     <Card
-      className={`border border-white/80 bg-white/80 shadow-lg backdrop-blur-2xl backdrop-saturate-200 ${className}`}
+      className={`border border-white/60 bg-white/60 shadow-lg backdrop-blur-2xl backdrop-saturate-200 ${className}`}
     >
       <CardHeader
         shadow={false}
@@ -28,7 +28,7 @@ export const Feature = ({
         <Typography variant="h5" className="mb-2 text-[#1A237E]">
           {title}
         </Typography>
-        <Typography className="font-light text-[#1A237E]/60">
+        <Typography variant="lead" className=" text-[#1A237E]/60">
           {children}
         </Typography>
       </CardBody>

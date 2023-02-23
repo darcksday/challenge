@@ -7,24 +7,24 @@ import { Feature } from '../cards/feature';
 export default function SectionFeatures() {
   const features = [
     {
-      icon: "dashboard",
-      title: "Tailwind CSS Components",
-      desc: "Material Tailwind comes with a huge number of Fully Coded Tailwind CSS components.",
+      icon: "group",
+      title: "P2P",
+      desc: "Allows players to place bets on their own conditions and terms.       ",
     },
     {
-      icon: "terminal",
-      title: "JavaScript Components",
-      desc: "Material Tailwind only features React and HTML components, but in the near future it will future more.",
+      icon: "currency_exchange",
+      title: "No Fees && Delays",
+      desc: "No fees and delays. Pay for transactions only and get your winnings instantly.",
     },
     {
-      icon: "description",
-      title: "Documentation",
-      desc: "This extension comes a lot of fully coded examples that help you get started faster.",
+      icon: "grid_view",
+      title: "Decentralized",
+      desc: "Decentralized and transparent. No third party interference.       ",
     },
     {
-      icon: "view_carousel",
-      title: "Templates (soon)",
-      desc: "Material Tailwind will come with fully coded sample pages so you could start working instantly.",
+      icon: "shield",
+      title: "Privacy",
+      desc: "No personal information required. No KYC required.        ",
     },
   ];
 
@@ -35,11 +35,10 @@ export default function SectionFeatures() {
           variant="h2"
           className="mb-2 font-semibold tracking-normal text-[#1A237E]"
         >
-          Tailwind CSS-Based Framework
+          Main Features
         </Typography>
-        <Typography className="mb-2 text-lg font-light text-[#1A237E]/60">
-          Material Tailwind features multiple React and HTML components, all
-          written with Tailwind CSS classes and Material Design guidelines.
+        <Typography className="mb-2 text-lg  text-[#1A237E]/60">
+          BetMe stands out from conventional betting platforms with its unique advantages and distinguishing features.
         </Typography>
       </div>
       <div className="flex flex-row flex-wrap content-center">
@@ -54,6 +53,5 @@ export default function SectionFeatures() {
           </div>
         ))}
       </div>
-    </section>
-  );
+    </section>);
 }

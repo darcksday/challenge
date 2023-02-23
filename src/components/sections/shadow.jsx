@@ -26,7 +26,7 @@ export default function SectionShadow() {
             </Typography>{" "}
             included.
           </Typography>
-          <Typography className="mb-5 text-lg text-[#1A237E]/60 md:pr-10">
+          <Typography variant="lead" className="mb-5 text-lg text-[#1A237E]/60 md:pr-10">
             Create a cohesive and modern-looking design for your website with
             our collection of realistic shadows. They will help your elements to
             pop-up.
