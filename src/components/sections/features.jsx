@@ -37,7 +37,7 @@ export default function SectionFeatures() {
         >
           Main Features
         </Typography>
-        <Typography className="mb-2 text-lg  text-[#1A237E]/60">
+        <Typography className="mb-2 text-lg font-light text-[#1A237E]/60">
           BetMe stands out from conventional betting platforms with its unique advantages and distinguishing features.
         </Typography>
       </div>

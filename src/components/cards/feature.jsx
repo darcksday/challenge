@@ -28,7 +28,7 @@ export const Feature = ({
         <Typography variant="h5" className="mb-2 text-[#1A237E]">
           {title}
         </Typography>
-        <Typography variant="lead" className=" text-[#1A237E]/60">
+        <Typography className=" text-[#1A237E]/60">
           {children}
         </Typography>
       </CardBody>
