@@ -47,7 +47,7 @@ export const CreatePrice = () => {
 
   return (
     <Page
-      className="mx-auto  bg-white  w-1/3	"
+      className="mx-auto  bg-white  w-[700px]	"
     >
       <div className="container z-20 mx-auto px-4">
         <section className="py-5 lg:py-10">

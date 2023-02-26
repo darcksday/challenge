@@ -9,6 +9,9 @@ import compHeaderImg from '/src/assets/img/components-header.png';
 import compFooter from '/src/assets/img/pre-footer.jpg';
 import { SectionCommnunity } from "../components/sections/community";
 import { SectionPrice } from "../components/sections/price";
+import { SectionPool } from "../components/sections/pool";
+import { SectionSports } from "../components/sections/sports";
+import { SectionChat } from "../components/sections/chat";
 
 export const Home = () => {
   return (<>
@@ -50,7 +53,7 @@ export const Home = () => {
                 >
                   BetMe
                 </Typography>
-                <Typography className="mb-6 text-lg  text-[#1A237E] lg:pr-12">
+                <Typography variant="lead" className="mb-6 text-lg  text-[#1A237E]/60 lg:pr-12">
                   BetMe is is a decentralised, peer-to-peer prediction market, giving you the freedom to bet: how much you want, all at you
                   want and against whom you want
 
@@ -91,6 +94,10 @@ export const Home = () => {
           <SectionFeatures/>
           <SectionCustom/>
           <SectionPrice/>
+          <SectionChat/>
+          <SectionSports/>
+          <SectionPool/>
+
           {/*<SectionComponents />*/}
           {/*<SectionFramework />*/}
 

@@ -34,8 +34,8 @@ export const CreateCustom = () => {
 
   }
   useEffect(() => {
-    if (txSuccess) {
-      navigate('/custom')
+    if (txSuccess && txSuccess === tx?.hash) {
+      navigate('/custom');
 
     }
 

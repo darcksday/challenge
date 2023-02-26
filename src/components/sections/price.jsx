@@ -4,27 +4,27 @@
 import { Button, Typography } from "@material-tailwind/react";
 
 // page components
-import logo1 from '/src/assets/img/purple.png';
-import logo2 from '/src/assets/img/color-palette.png';
-import { CodePreview } from "../cards/code-preview";
+import logo1 from '/src/assets/img/blue.png';
+import screen1 from '/src/assets/img/screens/price.png';
+import screen2 from '/src/assets/img/screens/price_create.png';
+import { Link } from "react-router-dom";
 
 export const SectionPrice = () => {
   return (
     <section className="py-24">
       <div className="flex flex-wrap items-center">
         <div className="relative w-full px-4 md:w-6/12">
-          <CodePreview
-            code={``}
-          />
+          <img className="rounded-lg" width="612" src={screen1} alt=''/>
+
           <img
             className="absolute -bottom-28 w-full md:top-36 md:-right-24 md:bottom-auto lg:top-24 lg:-left-52"
             src={logo1}
             alt="tailwind_blob_purple"
           />
           <img
-            className="absolute top-10 right-6 z-30 w-1/2 md:-top-10 md:-right-10"
-            src={logo2}
-            alt="tailwind_colors_pallet"
+            className="absolute rounded-lg top-10 right-6 z-30 w-1/2 md:-top-10 md:-right-10 shadow-2xl"
+            src={screen2}
+            alt=""
           />
         </div>
         <div className="relative order-first w-full px-4 md:order-last md:w-6/12">
@@ -40,15 +40,19 @@ export const SectionPrice = () => {
                 className="inline-block font-black tracking-normal"
                 textGradient
               >
-                Price P2P
+                Price
               </Typography><br/>
               Predictions
             </Typography>
-            <Typography className="text-lg text-[#1A237E]/60 lg:pr-2">
-              Price Prediction bets on crypto prices <b>Initiator</b>. <b>Oracle </b>
-              (guarantor) - trusted person who determines the winner or draw and get fee
-              at the expiration date.
+            <Typography variant="lead" className="mb-5 text-lg text-[#1A237E]/60 md:pr-10">
+              P2P crypto Price Predictions - are created, configured by the <b>Initiator</b>. <b> Chainlink Price Feeds</b> are used to
+              determine
+              the winner. Funds are distributed automatically when the expiration arrives. Coefficient is static and is set by
+              the <b>Initiator</b>
             </Typography>
+            <Link to={'/price'}>
+              <Button>To Market</Button>
+            </Link>
           </div>
         </div>
       </div>
