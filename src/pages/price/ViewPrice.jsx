@@ -3,7 +3,7 @@ import Page from '../../components/Page';
 import {
   Avatar,
   Box,
-  Card, CardActionArea, CardActions, CardContent, CardMedia, Chip,
+  Card, CardActionArea, CardActions, CardContent, CardMedia, Chip, CircularProgress,
   Grid,
   List,
   ListItemButton, ListItemSecondaryAction,
@@ -41,6 +41,7 @@ import { Communication } from '../../components/Communication';
 import { Price } from "../../models/price";
 import useWriteWagmi from "../../hooks/useWriteWagmi";
 import { Status } from "../../components/bet/Status";
+import { TransactionContext } from "../../context/TransactionContext";
 
 export const ViewPrice = () => {
   const [tab, setTab] = useState('0');
@@ -51,6 +52,7 @@ export const ViewPrice = () => {
   const { address } = useAccount()
   const chain = useNetwork();
   const nativeCurrency = chain.chain.nativeCurrency;
+  const { isLoading } = useContext(TransactionContext);
 
   const { data: item, refetch: refetchCollectionItems } = useContractRead({
     address: ContractAddress?.address,
@@ -371,7 +373,11 @@ export const ViewPrice = () => {
                 {
                   item.canDelete(address) && (
                     <div className="flex w-full gap-4 justify-center mt-8">
-                      <Button onClick={remove} size="lg" color="red">Remove</Button>
+                      {isLoading ? <CircularProgress/> :
+                        <Button onClick={remove} size="lg" color="red">Remove</Button>
+
+
+                      }
 
                     </div>
                   )
@@ -380,7 +386,12 @@ export const ViewPrice = () => {
                 {
                   item.canAccept(address) && (
                     <div className="flex w-full gap-4 justify-center mt-8">
-                      <Button onClick={accept} size="lg" color="blue">Bet {item.accept_payment + nativeCurrency.symbol}</Button>
+
+                      {isLoading ? <CircularProgress/> :
+                        <Button onClick={accept} size="lg" color="blue">Bet {item.accept_payment + nativeCurrency.symbol}</Button>
+
+
+                      }
                     </div>
                   )
                 }

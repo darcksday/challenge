@@ -12,10 +12,47 @@ import { SectionPrice } from "../components/sections/price";
 import { SectionPool } from "../components/sections/pool";
 import { SectionSports } from "../components/sections/sports";
 import { SectionChat } from "../components/sections/chat";
+import { RoadmapSection } from "../components/sections/roadmap";
 
 export const Home = () => {
+
+  let roadmap = {
+    title: "Roadmap",
+    desc: `We started development process this year and now we have a clear vision
+     how to make ZomLand the best NFT game ever.`,
+    sections: [
+      {
+        date: "Q4, 2022",
+        title: "BetMe Idea",
+        desc: "Prepare codebase,  logic and roadmap.",
+        type: "past",
+      },
+      {
+        date: "Q1, 2023",
+        title: "BetME Alpha",
+        desc: "Create website landing.Launch  Custom ,Price Prediction bets and Chat . Support Eth-compatible networks.  Start Testnet. ",
+        type: "past",
+      },
+      {
+        date: "Q1-Q2, 2023",
+        title: "BetME V1",
+        desc: "Launching Pool Bets",
+        type: "soon",
+      },
+
+      {
+        date: "Q1-Q2, 2023",
+        title: "BetME V2",
+        desc: "Launching Sport Bets",
+        type: "incomming",
+      },
+
+    ],
+  };
+
+
   return (<>
-      <div className="h-screen min-h-screen  bg-[url('/src/assets/img/bg-header.jpg')]  bg-cover bg-center bg-no-repeat ">
+      <div className="h-[70vh]  bg-[url('/src/assets/img/bg-header.jpg')]  bg-cover bg-center bg-no-repeat ">
         <div className="relative z-50 h-fit ">
           <div className="container mx-auto px-4">
             <div className="flex flex-wrap items-center justify-between">
@@ -95,13 +132,43 @@ export const Home = () => {
           <SectionCustom/>
           <SectionPrice/>
           <SectionChat/>
-          <SectionSports/>
           <SectionPool/>
+          <SectionSports/>
+
+
+          <section>
+
+
+            <div className="mx-auto mb-24 w-full text-center md:w-3/4 lg:w-1/2">
+              <Typography
+                variant="h2"
+                className="mb-2 font-semibold tracking-normal text-[#1A237E]"
+              >
+                Roadmap
+              </Typography>
+              {/*<Typography variant="lead" className="mb-2 text-lg  text-[#1A237E]/60">*/}
+              {/*  BetMe stands out from conventional betting platforms with its unique advantages and distinguishing features.*/}
+              {/*</Typography>*/}
+            </div>
+            <div className="relative wrap overflow-hidden h-full">
+              <div className="left-1/2 border-dashed absolute border-opacity-30 border-blue-200 h-full border hidden sm:block"></div>
+              {roadmap.sections.map((section, index) => (
+                <RoadmapSection
+                  key={index}
+                  index={index}
+                  date={section.date}
+                  title={section.title}
+                  desc={section.desc}
+                  type={section.type}
+                />
+              ))}
+            </div>
+          </section>
 
           {/*<SectionComponents />*/}
           {/*<SectionFramework />*/}
 
-          <SectionTestimonials/>
+          {/*<SectionTestimonials/>*/}
           <SectionCommnunity/>
 
         </div>

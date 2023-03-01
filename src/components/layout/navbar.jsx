@@ -169,9 +169,9 @@ export const Navbar = ({}) => {
         <div
           className="flex w-full items-center justify-between  text-[#1A237E]"
         >
-          <a className="flex items-center  text-size-sm mr-4 whitespace-nowrap font-bold text-inherit lg:ml-0">
+          <Link to={'/'} className="flex  mr-4 ">
             <img className="h-[3.8rem] mr-2 w-auto " src={logopng} alt="Challenge"/>
-          </a>
+          </Link>
           <IconButton
             variant="text"
             className="ml-auto h-6 w-6 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden"

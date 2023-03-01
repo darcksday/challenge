@@ -14,7 +14,7 @@ export default function SectionFeatures() {
     {
       icon: "currency_exchange",
       title: "No Fees && Delays",
-      desc: "No fees and delays. Pay for transactions only and get your winnings instantly.",
+      desc: "Pay for transactions only and get your winnings instantly.",
     },
     {
       icon: "grid_view",
