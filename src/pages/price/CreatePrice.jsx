@@ -8,6 +8,7 @@ import { parseUnits } from "@ethersproject/units/src.ts";
 import { useNavigate } from "react-router-dom";
 import useWriteWagmi from "../../hooks/useWriteWagmi";
 import { TransactionContext } from "../../context/TransactionContext";
+import sdk from "redstone-sdk";
 
 export const CreatePrice = () => {
   const { setConfig, tx } = useWriteWagmi();
@@ -17,22 +18,45 @@ export const CreatePrice = () => {
   const navigate = useNavigate();
 
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     let formData = new FormData(e.target);
     let data = Object.fromEntries(formData.entries());
     if (data.deadline_date) {
       data['deadline_date'] = Date.parse(data['deadline_date']) / 1000
     }
-    setConfig(
+
+    const redstonePayload = await sdk.requestRedstonePayload(
       {
-        'address': ContractAddress?.address,
-        'abi': Abi.abi,
-        'functionName': 'create',
-        'args': [data['name'], ethers.utils.parseEther(data['cof']), data['deadline_date'], data['token_address'], parseUnits(data['price_prediction'], 8), data['prediction_type']],
-        'ether': data['paid_maker']
-      }
+        dataServiceId: "redstone-main-demo",
+        uniqueSignersCount: 1,
+        dataFeeds: [data.token_symbol],
+      },
+      ["https://d33trozg86ya9x.cloudfront.net"],
+      "manual-payload"
     );
+
+    if (redstonePayload) {
+      data['redstone_payload'] = redstonePayload;
+    }
+    console.log(data)
+    // setConfig(
+    //   {
+    //     'address': ContractAddress?.address,
+    //     'abi': Abi.abi,
+    //     'functionName': 'create',
+    //     'args': [
+    //       data['name'],
+    //       ethers.utils.parseEther(data['cof']),
+    //       data['deadline_date'],
+    //       parseUnits(data['price_prediction'], 8),
+    //       data['prediction_type'],
+    //       data['redstone_payload'],
+    //       data['token_symbol']
+    //     ],
+    //     'ether': data['paid_maker']
+    //   }
+    // );
 
   }
 

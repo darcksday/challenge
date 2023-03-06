@@ -28,7 +28,6 @@ export class Price extends Base {
   constructor(item) {
     super(item);
 
-    console.log(item);
     this.id = item.id.toString();
     this.name = item.name;
     this.description = item.description;
@@ -47,7 +46,7 @@ export class Price extends Base {
     this.status = super.status();
     this.prediction_price = formatAmount(item.prediction_price, 8);
     this.prediction_type = item.prediction_type;
-    this.token_address = item.token_address;
+    this.token_symbol = item.token_symbol;
     this.accept_payment = (parseFloat(this.s_paid_maker) * parseFloat(this.s_cof)).toString();
   }
 
@@ -68,18 +67,18 @@ export class Price extends Base {
 
 
   get tokenDetails() {
-    return Price.priceFeedByContract(this.token_address);
+    return Price.priceFeedByContract(this.token_symbol);
   }
 
 
-  static priceFeedByContract = (token_address) => {
+  static priceFeedByContract = (token_symbol) => {
     let res = {};
 
     if (priceFeed) {
 
       Object.keys(priceFeed).forEach((key) => {
         priceFeed[key].forEach((item) => {
-          if (item.feedContract === token_address) {
+          if (item.symbol === token_symbol) {
             item['logo'] = Price.getLogo(item.logo_id);
             res = item;
           }

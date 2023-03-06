@@ -3,43 +3,20 @@ import { Button, CardBody, CardFooter, Input, Typography, Option } from "@materi
 import { Avatar, CircularProgress, FormControl, InputLabel, MenuItem, Select, Slider } from "@mui/material";
 import { deepOrange, deepPurple } from "@mui/material/colors";
 import priceFeed from '../../utilits/priceFeed.json';
-import { useContractRead, useNetwork } from 'wagmi'
-import ContractAddress from "../../contractsData/PriceChallenge-address.json";
-import Abi from "../../contractsData/PriceChallenge.json";
-import { formatAmount, getLogo, minDate } from "../../utilits";
-import { useNavigate } from "react-router-dom";
-// import {  Select as Select1 } from "@mui/material";
+import {  useNetwork } from 'wagmi'
+import {minDate } from "../../utilits";
 import { Price } from "../../models/price";
 import { TransactionContext } from "../../context/TransactionContext";
+import redstone from 'redstone-api';
 
 
 export const PriceForm = ({ handleSubmit }) => {
-  const [betData, setBetData] = useState({ paid_maker: 0, cof: 1, op_bet: '' });
-  const [contractFeed, setContractFeed] = useState([]);
+  const [betData, setBetData] = useState({ paid_maker: 0, cof: 1, op_bet: '', price_prediction: '' });
   const chain = useNetwork();
   const networks = priceFeed[chain.chain.id];
   const nativeCurrency = chain.chain.nativeCurrency;
 
   const { isLoading } = useContext(TransactionContext);
-
-
-  const { data: price = '', refetch: refetchCollectionItems } = useContractRead({
-    address: ContractAddress?.address,
-    abi: Abi.abi,
-    select: (data) => parseFloat(formatAmount(data, 8)).toFixed(2),
-    args: [contractFeed],
-    functionName: "cronPriceFeed",
-    // watch: true,
-    onSuccess: (data) => {
-      console.log('data', data)
-    },
-    onError: (error) => {
-      console.log(contractFeed)
-      console.log(error)
-    },
-    enabled: contractFeed.length > 0,
-
-  });
 
 
   const handleChangeBetData = (e) => {
@@ -50,8 +27,10 @@ export const PriceForm = ({ handleSubmit }) => {
   }
 
 
-  const changeCoin = (e) => {
-    setContractFeed(e);
+  const changeCoin = async (e) => {
+    const price = await redstone.getPrice(e);
+    const formattedPrice = parseFloat(price.value.toFixed(2));
+    setBetData(prevState => ({ ...prevState, 'price_prediction': formattedPrice }));
   }
 
 
@@ -128,7 +107,7 @@ export const PriceForm = ({ handleSubmit }) => {
           <FormControl size="small" required className="w-1/3 mr-2" variant="outlined">
             <InputLabel id="demo-simple-select-outlined-label">Select Coin</InputLabel>
             <Select
-              name="token_address"
+              name="token_symbol"
 
               onChange={(e) => {
                 changeCoin(e.target.value)
@@ -138,7 +117,7 @@ export const PriceForm = ({ handleSubmit }) => {
               {
                 networks.map((item) => {
                   return (
-                    <MenuItem value={item.feedContract} key={item.symbol}>
+                    <MenuItem value={item.symbol} key={item.symbol}>
                       <div className="flex items-center">
                         <Avatar className="mr-2 h-[20px] w-[20px]" alt={item.name} src={Price.getLogo(item.logo_id)}/>
                         <span className="uppercase">{item.symbol}</span>
@@ -163,7 +142,9 @@ export const PriceForm = ({ handleSubmit }) => {
           </FormControl>
 
           <div className="w-1/3">
-            <Input required name="price_prediction" defaultValue={price} step="0.01" min="0.01" type="number" label="USD"/>
+            <Input required name="price_prediction" defaultValue={betData.price_prediction} step="0.01"
+                   min="0.01" type="number"
+                   label="USD"/>
           </div>
         </div>
         <div>

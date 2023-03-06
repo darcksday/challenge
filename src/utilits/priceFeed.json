@@ -3,38 +3,32 @@
     {
       "logo_id": 1,
       "symbol": "BTC",
-      "name": "bitcoin",
-      "feedContract": "0x007A22900a3B98143368Bd5906f8E17e9867581b"
+      "name": "bitcoin"
     },
     {
       "logo_id": 1027,
       "symbol": "ETH",
-      "name": "ethereum",
-      "feedContract": "0x0715A7794a1dc8e42615F059dD6e406A6594651A"
+      "name": "ethereum"
     },
     {
       "logo_id": 1975,
       "symbol": "LINK",
-      "name": "chainlink",
-      "feedContract": "0x1C2252aeeD50e0c9B64bDfF2735Ee3C932F5C408"
+      "name": "chainlink"
     },
     {
       "logo_id": 3890,
       "symbol": "MATIC",
-      "name": "polygon",
-      "feedContract": "0xd0D5e3DB44DE05E9F294BB0a3bEEaF030DE24Ada"
+      "name": "polygon"
     },
     {
       "logo_id": 6210,
       "symbol": "SAND",
-      "name": "sandbox",
-      "feedContract": "0x9dd18534b8f456557d11B9DDB14dA89b2e52e308"
+      "name": "sandbox"
     },
     {
       "logo_id": 5426,
       "symbol": "SOL",
-      "name": "solana",
-      "feedContract": "0xEB0fb293f368cE65595BeD03af3D3f27B7f0BD36"
+      "name": "solana"
     }
   ]
 }
