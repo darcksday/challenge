@@ -13,7 +13,7 @@ import redstone from 'redstone-api';
 export const PriceForm = ({ handleSubmit }) => {
   const [betData, setBetData] = useState({ paid_maker: 0, cof: 1, op_bet: '', price_prediction: '' });
   const chain = useNetwork();
-  const networks = priceFeed[chain.chain.id];
+  const networks = priceFeed.items;
   const nativeCurrency = chain.chain.nativeCurrency;
 
   const { isLoading } = useContext(TransactionContext);

@@ -33,7 +33,7 @@ import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import PercentIcon from '@mui/icons-material/Percent';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import BalanceIcon from '@mui/icons-material/Balance';
-import { Link as RouterLink, useParams } from 'react-router-dom';
+import { Link as RouterLink, useNavigate, useParams } from 'react-router-dom';
 import TabContext from '@mui/lab/TabContext';
 import { TabList } from '@mui/lab';
 
@@ -47,12 +47,15 @@ import { Communication } from '../../components/Communication';
 import { Custom } from "../../models/custom";
 import useWriteWagmi from "../../hooks/useWriteWagmi";
 import { Status } from "../../components/bet/Status";
+import { TransactionContext } from "../../context/TransactionContext";
 
 export const ViewCustom = () => {
   const [tab, setTab] = useState('0');
   const [value, setValue] = useState(false);
   let { id } = useParams();
-  const { setConfig, txSuccess } = useWriteWagmi();
+  const { setConfig, tx } = useWriteWagmi();
+  const { txSuccess, isLoading } = useContext(TransactionContext);
+  const navigate = useNavigate();
 
   const { address } = useAccount()
   const chain = useNetwork();
@@ -107,7 +110,13 @@ export const ViewCustom = () => {
 
 
   };
+  useEffect(() => {
+    if (txSuccess && txSuccess === tx?.hash) {
+      navigate('/price');
 
+    }
+
+  }, [txSuccess])
 
   return (<Page className="max-w-[1350px] pt-0 mx-auto" title="Challenges">
       <div>

@@ -9,14 +9,19 @@ import "./RedStonePrice.sol";
 
 import "./Utils.sol";
 
-contract PriceChallenge is Utils, ChallengeHelper,RedStonePrice {
+contract PriceChallenge is Utils, ChallengeHelper, RedStonePrice {
 	uint public id;
-
+	bytes public  payloadData;
+	uint  public updateTime;
 
 	enum PredictionType{MORE, LESS}
+	event UpdatePayload(uint time, bytes payload);
 
 
+	constructor(uint _start_time){
+		updateTime = _start_time;
 
+	}
 
 
 	struct ChallengeStruct {
@@ -28,8 +33,7 @@ contract PriceChallenge is Utils, ChallengeHelper,RedStonePrice {
 		address taker;
 		uint paid_maker;
 		uint paid_taker;
-		bytes redstone_payload;
-		string token_symbol;
+		bytes32 token_symbol;
 		uint created_date;
 		uint deadline_date;
 		bool finished;
@@ -43,15 +47,12 @@ contract PriceChallenge is Utils, ChallengeHelper,RedStonePrice {
 	mapping(address => uint[]) userChallenges;
 
 
-
-
-
 	function getId() internal returns (uint) {
 		return id++;
 	}
 
 
-	function create(string memory _name, uint _cof, uint _deadline_date,  uint _price_prediction, PredictionType _prediction_type,bytes calldata _redstone_payload,string memory _token_symbol) external payable {
+	function create(string memory _name, uint _cof, uint _deadline_date, uint _price_prediction, PredictionType _prediction_type, bytes32 _token_symbol) external payable {
 
 		if (msg.value < 0) {
 
@@ -74,7 +75,6 @@ contract PriceChallenge is Utils, ChallengeHelper,RedStonePrice {
 			address(0),
 			msg.value,
 			0,
-			_redstone_payload,
 			_token_symbol,
 			block.timestamp,
 			_deadline_date,
@@ -136,6 +136,7 @@ contract PriceChallenge is Utils, ChallengeHelper,RedStonePrice {
 		return challenges[_id];
 	}
 
+
 	function remove(uint _id) public returns (bool){
 
 		ChallengeStruct memory _item = challenges[_id];
@@ -187,8 +188,7 @@ contract PriceChallenge is Utils, ChallengeHelper,RedStonePrice {
 	function setWinner(uint _i) public {
 
 		ChallengeStruct memory _item = challenges[_i];
-		uint256 _price = getLatestPrice(_item.redstone_payload,bytes32(bytes(_item.token_symbol))
-		);
+		uint256 _price = getLatestPrice(payloadData, _item.token_symbol);
 
 		uint _win_amount = SafeMath.add(_item.paid_maker, _item.paid_taker);
 
@@ -245,11 +245,10 @@ contract PriceChallenge is Utils, ChallengeHelper,RedStonePrice {
 	}
 
 
+	function cronCall(bytes memory redstonePayload) external {
 
 
-
-	function cronCall() external {
-
+		updatePayload(redstonePayload);
 		for (uint _i; _i < id; ++_i) {
 			if (!challenges[_i].finished && canSetWinner(_i)) {
 
@@ -258,6 +257,13 @@ contract PriceChallenge is Utils, ChallengeHelper,RedStonePrice {
 			}
 		}
 	}
+
+	function updatePayload(bytes memory redstonePayload) public {
+		payloadData = redstonePayload;
+		updateTime = block.timestamp;
+		emit UpdatePayload(updateTime, payloadData);
+	}
+
 
 }
 

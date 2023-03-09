@@ -20,7 +20,13 @@ async function main() {
   await customChallenge.deployed();
 
   const PriceChallenge = await hre.ethers.getContractFactory("PriceChallenge");
-  const priceChallenge = await PriceChallenge.deploy();
+
+
+  let startTime = new Date();
+  startTime.setUTCHours(0, 0, 0, 0);
+  startTime = startTime.getTime() / 1000;
+
+  const priceChallenge = await PriceChallenge.deploy(startTime);
   await priceChallenge.deployed();
 
 

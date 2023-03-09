@@ -1,5 +1,4 @@
 import { ethers } from 'ethers';
-import priceFeed from './priceFeed.json';
 
 
 export const formatAmount = (amount, decimals) => {

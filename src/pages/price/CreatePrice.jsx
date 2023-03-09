@@ -8,7 +8,7 @@ import { parseUnits } from "@ethersproject/units/src.ts";
 import { useNavigate } from "react-router-dom";
 import useWriteWagmi from "../../hooks/useWriteWagmi";
 import { TransactionContext } from "../../context/TransactionContext";
-import sdk from "redstone-sdk";
+import { convertStringToBytes32 } from "redstone-protocol/dist/src/common/utils";
 
 export const CreatePrice = () => {
   const { setConfig, tx } = useWriteWagmi();
@@ -26,37 +26,23 @@ export const CreatePrice = () => {
       data['deadline_date'] = Date.parse(data['deadline_date']) / 1000
     }
 
-    const redstonePayload = await sdk.requestRedstonePayload(
-      {
-        dataServiceId: "redstone-main-demo",
-        uniqueSignersCount: 1,
-        dataFeeds: [data.token_symbol],
-      },
-      ["https://d33trozg86ya9x.cloudfront.net"],
-      "manual-payload"
-    );
 
-    if (redstonePayload) {
-      data['redstone_payload'] = redstonePayload;
-    }
-    console.log(data)
-    // setConfig(
-    //   {
-    //     'address': ContractAddress?.address,
-    //     'abi': Abi.abi,
-    //     'functionName': 'create',
-    //     'args': [
-    //       data['name'],
-    //       ethers.utils.parseEther(data['cof']),
-    //       data['deadline_date'],
-    //       parseUnits(data['price_prediction'], 8),
-    //       data['prediction_type'],
-    //       data['redstone_payload'],
-    //       data['token_symbol']
-    //     ],
-    //     'ether': data['paid_maker']
-    //   }
-    // );
+    setConfig(
+      {
+        'address': ContractAddress?.address,
+        'abi': Abi.abi,
+        'functionName': 'create',
+        'args': [
+          data['name'],
+          ethers.utils.parseEther(data['cof']),
+          data['deadline_date'],
+          parseUnits(data['price_prediction'], 8),
+          data['prediction_type'],
+          convertStringToBytes32(data['token_symbol'])
+        ],
+        'ether': data['paid_maker']
+      }
+    );
 
   }
 

@@ -4,6 +4,7 @@ import priceFeed from "../utilits/priceFeed.json";
 import ContractAddress from "../contractsData/PriceChallenge-address.json";
 import Abi from "../contractsData/PriceChallenge.json";
 import { useState } from "react";
+import { parseBytes32String } from "ethers/lib/utils";
 
 export class Price extends Base {
 
@@ -26,8 +27,9 @@ export class Price extends Base {
 
 
   constructor(item) {
-    super(item);
 
+    super(item);
+    console.log(item)
     this.id = item.id.toString();
     this.name = item.name;
     this.description = item.description;
@@ -46,7 +48,7 @@ export class Price extends Base {
     this.status = super.status();
     this.prediction_price = formatAmount(item.prediction_price, 8);
     this.prediction_type = item.prediction_type;
-    this.token_symbol = item.token_symbol;
+    this.token_symbol = parseBytes32String(item.token_symbol);
     this.accept_payment = (parseFloat(this.s_paid_maker) * parseFloat(this.s_cof)).toString();
   }
 
@@ -67,22 +69,20 @@ export class Price extends Base {
 
 
   get tokenDetails() {
-    return Price.priceFeedByContract(this.token_symbol);
+    return Price.priceFeedBySymbol(this.token_symbol);
   }
 
 
-  static priceFeedByContract = (token_symbol) => {
+  static priceFeedBySymbol = (token_symbol) => {
     let res = {};
 
     if (priceFeed) {
 
-      Object.keys(priceFeed).forEach((key) => {
-        priceFeed[key].forEach((item) => {
-          if (item.symbol === token_symbol) {
-            item['logo'] = Price.getLogo(item.logo_id);
-            res = item;
-          }
-        })
+      priceFeed['items'].forEach((item) => {
+        if (item.symbol === token_symbol) {
+          item['logo'] = Price.getLogo(item.logo_id);
+          res = item;
+        }
       })
 
 
