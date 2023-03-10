@@ -6,7 +6,7 @@ import './assets/styles/index.css'
 import { Web3Provider } from "./context/Web3Context";
 import { BrowserRouter } from 'react-router-dom';
 import ThemeProvider from './theme';
-import '@rainbow-me/rainbowkit/dist/index.css';
+// import '@rainbow-me/rainbowkit/dist/styles.css';
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
