@@ -250,7 +250,7 @@ contract PriceChallenge is Utils, ChallengeHelper, RedStonePrice {
 
 		updatePayload(redstonePayload);
 		for (uint _i; _i < id; ++_i) {
-			if (!challenges[_i].finished && canSetWinner(_i)) {
+			if ( canSetWinner(_i)) {
 
 				setWinner(_i);
 
