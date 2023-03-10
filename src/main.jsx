@@ -5,8 +5,7 @@ import './assets/styles/index.css'
 // // Bootstrap Bundle JS
 import { Web3Provider } from "./context/Web3Context";
 import { BrowserRouter } from 'react-router-dom';
-import ThemeProvider from './theme';
-import '@rainbow-me/rainbowkit/styles.css';
+import ThemeProvider from './thefme';
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
