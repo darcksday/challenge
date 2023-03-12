@@ -15,7 +15,7 @@ export default function Footer() {
     {
       icon: "fab fa-github",
       color: "text-gray-900",
-      link: "",
+      link: "https://github.com/darcksday/challenge",
     },
     {
       icon: "fab fa-discord",
