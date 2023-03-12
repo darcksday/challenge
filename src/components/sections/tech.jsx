@@ -33,8 +33,9 @@ export default function SectionTech() {
           <Typography variant="lead" className="mb-5 text-lg text-[#1A237E]/60 md:pr-10">
             To display current prices on the UI, we using the RedStone API. On the contract side, we
             implemented the RedStone Price Feed contracts to obtain current prices and close bets. The Gelato Web3 functions are responsible
-            for generating and updating the redstonePayload (byte code required for the getPrice function) and control by the expiration
-            of bets to determine the winner and distribute funds. Currently, this function is called and updates on-chain data every 24
+            for generating and updating the redstonePayload (byte code required for the getPrice function) and The Gelato Web3 functions are
+            responsible for generating and updating the redstonePayload and controled the expiration of bets for determine the winner and
+            distribute funds. Currently, this function is called and updates on-chain data every 24
             hours. Here is list of technologies was used:
           </Typography>
           <div className="mt-7 flex flex-wrap text-[#344767]">
