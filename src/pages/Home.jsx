@@ -99,10 +99,10 @@ export const Home = () => {
               <div className="hidden px-4 pt-24 mr-10 md:pt-0 lg:block">
 
 
-                <iframe frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        className="aspect-auto" width="600" height="400"
-                        src="https://www.youtube.com/embed/xP4St4Q5GAg">
-                </iframe>
+                <iframe width="600" height="400" src="https://www.youtube.com/embed/xP4St4Q5GAg" title="YouTube video player"
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowFullScreen></iframe>
               </div>
             </div>
           </div>
