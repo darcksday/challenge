@@ -8,7 +8,7 @@ import { CodePreview } from "../cards/code-preview";
 export const SectionPool = () => {
   return (
     <section className="py-24">
-      <div className="flex flex-wrap items-center">
+      <div className="flex flex-wrap justify-between items-center">
         <div className="relative w-full px-4 md:w-6/12">
           <CodePreview
             code={`//TO BE CONTINUED
@@ -29,8 +29,6 @@ export const SectionPool = () => {
             />
 
 
-
-
             <Typography
               variant="h2"
               className="mb-2 font-black tracking-normal text-[#1A237E]"
@@ -48,7 +46,7 @@ export const SectionPool = () => {
               Bets and Events
 
             </Typography>
-            <Typography variant="lead" className="mb-5 text-lg text-[#1A237E]/60 md:pr-10">
+            <Typography variant="lead" className="mb-5 text-lg text-[#1A237E]/60 md:pr-10"> Count of participants is unlimited.
               Players bet on their predicted outcomes and all stakes go into a <b>Single Pool</b>. The pool is distributed to the winners.
               The coefficient are dynamic and depend on the number of players and the amount their bets.
               .</Typography>

@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 export const SectionPrice = () => {
   return (
     <section className="py-24">
-      <div className="flex flex-wrap items-center">
+      <div className="flex flex-wrap justify-between items-center">
         <div className="relative w-full px-4 md:w-6/12">
           <img className="rounded-lg" width="612" src={screen1} alt=''/>
 
@@ -28,7 +28,7 @@ export const SectionPrice = () => {
           />
         </div>
         <div className="relative order-first w-full px-4 md:order-last md:w-6/12">
-          <div className="md:ml-7 lg:ml-24 lg:w-2/3">
+          <div className="md:ml-7 lg:ml-24 ">
             <Typography
               variant="h2"
               className="mb-2 font-black tracking-normal text-[#1A237E]"
@@ -45,7 +45,7 @@ export const SectionPrice = () => {
               Predictions
             </Typography>
             <Typography variant="lead" className="mb-5 text-lg text-[#1A237E]/60 md:pr-10">
-              P2P crypto Price Predictions - are created, configured by the <b>Initiator</b>. <b> Chainlink Price Feeds</b> are used to
+              P2P crypto Price Predictions - are created, configured by the <b>Initiator</b>. <b> RedStone Price Feeds</b> are used to
               determine
               the winner. Funds are distributed automatically when the expiration arrives. Coefficient is static and is set by
               the <b>Initiator</b>

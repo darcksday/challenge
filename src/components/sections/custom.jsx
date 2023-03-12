@@ -9,7 +9,7 @@ export const SectionCustom = () => {
 
   return (
     <section className="py-24">
-      <div className="flex flex-wrap items-center">
+      <div className="flex flex-wrap justify-between items-center">
         <div className="w-full px-4 lg:w-5/12">
           <Typography
             variant="h2"

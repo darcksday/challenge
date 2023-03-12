@@ -1,7 +1,6 @@
 import { Button, Card, Tab, Tabs, TabsHeader, Typography } from '@material-tailwind/react';
 import SectionFeatures from '../components/sections/features';
 import { SectionCustom } from '../components/sections/custom';
-import SectionTestimonials from '../components/sections/testimonials';
 import { Link } from "@mui/material";
 
 
@@ -13,6 +12,7 @@ import { SectionPool } from "../components/sections/pool";
 import { SectionSports } from "../components/sections/sports";
 import { SectionChat } from "../components/sections/chat";
 import { RoadmapSection } from "../components/sections/roadmap";
+import SectionTech from "../components/sections/tech";
 
 export const Home = () => {
 
@@ -24,7 +24,7 @@ export const Home = () => {
       {
         date: "Q4, 2022",
         title: "BetMe Idea",
-        desc: "Prepare codebase,  logic and roadmap.",
+        desc: "Prepare codebase,  logic and idea.",
         type: "past",
       },
       {
@@ -33,17 +33,33 @@ export const Home = () => {
         desc: "Create website landing.Launch  Custom ,Price Prediction bets and Chat . Support Eth-compatible networks.  Start Testnet. ",
         type: "past",
       },
+
       {
-        date: "Q1-Q2, 2023",
-        title: "BetME V1",
-        desc: "Launching Pool Bets",
+        date: "Q1 may, 2023",
+        title: "BetME V1.1",
+        desc: "Integrate Account Abstraction, Gelato Relay ERC2771, 1Balance, bets with stable",
         type: "soon",
       },
 
+
       {
-        date: "Q1-Q2, 2023",
+        date: "Q1-may, 2023",
+        title: "BetME V1.2",
+        desc: "Add ability to bet for more assets,real-world events,sport etc.",
+        type: "incomming",
+      },
+
+      {
+        date: "Q2, 2023",
         title: "BetME V2",
-        desc: "Launching Sport Bets",
+        desc: "Launching pool bets, with dynamic coefficient and unlimited participants",
+        type: "incomming",
+      },
+
+      {
+        date: "Q2, 2023",
+        title: "BetME V2",
+        desc: "Dynamic automated events (sources of information for Oracle setup manually)",
         type: "incomming",
       },
 
@@ -134,6 +150,8 @@ export const Home = () => {
           <SectionChat/>
           <SectionPool/>
           <SectionSports/>
+          <SectionTech/>
+          {/*<SectionTestimonials/>*/}
 
 
           <section>

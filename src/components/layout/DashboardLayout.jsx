@@ -21,7 +21,7 @@ export const DashboardLayout = () => {
 
   return (
     <div
-      className="flex flex-col justify-between  bg-[url('/src/assets/img/bg-header.jpg')] bg-contain  h-screen bg-gray-100 h-[100%]  ">
+      className="flex flex-col justify-between  bg-[url('/src/assets/img/bg-header.jpg')] bg-cover  h-screen bg-gray-100 h-[100%]  ">
       <div className="flex justify-between">
         <Dashboard/>
 

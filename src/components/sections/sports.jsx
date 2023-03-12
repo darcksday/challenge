@@ -7,7 +7,7 @@ export const SectionSports = () => {
 
   return (
     <section className="py-24">
-      <div className="flex flex-wrap items-center">
+      <div className="flex flex-wrap justify-between items-center">
         <div className="w-full px-4 lg:w-5/12">
           <Chip
             variant="gradient"
@@ -25,12 +25,13 @@ export const SectionSports = () => {
               className="inline-block font-black tracking-normal"
               textGradient
             >
-              Sports
+              Real World Events
             </Typography><br/>
             Predictions
           </Typography>
           <Typography variant="lead" className="mb-5 text-lg text-[#1A237E]/60 md:pr-10">
-            Players bet on sport events and all stakes go into a <b>Single Pool</b> of this event. The winner determined automatically by
+            Players bet on real world events such as:sports,politics, business etc. and all stakes go into a <b>Single Pool</b>. The winner
+            determined automatically by
             Decentralized Oracle.
             The coefficient are dynamic and depend on the number of players and the amount their bets.
           </Typography>
