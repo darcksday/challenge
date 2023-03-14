@@ -45,7 +45,8 @@ export const SectionPrice = () => {
               Predictions
             </Typography>
             <Typography variant="lead" className="mb-5 text-lg text-[#1A237E]/60 md:pr-10">
-              P2P crypto Price Predictions - are created, configured by the <b>Initiator</b>. <b> RedStone Price Feeds</b> are used to
+              P2P crypto Price Predictions - are created, configured by the <b>Initiator</b>. <b> RedStone Price Feeds</b> oracle are used
+              to
               determine
               the winner. Funds are distributed automatically when the expiration arrives. Coefficient is static and is set by
               the <b>Initiator</b>
