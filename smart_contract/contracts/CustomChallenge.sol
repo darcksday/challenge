@@ -4,11 +4,12 @@ pragma solidity ^0.8.14;
 import "@openzeppelin/contracts/utils/Strings.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 import "./ChallengeHelper.sol";
+import {ERC2771Context} from "@gelatonetwork/relay-context/contracts/vendor/ERC2771Context.sol";
 
 
 import "./Utils.sol";
 
-contract CustomChallenge is Utils, ChallengeHelper {
+contract CustomChallenge is Utils, ChallengeHelper, ERC2771Context {
 	uint public id;
 
 
@@ -36,9 +37,16 @@ contract CustomChallenge is Utils, ChallengeHelper {
 	mapping(address => uint[]) userChallenges;
 
 
+	modifier onlyTrustedForwarder() {
+		require(
+			isTrustedForwarder(msg.sender),
+			"Only callable by Trusted Forwarder"
+		);
+		_;
+	}
 
-	constructor()  {
 
+	constructor(address trustedForwarder) ERC2771Context(trustedForwarder) {
 
 	}
 
@@ -99,17 +107,14 @@ contract CustomChallenge is Utils, ChallengeHelper {
 	}
 
 
-
-
 	function getUserChallenges(address u_address) external view returns (ChallengeStruct[] memory){
 
 
-
-		uint item_length=userChallenges[u_address].length;
+		uint item_length = userChallenges[u_address].length;
 		ChallengeStruct[] memory _result = new ChallengeStruct[](item_length);
-		for (uint _i=0; _i < item_length; ++_i) {
+		for (uint _i = 0; _i < item_length; ++_i) {
 
-			uint item_id=userChallenges[u_address][_i];
+			uint item_id = userChallenges[u_address][_i];
 
 			_result[_i] = challenges[item_id];
 
