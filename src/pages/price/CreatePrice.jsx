@@ -6,13 +6,11 @@ import ContractAddress from '/src/contractsData/PriceChallenge-address.json'
 import { ethers } from "ethers";
 import { parseUnits } from "@ethersproject/units/src.ts";
 import { useNavigate } from "react-router-dom";
-import useWriteWagmi from "../../hooks/useWriteWagmi";
-import { TransactionContext } from "../../context/TransactionContext";
 import { convertStringToBytes32 } from "redstone-protocol/dist/src/common/utils";
+import { GelatoTxContext } from "../../context/GelatoTxContext";
 
 export const CreatePrice = () => {
-  const { setConfig, tx } = useWriteWagmi();
-  const { txSuccess, isLoading } = useContext(TransactionContext);
+  const { setConfig, txSuccess, clearConfig } = useContext(GelatoTxContext);
 
 
   const navigate = useNavigate();
@@ -47,7 +45,7 @@ export const CreatePrice = () => {
   }
 
   useEffect(() => {
-    if (txSuccess && txSuccess === tx?.hash) {
+    if (txSuccess) {
       navigate('/price');
 
     }
@@ -61,7 +59,7 @@ export const CreatePrice = () => {
     >
       <div className="container z-20 mx-auto px-4">
         <section className="py-5 lg:py-10">
-          <PriceForm tx={tx} handleSubmit={handleSubmit}/>
+          <PriceForm handleSubmit={handleSubmit}/>
         </section>
       </div>
     </Page>

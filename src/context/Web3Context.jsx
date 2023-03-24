@@ -18,9 +18,13 @@ import {
   RainbowKitProvider,
 } from '@rainbow-me/rainbowkit';
 import { TransactionProvider } from "./TransactionContext";
+import { GaslessOnboarding } from "@gelatonetwork/gasless-onboarding";
+import { GelatoTxProvider } from "./GelatoTxContext";
 
 export const Web3Context = React.createContext();
 export const Web3Provider = ({ children }) => {
+
+  const [gelato, setGelato] = useState(false);
 
 
   // const localChain = {
@@ -52,7 +56,6 @@ export const Web3Provider = ({ children }) => {
     chains
   });
 
-
   // Set up client
   const client = createClient({
     autoConnect: true,
@@ -61,18 +64,55 @@ export const Web3Provider = ({ children }) => {
     // webSocketProvider,
   });
 
+
+  const gaslessWalletConfig = { apiKey: process.env.GELATO_API_KEY };
+  const loginConfig = {
+    domains: ["http://localhost:1234/"],
+
+    chain: {
+      id: polygonMumbai.id,
+      rpcUrl: polygonMumbai.rpcUrls.default.http[0],
+    },
+    openLogin: {
+      redirectUrl: `http://localhost:1234/`,
+    },
+
+  };
+  const initGelato = async () => {
+    const onboarding = new GaslessOnboarding(
+      loginConfig,
+      gaslessWalletConfig
+    );
+    await onboarding.init();
+    setGelato(onboarding);
+
+  }
+
+
+  useEffect(() => {
+    initGelato();
+
+  }, [])
+
+  // useEffect(() => {
+  //
+  // }, [gelato])
+
+
   return (
     <WagmiConfig client={client}>
       <RainbowKitProvider chains={chains}>
 
         <SnackbarProvider autoHideDuration={8000} anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
                           maxSnack={5}>
-          <TransactionProvider>
-            <Web3Context.Provider
-              value={{}}>
-              {children}
-            </Web3Context.Provider>
-          </TransactionProvider>
+          <Web3Context.Provider value={{ gelato }}>
+            <TransactionProvider>
+              <GelatoTxProvider>
+                {gelato && children}
+              </GelatoTxProvider>
+            </TransactionProvider>
+          </Web3Context.Provider>
+
         </SnackbarProvider>
       </RainbowKitProvider>
     </WagmiConfig>

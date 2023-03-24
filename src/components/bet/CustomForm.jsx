@@ -4,16 +4,14 @@ import { Avatar, CircularProgress, Slider } from "@mui/material";
 import { deepOrange, deepPurple } from "@mui/material/colors";
 import { useNetwork } from "wagmi";
 import { minDate } from "../../utilits";
-import { useNavigate } from "react-router-dom";
-import { TransactionContext } from "../../context/TransactionContext";
+import { GelatoTxContext } from "../../context/GelatoTxContext";
 
 
-export const CustomForm = ({ handleSubmit, tx }) => {
+export const CustomForm = ({ handleSubmit }) => {
   const [betData, setBetData] = useState({ paid_maker: 0, cof: 1, op_bet: '' });
   const chain = useNetwork();
   const nativeCurrency = chain.chain.nativeCurrency;
-  const navigate = useNavigate();
-  const { isLoading } = useContext(TransactionContext);
+  const { isLoading } = useContext(GelatoTxContext);
 
 
   const handleChangeBetData = (e) => {

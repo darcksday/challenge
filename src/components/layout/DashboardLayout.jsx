@@ -3,6 +3,7 @@ import { Navbar } from './navbar';
 import Footer from './footer';
 import { styled } from '@mui/material/styles';
 import { Dashboard } from './dasbord/Dashboard';
+import { DialogModal } from "../DialogModal";
 
 
 export const DashboardLayout = () => {
@@ -40,6 +41,8 @@ export const DashboardLayout = () => {
 
       </div>
       <Footer/>
+      <DialogModal/>
+
     </div>
 
 

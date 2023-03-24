@@ -13,12 +13,17 @@ import { PriceList } from "./pages/price/PriceList";
 import { MyCustomList } from "./pages/my/MyCustomList";
 import { MyPriceList } from "./pages/my/MyPriceList";
 import { DashboardLayout } from "./components/layout/DashboardLayout";
-
+import { Web3Context } from "./context/Web3Context";
 
 const App = () => {
 
+
   const { address } = useAccount()
   const { openConnectModal } = useConnectModal();
+
+
+  const { gelato } = useContext(Web3Context);
+
   const ProtectedRoute = ({ children }) => {
     if (!address) {
       setTimeout(() => {
@@ -31,41 +36,66 @@ const App = () => {
   };
 
 
+  const bla = async () => {
+    console.log(await gelato.getUserInfo())
+
+  }
+
   useEffect(() => {
-  }, [])
+
+    // bla();
+    // console.log(gelato.getGaslessWallet().getAddress());
+    // console.log(gelato.getGaslessWallet());
 
 
-  return (
-    <Routes>
-      <Route element={<MainLayout/>}>
-        <Route path="/" element={<Home/>}/>
-      </Route>
+  }, [gelato])
 
 
-      <Route element={<DashboardLayout/>}>
-        <Route element={<ProtectedRoute/>}>
+  return (<>
 
-          <Route path="custom/" element={<CustomList/>}/>
-          <Route path="custom/create" element={<CreateCustom/>}/>
-          <Route path="custom/:id" element={<ViewCustom/>}/>
-
-          <Route path="price" element={<PriceList/>}/>
-          <Route path="price/create" element={<CreatePrice/>}/>
-          <Route path="price/:id" element={<ViewPrice/>}/>
+      <div onClick={async () => {
+        await gelato.login();
+      }}>Login
+      </div>
 
 
-          <Route path="my/">
-            <Route path="price" element={<MyPriceList/>}/>
-            <Route path="custom" element={<MyCustomList/>}/>
-          </Route>
+      <div onClick={() => {
+        gelato.logout()
+      }}>Logout
+      </div>
 
 
-          {/*<Route path="challenges/:id/messages1/:address" element={<Challenge />} />*/}
-          {/*<Route path="challenges/:id/messages2/:address" element={<Challenge />} />*/}
-
+      <Routes>
+        <Route element={<MainLayout/>}>
+          <Route path="/" element={<Home/>}/>
         </Route>
-      </Route>
-    </Routes>
+
+
+        <Route element={<DashboardLayout/>}>
+          <Route element={<ProtectedRoute/>}>
+
+            <Route path="custom/" element={<CustomList/>}/>
+            <Route path="custom/create" element={<CreateCustom/>}/>
+            <Route path="custom/:id" element={<ViewCustom/>}/>
+
+            <Route path="price" element={<PriceList/>}/>
+            <Route path="price/create" element={<CreatePrice/>}/>
+            <Route path="price/:id" element={<ViewPrice/>}/>
+
+
+            <Route path="my/">
+              <Route path="price" element={<MyPriceList/>}/>
+              <Route path="custom" element={<MyCustomList/>}/>
+            </Route>
+
+
+            {/*<Route path="challenges/:id/messages1/:address" element={<Challenge />} />*/}
+            {/*<Route path="challenges/:id/messages2/:address" element={<Challenge />} />*/}
+
+          </Route>
+        </Route>
+      </Routes>
+    </>
 
   )
 }

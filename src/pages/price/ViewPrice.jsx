@@ -39,16 +39,15 @@ import Abi from '../../contractsData/PriceChallenge.json';
 import { dateFormat, isEmptyAddress } from '../../utilits';
 import { Communication } from '../../components/Communication';
 import { Price } from "../../models/price";
-import useWriteWagmi from "../../hooks/useWriteWagmi";
 import { Status } from "../../components/bet/Status";
-import { TransactionContext } from "../../context/TransactionContext";
+import { GelatoTxContext } from "../../context/GelatoTxContext";
 
 export const ViewPrice = () => {
   const [tab, setTab] = useState('0');
   const [value, setValue] = useState(false);
   let { id } = useParams();
-  const { setConfig, tx } = useWriteWagmi();
-  const { txSuccess, isLoading } = useContext(TransactionContext);
+  const { setConfig, txSuccess, clearConfig } = useContext(GelatoTxContext);
+
   const navigate = useNavigate();
 
   const { address } = useAccount()
@@ -115,7 +114,8 @@ export const ViewPrice = () => {
   };
 
   useEffect(() => {
-    if (txSuccess && txSuccess === tx?.hash) {
+    if (txSuccess) {
+      clearConfig();
       navigate('/price');
 
     }

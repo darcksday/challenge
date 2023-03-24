@@ -1,9 +1,7 @@
 import { useState, useEffect, useContext } from "react";
-import { useContractWrite, usePrepareContractWrite, useWaitForTransaction } from "wagmi";
+import { useContractWrite, usePrepareContractWrite } from "wagmi";
 import { ethers } from "ethers";
-import { useSnackbar } from "notistack";
 import useAlert from "./useAlert";
-import { create } from 'zustand'
 import { TransactionContext } from "../context/TransactionContext";
 
 const useWriteWagmi = () => {
@@ -17,6 +15,7 @@ const useWriteWagmi = () => {
   }
   let callAlert = useAlert();
   let [config, setConfig] = useState(DEFAULT_CONF);
+
   const { config: prepare, status: prepStatus } = usePrepareContractWrite({
     ...config,
     overrides: {

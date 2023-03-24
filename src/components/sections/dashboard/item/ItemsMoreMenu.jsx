@@ -1,22 +1,23 @@
-import { useRef, useState } from 'react';
+import { useContext, useRef, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 // material
 import { Menu, MenuItem, IconButton, ListItemIcon, ListItemText } from '@mui/material';
 // component
 import Iconify from '/src/components/Iconify';
-import { useAccount } from 'wagmi';
-import ContractAddress from "../../../../contractsData/PriceChallenge-address.json";
-import Abi from "../../../../contractsData/PriceChallenge.json";
-import useWriteWagmi from "../../../../hooks/useWriteWagmi";
-import { Price } from "../../../../models/price";
+import { Web3Context } from "../../../../context/Web3Context";
+import { GelatoTxContext } from "../../../../context/GelatoTxContext";
 
 // ----------------------------------------------------------------------
 
 export default function ItemsMoreMenu({ item }) {
   const ref = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
-  const { address } = useAccount()
-  const { setConfig } = useWriteWagmi();
+
+  const { setConfig } = useContext(GelatoTxContext);
+  const { gelato } = useContext(Web3Context);
+  let address = null;
+  address = gelato.getGaslessWallet().getAddress();
+
 
   const remove = () => {
     setConfig(

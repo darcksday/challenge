@@ -45,17 +45,17 @@ import Abi from '../../contractsData/CustomChallenge.json';
 import { dateFormat, isEmptyAddress } from '../../utilits';
 import { Communication } from '../../components/Communication';
 import { Custom } from "../../models/custom";
-import useWriteWagmi from "../../hooks/useWriteWagmi";
 import { Status } from "../../components/bet/Status";
-import { TransactionContext } from "../../context/TransactionContext";
+import { GelatoTxContext } from "../../context/GelatoTxContext";
 
 export const ViewCustom = () => {
   const [tab, setTab] = useState('0');
   const [value, setValue] = useState(false);
   let { id } = useParams();
-  const { setConfig, tx } = useWriteWagmi();
-  const { txSuccess, isLoading } = useContext(TransactionContext);
   const navigate = useNavigate();
+  const { setConfig, txSuccess,clearConfig } = useContext(GelatoTxContext);
+
+
 
   const { address } = useAccount()
   const chain = useNetwork();
@@ -111,8 +111,9 @@ export const ViewCustom = () => {
 
   };
   useEffect(() => {
-    if (txSuccess && txSuccess === tx?.hash) {
-      navigate('/price');
+    if (txSuccess) {
+      clearConfig();
+      navigate('/custom');
 
     }
 

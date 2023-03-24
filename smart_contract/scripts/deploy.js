@@ -5,8 +5,10 @@
 // Runtime Environment's members available in the global scope.
 const { saveFrontendFiles } = require('./utils');
 const hre = require("hardhat");
+const relayAddress = '0xBf175FCC7086b4f9bd59d5EAE8eA67b8f940DE0d';
 
 async function main() {
+
   // Hardhat always runs to compile task when running scripts with its command
   // line interface.
   //
@@ -16,7 +18,7 @@ async function main() {
 
   // We get the contract to deploy
   const CustomChallenge = await hre.ethers.getContractFactory("CustomChallenge");
-  const customChallenge = await CustomChallenge.deploy();
+  const customChallenge = await CustomChallenge.deploy(relayAddress);
   await customChallenge.deployed();
 
   const PriceChallenge = await hre.ethers.getContractFactory("PriceChallenge");

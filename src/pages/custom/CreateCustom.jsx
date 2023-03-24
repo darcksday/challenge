@@ -5,12 +5,11 @@ import { CustomForm } from "../../components/bet/CustomForm";
 import Abi from '/src/contractsData/CustomChallenge.json'
 import ContractAddress from '/src/contractsData/CustomChallenge-address.json'
 import { useNavigate } from "react-router-dom";
-import useWriteWagmi from "../../hooks/useWriteWagmi";
-import { TransactionContext } from "../../context/TransactionContext";
+import { GelatoTxContext } from "../../context/GelatoTxContext";
 
 export const CreateCustom = () => {
-  const { setConfig, tx } = useWriteWagmi();
-  const { txSuccess, isLoading } = useContext(TransactionContext);
+  const { setConfig, txSuccess, clearConfig } = useContext(GelatoTxContext);
+
   const navigate = useNavigate();
 
 
@@ -34,7 +33,7 @@ export const CreateCustom = () => {
 
   }
   useEffect(() => {
-    if (txSuccess && txSuccess === tx?.hash) {
+    if (txSuccess) {
       navigate('/custom');
 
     }
@@ -47,7 +46,7 @@ export const CreateCustom = () => {
     >
       <div className="container z-20 mx-auto px-4">
         <section className="py-5 lg:py-10">
-          <CustomForm handleSubmit={handleSubmit} tx={tx}/>
+          <CustomForm handleSubmit={handleSubmit}/>
         </section>
       </div>
     </Page>
