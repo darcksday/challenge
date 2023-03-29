@@ -49,6 +49,7 @@ export const Web3Provider = ({ children }) => {
     },
 
   };
+  console.log(loginConfig);
   const initGelato = async () => {
     const onboarding = new GaslessOnboarding(
       loginConfig,
