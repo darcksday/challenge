@@ -37,16 +37,15 @@ export const Web3Provider = ({ children }) => {
 
 
   const gaslessWalletConfig = { apiKey: process.env.GELATO_API_KEY };
-  console.log(gaslessWalletConfig, 'test')
   const loginConfig = {
-    domains: ["http://localhost:1234/"],
+    domains: [process.env.DOMAIN],
 
     chain: {
       id: defaultChain.id,
       rpcUrl: defaultChain.rpcUrls.default.http[0],
     },
     openLogin: {
-      redirectUrl: `http://localhost:1234/my/deposit`,
+      redirectUrl: process.env.REDIRECT_URL,
     },
 
   };
