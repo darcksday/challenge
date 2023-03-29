@@ -59,16 +59,7 @@ export const LoginButton = ({}) => {
                 <MenuItem className="flex items-center gap-2">
                   <AccountBalanceWalletIcon strokeWidth={2} className="h-4 w-4"/>
                   <Typography variant="small" className="font-normal">
-                    Deposit
-                  </Typography>
-                </MenuItem>
-              </Link>
-
-              <Link to={'/my/price'}>
-                <MenuItem className="flex items-center gap-2">
-                  <ContentCopyIcon strokeWidth={2} className="h-4 w-4"/>
-                  <Typography variant="small" className="font-normal">
-                    My Predictions
+                    Profile
                   </Typography>
                 </MenuItem>
               </Link>
