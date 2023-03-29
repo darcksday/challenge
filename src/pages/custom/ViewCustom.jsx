@@ -13,8 +13,6 @@ import {
   Typography
 } from '@mui/material';
 
-
-
 import { Button, IconButton } from '@material-tailwind/react';
 
 import ShortTextIcon from '@mui/icons-material/ShortText';
