@@ -22,10 +22,6 @@ export const Profile = () => {
     address: userInfo.address,
   });
 
-  const handleClose = () => {
-    onClose(selectedValue);
-  };
-
 
   return !isLoading && (
 
@@ -73,7 +69,7 @@ export const Profile = () => {
 
         <Typography
           className="text.secondary"
-          variant="button"
+          variant="h5"
         >
 
           {data.formatted} {data.symbol}

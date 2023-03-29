@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { GelatoTxContext } from "../../context/GelatoTxContext";
 
 export const CreateCustom = () => {
-  const { setConfig, txSuccess, clearConfig } = useContext(GelatoTxContext);
+  const { setConfig, txSuccess } = useContext(GelatoTxContext);
 
   const navigate = useNavigate();
 

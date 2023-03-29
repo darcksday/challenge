@@ -8,28 +8,35 @@ import { ConnectButton, lightTheme } from "@rainbow-me/rainbowkit";
 import ShortTextIcon from "@mui/icons-material/ShortText";
 import { Button, Input } from "@material-tailwind/react";
 import { Web3Context } from "../../context/Web3Context";
-import { useAccount, usePrepareSendTransaction, useSendTransaction } from "wagmi";
+import { useAccount } from "wagmi";
 import { ethers } from "ethers";
+import useSendWagmi from "../../hooks/useSendWagmi";
+import { TransactionContext } from "../../context/TransactionContext";
 
 export const Deposits = () => {
   const { userInfo, chains } = useContext(Web3Context);
   const chain = chains[0]
   const nativeCurrency = chain.nativeCurrency;
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState('');
   const { address } = useAccount()
 
-
-  const { config } = usePrepareSendTransaction({
-    request: { to: userInfo?.address, value: ethers.utils.parseEther(value) },
-  })
-  const { data, isLoading, isSuccess, sendTransaction } = useSendTransaction(config)
+  const { setConfig } = useSendWagmi();
+  const { isLoading } = useContext(TransactionContext);
 
 
   const handleChange = ({ target }) => {
     setValue(target.value);
-    console.log(target.value)
   }
 
+
+  const handleDeposit = () => {
+    setConfig(
+      {
+        to: userInfo?.address,
+        value: value ? ethers.utils.parseEther(value) : undefined,
+      }
+    );
+  }
 
   return (<div className="mt-8  mx-auto w-[66%]">
       <div className="flex items-center justify-between w-full mb-6">
@@ -60,9 +67,11 @@ export const Deposits = () => {
               <CircularProgress/>
               :
               <Button
+                disabled={!userInfo.address || !value}
+                onClick={() => {
+                  handleDeposit()
+                }}
                 size="sm"
-                color={value ? "blue" : "blue-gray"}
-                disabled={!value}
                 className="!absolute right-1 top-1 rounded"
               >
                 Deposit

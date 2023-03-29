@@ -37,6 +37,7 @@ export const Web3Provider = ({ children }) => {
 
 
   const gaslessWalletConfig = { apiKey: process.env.GELATO_API_KEY };
+  console.log(gaslessWalletConfig)
   const loginConfig = {
     domains: ["http://localhost:1234/"],
 
