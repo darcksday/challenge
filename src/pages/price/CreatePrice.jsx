@@ -10,7 +10,7 @@ import { convertStringToBytes32 } from "redstone-protocol/dist/src/common/utils"
 import { GelatoTxContext } from "../../context/GelatoTxContext";
 
 export const CreatePrice = () => {
-  const { setConfig, txSuccess, clearConfig } = useContext(GelatoTxContext);
+  const { setConfig, txSuccess  } = useContext(GelatoTxContext);
 
 
   const navigate = useNavigate();

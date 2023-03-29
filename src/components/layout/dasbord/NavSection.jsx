@@ -9,7 +9,7 @@ import useBreadcrumbs from "use-react-router-breadcrumbs";
 
 
 const getIcon = (name) => {
-  return (<Iconify icon={name} width={22} height={22} />)
+  return (<Iconify icon={name} width={22} height={22}/>)
 };
 const ListItemStyle = styled((props) => <ListItemButton disableGutters {...props} />)(({ theme }) => ({
   ...theme.typography.body2,
@@ -47,8 +47,6 @@ const NavItem = ({ item, active }) => {
   };
 
 
-
-
   const activeRootStyle = {
     color: 'primary.main',
     fontWeight: 'fontWeightMedium',
@@ -70,14 +68,14 @@ const NavItem = ({ item, active }) => {
       }}
     >
       <ListItemIconStyle>{icon && icon}</ListItemIconStyle>
-      <ListItemText disableTypography primary={title} />
+      <ListItemText disableTypography primary={title}/>
       {info && info}
     </ListItemStyle>
   );
 }
 
 
-const navConfig = [
+const navMain = [
   {
     title: 'Price Prediction Bets',
     path: '/price',
@@ -88,6 +86,19 @@ const navConfig = [
     path: '/custom',
     icon: getIcon('eva:archive-outline'),
   },
+
+
+];
+
+const navProfile = [
+
+
+  {
+    title: 'Deposit',
+    path: '/my/deposit/',
+    icon: getIcon('eva:briefcase-outline'),
+  },
+
   {
     title: 'My Price Predictions',
     path: '/my/price/',
@@ -99,8 +110,6 @@ const navConfig = [
     path: 'my/custom',
     icon: getIcon('eva:people-fill'),
   },
-
-
 
 ];
 
@@ -122,32 +131,42 @@ const NavSection = () => {
   ));
   return (<>
       <Box className="mt-6" sx={{ mb: 5, mx: 2.5 }}>
-          <AccountStyle>
-            <Box sx={{ ml: 2 }}>
-                <Breadcrumbs aria-label="breadcrumb">
+        <AccountStyle>
+          <Box sx={{ ml: 2 }}>
+            <Breadcrumbs aria-label="breadcrumb">
 
-                  {breadcrumbs.map(({ match,
-                    breadcrumb }) => (
+              {breadcrumbs.map(({
+                match,
+                breadcrumb
+              }) => (
 
-                    <Link underline="hover" color="inherit" component={RouterLink} key={match.pathname} to={match.pathname}>
-                      {breadcrumb}
-                    </Link>
-
-
-                  ))}
-
+                <Link underline="hover" color="inherit" component={RouterLink} key={match.pathname} to={match.pathname}>
+                  {breadcrumb}
+                </Link>
 
 
-                </Breadcrumbs>
+              ))}
 
 
-            </Box>
-          </AccountStyle>
+            </Breadcrumbs>
+
+
+          </Box>
+        </AccountStyle>
       </Box>
       <Box>
         <List disablePadding sx={{ p: 1 }}>
-          {navConfig.map((item) => (
-            <NavItem key={item.title} item={item} active={match} />
+          {navMain.map((item) => (
+            <NavItem key={item.title} item={item} active={match}/>
+          ))}
+        </List>
+      </Box>
+
+      <hr className="my-5 border-blue-gray-50"/>
+      <Box>
+        <List disablePadding sx={{ p: 1 }}>
+          {navProfile.map((item) => (
+            <NavItem key={item.title} item={item} active={match}/>
           ))}
         </List>
       </Box>

@@ -2,16 +2,18 @@ import { useContext, useEffect, useState } from 'react';
 import { Button, CardBody, CardFooter, Input, Textarea, Typography } from "@material-tailwind/react";
 import { Avatar, CircularProgress, Slider } from "@mui/material";
 import { deepOrange, deepPurple } from "@mui/material/colors";
-import { useNetwork } from "wagmi";
 import { minDate } from "../../utilits";
 import { GelatoTxContext } from "../../context/GelatoTxContext";
+import { Web3Context } from "../../context/Web3Context";
 
 
 export const CustomForm = ({ handleSubmit }) => {
-  const [betData, setBetData] = useState({ paid_maker: 0, cof: 1, op_bet: '' });
-  const chain = useNetwork();
-  const nativeCurrency = chain.chain.nativeCurrency;
   const { isLoading } = useContext(GelatoTxContext);
+  const { chains } = useContext(Web3Context);
+
+  const [betData, setBetData] = useState({ paid_maker: 0, cof: 1, op_bet: '' });
+  const chain = chains[0];
+  const nativeCurrency = chain.nativeCurrency;
 
 
   const handleChangeBetData = (e) => {

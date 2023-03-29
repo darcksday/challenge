@@ -14,23 +14,21 @@ import ContractAddress from '/src/contractsData/CustomChallenge-address.json'
 import { CommonTable } from "../../components/bet/CommonTable";
 import { Custom } from "../../models/custom";
 import { CreateRounded } from "@mui/icons-material";
-
-
-
-
+import { Web3Context } from "../../context/Web3Context";
+import { useContext } from "react";
 
 
 export const MyCustomList = () => {
 
-  const { address } = useAccount()
+  const { userInfo } = useContext(Web3Context);
 
 
   const { data: items = [], refetch: refetchCollectionItems } = useContractRead({
     address: ContractAddress?.address,
     abi: Abi.abi,
-    enabled: address.length ,
+    enabled: userInfo.address.length,
     select: (data) => data.filter((item) => parseInt(item.paid_maker)).map((item) => new Custom(item)),
-    args: [address],
+    args: [userInfo.address],
     cacheTime: 4000,
     functionName: "getUserChallenges",
     watch: true,
@@ -39,15 +37,6 @@ export const MyCustomList = () => {
     }
 
   });
-
-
-
-
-
-
-
-
-
 
 
   return (

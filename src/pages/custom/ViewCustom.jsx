@@ -38,7 +38,7 @@ import TabContext from '@mui/lab/TabContext';
 import { TabList } from '@mui/lab';
 
 import TabPanel from '@mui/lab/TabPanel';
-import { useAccount, useContractRead, useNetwork } from 'wagmi';
+import { useAccount, useContractRead } from 'wagmi';
 
 import ContractAddress from '../../contractsData/CustomChallenge-address.json';
 import Abi from '../../contractsData/CustomChallenge.json';
@@ -47,19 +47,20 @@ import { Communication } from '../../components/Communication';
 import { Custom } from "../../models/custom";
 import { Status } from "../../components/bet/Status";
 import { GelatoTxContext } from "../../context/GelatoTxContext";
+import { Web3Context } from "../../context/Web3Context";
 
 export const ViewCustom = () => {
   const [tab, setTab] = useState('0');
   const [value, setValue] = useState(false);
   let { id } = useParams();
-  const navigate = useNavigate();
-  const { setConfig, txSuccess,clearConfig } = useContext(GelatoTxContext);
+  const navigate = useNavigate
+  const { setConfig, txSuccess, clearConfig } = useContext(GelatoTxContext);
+  const { chains, userInfo } = useContext(Web3Context);
 
+  const address = userInfo.address;
 
-
-  const { address } = useAccount()
-  const chain = useNetwork();
-  const nativeCurrency = chain.chain.nativeCurrency;
+  const chain = chains[0];
+  const nativeCurrency = chain.nativeCurrency;
 
   const { data: item, refetch: refetchCollectionItems } = useContractRead({
     address: ContractAddress?.address, abi: Abi.abi, // enabled: isContractAddress(currentCommunity?.nftContract),

@@ -3,20 +3,21 @@ import { Button, CardBody, CardFooter, Input, Typography, Option } from "@materi
 import { Avatar, CircularProgress, FormControl, InputLabel, MenuItem, Select, Slider } from "@mui/material";
 import { deepOrange, deepPurple } from "@mui/material/colors";
 import priceFeed from '../../utilits/priceFeed.json';
-import {  useNetwork } from 'wagmi'
-import {minDate } from "../../utilits";
+import { minDate } from "../../utilits";
 import { Price } from "../../models/price";
-import { TransactionContext } from "../../context/TransactionContext";
 import redstone from 'redstone-api';
+import { GelatoTxContext } from "../../context/GelatoTxContext";
+import { Web3Context } from "../../context/Web3Context";
 
 
 export const PriceForm = ({ handleSubmit }) => {
-  const [betData, setBetData] = useState({ paid_maker: 0, cof: 1, op_bet: '', price_prediction: '' });
-  const chain = useNetwork();
-  const networks = priceFeed.items;
-  const nativeCurrency = chain.chain.nativeCurrency;
+  const { isLoading } = useContext(GelatoTxContext);
+  const { chains } = useContext(Web3Context);
 
-  const { isLoading } = useContext(TransactionContext);
+  const [betData, setBetData] = useState({ paid_maker: 0, cof: 1, op_bet: '', price_prediction: '' });
+  const chain = chains[0]
+  const networks = priceFeed.items;
+  const nativeCurrency = chain.nativeCurrency;
 
 
   const handleChangeBetData = (e) => {

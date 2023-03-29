@@ -32,7 +32,7 @@ import TabContext from '@mui/lab/TabContext';
 import { TabList } from '@mui/lab';
 
 import TabPanel from '@mui/lab/TabPanel';
-import { useAccount, useContractRead, useNetwork } from 'wagmi';
+import { useAccount, useContractRead } from 'wagmi';
 
 import ContractAddress from '../../contractsData/PriceChallenge-address.json';
 import Abi from '../../contractsData/PriceChallenge.json';
@@ -41,18 +41,19 @@ import { Communication } from '../../components/Communication';
 import { Price } from "../../models/price";
 import { Status } from "../../components/bet/Status";
 import { GelatoTxContext } from "../../context/GelatoTxContext";
+import { Web3Context } from "../../context/Web3Context";
 
 export const ViewPrice = () => {
   const [tab, setTab] = useState('0');
   const [value, setValue] = useState(false);
   let { id } = useParams();
-  const { setConfig, txSuccess, clearConfig } = useContext(GelatoTxContext);
+  const { setConfig, txSuccess, clearConfig, isLoading } = useContext(GelatoTxContext);
+  const { chains, userInfo } = useContext(Web3Context);
 
   const navigate = useNavigate();
 
-  const { address } = useAccount()
-  const chain = useNetwork();
-  const nativeCurrency = chain.chain.nativeCurrency;
+  const address = userInfo.address;
+  const nativeCurrency = chains[0].nativeCurrency;
 
   const { data: item, refetch: refetchCollectionItems } = useContractRead({
     address: ContractAddress?.address,

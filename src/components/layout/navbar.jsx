@@ -1,17 +1,18 @@
-import { useState, useEffect, useRef, useContext } from "react";
+import { useState, useEffect } from "react";
 import logopng from '/src/assets/img/logo2.png'
 import {
   Navbar as MTNavbar,
   MobileNav,
-  IconButton, MenuList, MenuItem, MenuHandler, Menu,
+  IconButton, MenuList, MenuItem, MenuHandler, Menu, Button,
 } from "@material-tailwind/react";
 import { Link } from 'react-router-dom';
-import { ConnectButton, lightTheme } from '@rainbow-me/rainbowkit';
+import { LoginButton } from "../my/LoginButton";
 
 export const Navbar = ({}) => {
 
 
   const [open, setOpen] = useState(false);
+
   const navbarItemClasses =
     "flex items-center px-1 py-2 font-normal transition-all duration-250 text-size-sm text-current font-light lg:px-2 cursor-pointer";
 
@@ -20,6 +21,7 @@ export const Navbar = ({}) => {
       window.innerWidth >= 960 && setOpen(false);
     });
   }, []);
+
 
   const menuOpenIcon = (
     <svg
@@ -184,18 +186,7 @@ export const Navbar = ({}) => {
             {navbarMenu}
           </div>
 
-          <div className="flex">
-          <span className="h-[42px]">
-
-            <ConnectButton theme={lightTheme({
-              shadows: {
-                connectButton: '...',
-                walletLogo: '...',
-              },
-            })} showBalance={false}/>
-
-          </span>
-          </div>
+          <LoginButton/>
         </div>
 
         <MobileNav open={open} className=" text-[#1A237E]">

@@ -11,15 +11,17 @@ import {
 import { ItemsMoreMenu } from '/src/components/sections/dashboard/item';
 // mock
 import { dateFormat, isEmptyAddress } from '../../utilits';
-import { useNetwork } from "wagmi";
 import { Status } from "./Status";
+import { Web3Context } from "../../context/Web3Context";
+import { useContext } from "react";
 // ----------------------------------------------------------------------
 
 
 export const CustomRow = ({ item }) => {
+  const { chains } = useContext(Web3Context);
 
-  const chain = useNetwork();
-  const nativeCurrency = chain.chain.nativeCurrency;
+  const chain = chains[0];
+  const nativeCurrency = chain.nativeCurrency;
 
   return (
     <TableRow

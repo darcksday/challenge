@@ -14,20 +14,16 @@ import { MyCustomList } from "./pages/my/MyCustomList";
 import { MyPriceList } from "./pages/my/MyPriceList";
 import { DashboardLayout } from "./components/layout/DashboardLayout";
 import { Web3Context } from "./context/Web3Context";
+import { MyDeposit } from "./pages/my/MyDeposit";
 
 const App = () => {
 
 
-  const { address } = useAccount()
-  const { openConnectModal } = useConnectModal();
-
-
-  const { gelato } = useContext(Web3Context);
-
+  const { login, isAuth } = useContext(Web3Context);
   const ProtectedRoute = ({ children }) => {
-    if (!address) {
+    if (!isAuth) {
       setTimeout(() => {
-        openConnectModal();
+        login()
       }, 300)
       return <Navigate to="/" replace/>;
     }
@@ -36,33 +32,7 @@ const App = () => {
   };
 
 
-  const bla = async () => {
-    console.log(await gelato.getUserInfo())
-
-  }
-
-  useEffect(() => {
-
-    // bla();
-    // console.log(gelato.getGaslessWallet().getAddress());
-    // console.log(gelato.getGaslessWallet());
-
-
-  }, [gelato])
-
-
   return (<>
-
-      <div onClick={async () => {
-        await gelato.login();
-      }}>Login
-      </div>
-
-
-      <div onClick={() => {
-        gelato.logout()
-      }}>Logout
-      </div>
 
 
       <Routes>
@@ -84,6 +54,7 @@ const App = () => {
 
 
             <Route path="my/">
+              <Route path="deposit" element={<MyDeposit/>}/>
               <Route path="price" element={<MyPriceList/>}/>
               <Route path="custom" element={<MyCustomList/>}/>
             </Route>

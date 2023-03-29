@@ -1,22 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { ethers, BigNumber } from 'ethers';
-import {
-  WagmiConfig,
-  createClient,
-  configureChains,
-} from 'wagmi'
-import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
-import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
-import { InjectedConnector } from 'wagmi/connectors/injected'
+import { configureChains, createClient, WagmiConfig, } from 'wagmi'
 
-import { polygonMumbai, goerli } from 'wagmi/chains'
+import { polygonMumbai as defaultChain } from 'wagmi/chains'
 
 import { publicProvider } from 'wagmi/providers/public'
 import { SnackbarProvider } from 'notistack';
-import {
-  getDefaultWallets,
-  RainbowKitProvider,
-} from '@rainbow-me/rainbowkit';
+import { getDefaultWallets, } from '@rainbow-me/rainbowkit';
 import { TransactionProvider } from "./TransactionContext";
 import { GaslessOnboarding } from "@gelatonetwork/gasless-onboarding";
 import { GelatoTxProvider } from "./GelatoTxContext";
@@ -25,29 +14,11 @@ export const Web3Context = React.createContext();
 export const Web3Provider = ({ children }) => {
 
   const [gelato, setGelato] = useState(false);
-
-
-  // const localChain = {
-  //   id: 31337,
-  //   name: 'Local',
-  //   network: 'Local',
-  //   nativeCurrency: {
-  //     decimals: 18,
-  //     name: 'Local',
-  //     symbol: 'GO',
-  //   },
-  //   rpcUrls: {
-  //     default: 'http://localhost:8545',
-  //   },
-  //   blockExplorers: {
-  //     default: { name: 'SnowTrace', url: 'https://etherscan.io' },
-  //   },
-  //   testnet: false,
-  // }
-
+  const [isAuth, setIsAuth] = useState(false);
+  const [userInfo, setUserInfo] = useState({});
 
   const { chains, provider } = configureChains([
-    polygonMumbai, goerli
+    defaultChain
   ], [
     publicProvider(),
   ]);
@@ -70,11 +41,11 @@ export const Web3Provider = ({ children }) => {
     domains: ["http://localhost:1234/"],
 
     chain: {
-      id: polygonMumbai.id,
-      rpcUrl: polygonMumbai.rpcUrls.default.http[0],
+      id: defaultChain.id,
+      rpcUrl: defaultChain.rpcUrls.default.http[0],
     },
     openLogin: {
-      redirectUrl: `http://localhost:1234/`,
+      redirectUrl: `http://localhost:1234/my/deposit`,
     },
 
   };
@@ -86,11 +57,41 @@ export const Web3Provider = ({ children }) => {
     await onboarding.init();
     setGelato(onboarding);
 
+    if (onboarding.getProvider()) {
+
+      initAuthInfo(onboarding);
+
+    }
+
+
   }
 
 
+  const login = async () => {
+    await gelato.login()
+    initAuthInfo(gelato);
+
+
+  };
+
+
+  const logout = () => {
+    gelato.logout().then((res) => {
+      setIsAuth(false);
+
+
+    });
+  }
+  const initAuthInfo = async (onboarding) => {
+    const info = await onboarding.getUserInfo();
+    info['address'] = onboarding.getGaslessWallet().getAddress();
+    setUserInfo(info);
+    setIsAuth(true);
+  }
+
   useEffect(() => {
     initGelato();
+
 
   }, [])
 
@@ -99,22 +100,21 @@ export const Web3Provider = ({ children }) => {
   // }, [gelato])
 
 
-  return (
+  return gelato && (
+
     <WagmiConfig client={client}>
-      <RainbowKitProvider chains={chains}>
 
-        <SnackbarProvider autoHideDuration={8000} anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
-                          maxSnack={5}>
-          <Web3Context.Provider value={{ gelato }}>
-            <TransactionProvider>
-              <GelatoTxProvider>
-                {gelato && children}
-              </GelatoTxProvider>
-            </TransactionProvider>
-          </Web3Context.Provider>
+      <SnackbarProvider autoHideDuration={8000} anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
+                        maxSnack={5}>
+        <Web3Context.Provider value={{ gelato, chains, login, logout, isAuth, userInfo }}>
+          <TransactionProvider>
+            <GelatoTxProvider>
+              {children}
+            </GelatoTxProvider>
+          </TransactionProvider>
+        </Web3Context.Provider>
 
-        </SnackbarProvider>
-      </RainbowKitProvider>
+      </SnackbarProvider>
     </WagmiConfig>
 
   )

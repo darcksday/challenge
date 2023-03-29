@@ -8,29 +8,26 @@ import {
 // components
 import Page from '/src/components/Page';
 // mock
-import { useAccount, useContractRead } from 'wagmi';
+import { useContractRead } from 'wagmi';
 import Abi from '/src/contractsData/PriceChallenge.json'
 import ContractAddress from '/src/contractsData/PriceChallenge-address.json'
 import { CommonTable } from "../../components/bet/CommonTable";
 import { Price } from "../../models/price";
 import { CreateRounded } from "@mui/icons-material";
-
-
-
-
+import { Web3Context } from "../../context/Web3Context";
+import { useContext } from "react";
 
 
 export const MyPriceList = () => {
 
-  const { address } = useAccount()
-
+  const { userInfo } = useContext(Web3Context);
 
   const { data: items = [], refetch: refetchCollectionItems } = useContractRead({
     address: ContractAddress?.address,
     abi: Abi.abi,
-    enabled: address?.length ,
+    enabled: userInfo.address?.length,
     select: (data) => data.map((item) => new Price(item)),
-    args: [address],
+    args: [userInfo.address],
     cacheTime: 4000,
     functionName: "getUserChallenges",
     watch: true,
@@ -39,9 +36,6 @@ export const MyPriceList = () => {
     }
 
   });
-
-
-
 
 
   return (
