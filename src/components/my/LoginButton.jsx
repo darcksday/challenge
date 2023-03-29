@@ -18,7 +18,6 @@ export const LoginButton = ({}) => {
     watch: true,
     address: userInfo.address,
   });
-  console.log(userInfo);
 
 
   return (

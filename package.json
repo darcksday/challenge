@@ -7,7 +7,7 @@
     "parcel:build": "parcel build ./index.html --public-url ./",
     "build": "NODE_ENV=production npm run parcel:build",
     "local": "env $(cat .env) npx hardhat node",
-    "start": "npm run cleanup && NODE_ENV=localhost parcel ./index.html --open"
+    "start": "NODE_ENV=localhost parcel ./index.html --open"
   },
   "dependencies": {
     "@chainlink/contracts": "^0.5.1",
@@ -40,6 +40,7 @@
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-hooks-identicons": "^1.0.4",
+    "react-qr-code": "^2.0.11",
     "react-router-dom": "^6.3.0",
     "react-simple-code-editor": "^0.13.1",
     "redstone-api": "^0.4.11",
