@@ -35,10 +35,10 @@ export const Home = () => {
       },
 
       {
-        date: "Q1 may, 2023",
+        date: "Q1 march, 2023",
         title: "BetME V1.1",
-        desc: "Integrate Account Abstraction, Gelato Relay ERC2771, 1Balance, bets with stable",
-        type: "soon",
+        desc: "Integrate Account Abstraction, Gelato Relay, 1Balance - Gasless transactions",
+        type: "past",
       },
 
 
@@ -46,7 +46,7 @@ export const Home = () => {
         date: "Q1-may, 2023",
         title: "BetME V1.2",
         desc: "Add ability to bet for more assets,real-world events,sport etc.",
-        type: "incomming",
+        type: "soon",
       },
 
       {
@@ -99,7 +99,7 @@ export const Home = () => {
               <div className="hidden px-4 pt-24 mr-10 md:pt-0 lg:block">
 
 
-                <iframe width="600" height="400" src="https://www.youtube.com/embed/xP4St4Q5GAg" title="YouTube video player"
+                <iframe width="600" height="400" src="https://www.youtube.com/embed/u4QmkGzS8wQ" title="YouTube video player"
                         frameBorder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                         allowFullScreen></iframe>
