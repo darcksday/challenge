@@ -1,7 +1,6 @@
 import { Button, Card, Tab, Tabs, TabsHeader, Typography } from '@material-tailwind/react';
 import SectionFeatures from '../components/sections/features';
 import { SectionCustom } from '../components/sections/custom';
-import { Link } from "@mui/material";
 
 
 import compHeaderImg from '/src/assets/img/components-header.png';
@@ -13,6 +12,7 @@ import { SectionSports } from "../components/sections/sports";
 import { SectionChat } from "../components/sections/chat";
 import { RoadmapSection } from "../components/sections/roadmap";
 import SectionTech from "../components/sections/tech";
+import { Link } from "react-router-dom";
 
 export const Home = () => {
 
@@ -82,16 +82,13 @@ export const Home = () => {
                   BetMe
                 </Typography>
                 <Typography variant="lead" className="mb-6 text-lg  text-[#1A237E]/60 lg:pr-12">
-                  BetMe is is a decentralised, peer-to-peer prediction market, giving you the freedom to bet: how much you want, all at you
-                  want and against whom you want
-
+                  BetMe is is a decentralised, peer-to-peer prediction market, built via Account Abstraction technologies for improve UI
+                  experience.
                 </Typography>
                 <div className="flex flex-col-reverse gap-2 lg:flex-row">
-                  <Link to={'/custom'}>
-
-
+                  <Link to={'/my/deposit'}>
                     <Button variant="gradient" className="h-full w-full">
-                      To Market
+                      Get Started
                     </Button>
                   </Link>
                 </div>
@@ -118,9 +115,9 @@ export const Home = () => {
           <SectionFeatures/>
           <SectionCustom/>
           <SectionPrice/>
-          <SectionChat/>
-          <SectionPool/>
           <SectionSports/>
+          <SectionPool/>
+
           <SectionTech/>
           {/*<SectionTestimonials/>*/}
 

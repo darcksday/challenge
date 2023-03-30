@@ -7,18 +7,18 @@ import { Feature } from '../cards/feature';
 export default function SectionFeatures() {
   const features = [
     {
+      icon: "currency_exchange",
+      title: "Simple and Gasless",
+      desc: "No longer need to interact directly with the blockchain and pay for transactions",
+    },
+    {
       icon: "group",
       title: "P2P",
       desc: "Allows players to place bets on their own conditions and terms.       ",
     },
     {
-      icon: "currency_exchange",
-      title: "No Fees && Delays",
-      desc: "Pay for transactions only and get your winnings instantly.",
-    },
-    {
       icon: "grid_view",
-      title: "Decentralized",
+      title: "Decentralized and Secure",
       desc: "Decentralized and transparent. No third party interference.       ",
     },
     {

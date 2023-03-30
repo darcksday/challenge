@@ -31,11 +31,11 @@ export default function SectionTech() {
         <div className="w-full px-4 lg:w-5/12">
 
           <Typography variant="lead" className="mb-5 text-lg text-[#1A237E]/60 md:pr-10">
+            For build AA and gasless transaction we use combination of Gelato 1Balance, Web3Auth and Safe Contract Address.
             To display current prices on the UI, we using the RedStone API. On the contract side, we
             implemented the RedStone Price Feed contracts to obtain current prices and close bets. The Gelato Web3 functions are responsible
-            for generating and updating the redstonePayload (byte code required for the getPrice function) and controled the expiration of
-            bets for distribute funds. Currently, this function is called and updates on-chain data every 24
-            hours. Here is list of technologies was used:
+            for generating and updating the redstonePayload (byte code required for the getPrice function) and controlled the expiration of
+            bets for distribute funds.
           </Typography>
           <div className="mt-7 flex flex-wrap text-[#344767]">
             <div
