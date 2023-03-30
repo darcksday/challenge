@@ -244,7 +244,7 @@ contract PriceChallenge is Utils, ChallengeHelper, RedStonePrice {
 
 	}
 
-
+	// Calling by  GelatoFunctions
 	function cronCall(bytes memory redstonePayload) external {
 
 
