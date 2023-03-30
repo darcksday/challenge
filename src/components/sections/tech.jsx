@@ -3,11 +3,11 @@ import { Button, Chip, Typography } from "@material-tailwind/react";
 import { CodePreview } from "../cards/code-preview";
 import logo1 from "../../assets/img/blue.png";
 import screen1 from "../../assets/img/screens/tech.png";
-import react from "../../assets/img/logos/react.png";
+import safe from "../../assets/img/logos/gnosis.png";
 import gelato from "../../assets/img/logos/gelato.png";
 import redstone from "../../assets/img/logos/redstone.png";
 import solidity from "../../assets/img/logos/solidity.png";
-import zkSync from "../../assets/img/logos/zk-sync.png";
+import web3auth from "../../assets/img/logos/web3auth.png";
 import { Link } from "@mui/material";
 
 
@@ -42,11 +42,11 @@ export default function SectionTech() {
               className="mr-6 w-16 cursor-pointer text-center"
             >
               <Link className="no-underline"
-                    href="https://reactjs.org/"
+                    href="https://safe.global"
               >
-                <img className="mx-auto" width={36} src={react}/>
+                <img className="mx-auto" width={36} src={safe}/>
                 <Typography className="mt-2 font-bold text-[#1A237E]">
-                  React
+                  Safe
                 </Typography>
               </Link>
             </div>
@@ -96,19 +96,18 @@ export default function SectionTech() {
 
             </div>
             <div className="relative mr-6 w-16 cursor-not-allowed text-center">
-              <div className="opacity-50">
-                <img className="mx-auto" width={36} src={zkSync}/>
+              <Link className="no-underline"
+                    href="https://web3auth.io/"
+              >
+                <img className="mx-auto" width={36} src={web3auth}/>
 
-              </div>
-              <Chip
-                value="soon"
-                variant="gradient"
-                className="absolute -top-3 rounded-full from-[#191919] to-[#42424a] py-1 px-2"
-              />
-              <Typography className="mt-2 font-bold text-[#1A237E]">
-                ZkSync
-              </Typography>
+                <Typography className="mt-2 font-bold text-[#1A237E]">
+                  Web3Auth
+                </Typography>
+              </Link>
             </div>
+
+
           </div>
 
         </div>
