@@ -2,12 +2,23 @@
 
 BetMe is a decentralised, peer-to-peer prediction market, built via Account Abstraction technologies for improve UI experience.
 
+### How it's works
+
+![grid](https://challenge-darcksday.vercel.app/tech.d18822a9.png)
+
+
+For build AA and gasless transaction we use combination of Gelato 1Balance, Web3Auth and Safe Contract Address. To display current prices on
+the UI, we using the RedStone API. On the contract side, we implemented the RedStone Price Feed to obtain current prices and close bets. The
+Gelato Web3 functions are responsible for generating and updating the redstonePayload (byte code required for the getPrice function) and
+controlled the expiration of bets for distribute funds.
+
 ### Ethereum Smart Contracts
 
 Three smart contracts were written in Solidity for BetMe:
 
 - `CustomChallenge.sol` - This contract responsible for Custom bets. Deployed on Mumbai Testnet `0xf0699FdAd4A58472C13553d1965D682f88A3e551`
-- `PriceChallenge.sol` - This contract responsible for Price bets. Deployed on Mumbai Testnet `0x33107Ff5a765B6472A0943eA5975FdB3E5b2CCC6`
+- `PriceChallenge.sol` - This contract responsible for Price bets. Extend RedStonePrice contract. Deployed on Mumbai
+  Testnet `0x33107Ff5a765B6472A0943eA5975FdB3E5b2CCC6`
 
 ### Gelato Web3Functions Repository
 
@@ -23,7 +34,7 @@ Here are some quick links to code in this repo, including some examples of where
 - [Web3Auth](src/context/Web3Context.js#L70)
 - [Gelato Gasless Transaction](src/context/GelatoTxContext.js)
 
-## Getting Started
+## Installation
 
 These instructions will get you a copy of the project up and running on your Mumbai testnet for development and testing purposes.
 
