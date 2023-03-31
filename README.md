@@ -67,7 +67,7 @@ npm run build
 
 ## Links
 
-- Try it now: https://challenge-seven-psi.vercel.app/(minting on Mumbai testnet)
+- Try it now: https://challenge-seven-psi.vercel.app/  (on Mumbai testnet)
 - Demo Video: https://youtu.be/u4QmkGzS8wQ
 
 ## Contact
