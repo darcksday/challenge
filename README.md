@@ -20,11 +20,6 @@ Three smart contracts were written in Solidity for BetMe:
 - `PriceChallenge.sol` - This contract responsible for Price bets. Extend RedStonePrice contract. Deployed on Mumbai
   Testnet `0x33107Ff5a765B6472A0943eA5975FdB3E5b2CCC6`
 
-
-### Gelato Web3Functions Repository
-
-[Link](https://github.com/darcksday/betme-gelato-functions)
-
 ### Quick Links for Code
 
 Here are some quick links to code in this repo, including some examples of where hackathon sponsor tech was used:
@@ -35,6 +30,9 @@ Here are some quick links to code in this repo, including some examples of where
 - [Web3Auth](src/context/Web3Context.js#L70)
 - [Gelato Gasless Transaction](src/context/GelatoTxContext.js)
 
+### Gelato Web3Functions Repository
+
+[Link](https://github.com/darcksday/betme-gelato-functions)
 
 ## Next Steps
 
