@@ -6,7 +6,7 @@ BetMe is a decentralised, peer-to-peer prediction market, built via Account Abst
 
 ![grid](https://challenge-darcksday.vercel.app/tech.d18822a9.png)
 
-For build AA and gasless transaction we use combination of Gelato 1Balance, Web3Auth and Safe Contract Address. To display current prices on
+For build AA and gasless transaction we use combination of Gelato 1Balance && Relay, Web3Auth and Safe Contract Address. To display current prices on
 the UI, we using the RedStone API. On the contract side, we implemented the RedStone Price Feed to obtain current prices and close bets. The
 Gelato Web3 functions are responsible for generating and updating the redstonePayload (byte code required for the getPrice function) and
 controlled the expiration of bets for distribute funds.
