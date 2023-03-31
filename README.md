@@ -57,3 +57,23 @@ npm run start
 ```
 npm run build
 ```
+
+## Next Steps
+
+- Run on mainnet and add ability deposits via credit card
+- Launching pool bets, with dynamic coefficient and unlimited participants
+- Dynamic automated events (sources of information for Oracle setup manually)
+- Add ability to bet for more assets,real-world events,sport, politics etc.
+
+## Links
+
+- Try it now: https://challenge-seven-psi.vercel.app/(minting on Mumbai testnet)
+- Demo Video: https://youtu.be/u4QmkGzS8wQ
+
+## Contact
+
+- Twitter: @MacksPopov
+- Discord: Macks darcksday#0596
+- Github: @darcksday
+
+![grid](https://challenge-seven-psi.vercel.app/logo2.dbbde0f4.png)
