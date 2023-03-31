@@ -16,9 +16,9 @@ controlled the expiration of bets for distribute funds.
 
 Three smart contracts were written in Solidity for BetMe:
 
-- `CustomChallenge.sol` - This contract responsible for Custom bets. Deployed on Mumbai Testnet `0xf0699FdAd4A58472C13553d1965D682f88A3e551`
+- `CustomChallenge.sol` - This contract responsible for Custom bets. Deployed on Mumbai Testnet `0xDb0C8933A0EEe4a07d8A524f27E9041fA58C0AFc`
 - `PriceChallenge.sol` - This contract responsible for Price bets. Extend RedStonePrice contract. Deployed on Mumbai
-  Testnet `0x33107Ff5a765B6472A0943eA5975FdB3E5b2CCC6`
+  Testnet `0xbB2c5955eFf974Dd4F870f4902183732318C9415`
 
 ### Quick Links for Code
 

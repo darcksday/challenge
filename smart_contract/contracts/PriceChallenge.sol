@@ -248,20 +248,18 @@ contract PriceChallenge is Utils, ChallengeHelper, RedStonePrice {
 	function cronCall(bytes memory redstonePayload) external {
 
 
-		updatePayload(redstonePayload);
+		payloadData = redstonePayload;
+		updateTime = block.timestamp;
+		emit UpdatePayload(updateTime, payloadData);
+
+
 		for (uint _i; _i < id; ++_i) {
-			if ( canSetWinner(_i)) {
+			if (canSetWinner(_i)) {
 
 				setWinner(_i);
 
 			}
 		}
-	}
-
-	function updatePayload(bytes memory redstonePayload) public {
-		payloadData = redstonePayload;
-		updateTime = block.timestamp;
-		emit UpdatePayload(updateTime, payloadData);
 	}
 
 
