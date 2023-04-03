@@ -5,6 +5,7 @@
 // Runtime Environment's members available in the global scope.
 const { saveFrontendFiles } = require('./utils');
 const hre = require("hardhat");
+const { exit } = require("process");
 const relayAddress = '0xBf175FCC7086b4f9bd59d5EAE8eA67b8f940DE0d';
 
 async function main() {
@@ -27,6 +28,8 @@ async function main() {
   let startTime = new Date();
   startTime.setUTCHours(0, 0, 0, 0);
   startTime = startTime.getTime() / 1000;
+  console.log(startTime)
+  return false;
 
   const priceChallenge = await PriceChallenge.deploy(startTime);
   await priceChallenge.deployed();

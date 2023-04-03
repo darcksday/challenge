@@ -96,6 +96,18 @@ npm run build
 
 ---
 
+
+
+## Tech Stack
+
+- React
+- Tailwind
+- Hardhat
+- Gelato Gasless Wallet
+- Safe Wallet
+- Web3Auth
+
+
 ## Links
 
 - Try it now: https://challenge-seven-psi.vercel.app/  (on Mumbai testnet)
